@@ -82,7 +82,30 @@ For the development of this thesis,
 the next section will be devoted to a deeper study of equation \eqref{eq:cost_intro}.
 For a deeper review of the development of bottleneck modelling, please refer to \cite{LI2020311}.
 
+\section{Scheduling Delay Preferences}
 
+As seen in the previous section, every user will make a decision regarding when to depart from their origin and,
+in the simplest case, acts minimizing the cost function \eqref{eq:cost_intro}:
+\begin{equation*}
+  C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
+\end{equation*}
+Given the travel time pattern, this decision will be made depending on some parameters, namely:
+the desired arrival time at destination, that will be denoted as \(t^*\) throughout the thesis;
+the parameter \(\alpha\), which determines the cost of each unit of time spent travelling;
+the parameters \(\beta, \gamma\), which are, respectively,
+the cost of arriving early and late to destination by one unit of time.
+% Note that, for each user, minimizing the cost function is the same as minimizing a rescaled version of it:
+
+For the morning peak, the desired arrival time \(t^*\) will usually be the starting time at work:
+note indeed that the usual behaviour of planning to arrive some time earlier to work is likely caused by risk aversion, which will not be taken in account in this thesis (for further discussion on this, see \cite{doi:10.1177/0361198118792336}).
+Values for \(\alpha, \beta\) and \(\gamma\) depend, on the other hand, on the user.
+While \(\alpha\) can be assumed to depend on the whole set of the social-economics characteristic of the user,
+the parameters \(\beta, \gamma\) can have a more intuitive meaning:
+for instance, experience may suggest me that a Master student will have very low value for both of them when writing their thesis, since the work can be carried out at whatever time, without any constraint on when to arrive to the office.
+The same Master student will on the other hand have a really high value of \(\gamma\) when following classes:
+it may indeed be that the professor closes the door of the class when starting the class, resulting in a big loss of knowledge for the student arriving late.
+Lastly, a young Italian could have a high value of \(\beta\) when going to a social gathering:
+the embarrassment in having to wait the others alone could be, in some cultures, pretty costly.
 
 
 %%% Local Variables:
