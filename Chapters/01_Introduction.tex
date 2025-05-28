@@ -1,23 +1,91 @@
+\missingfigure{Remove todonotes package!!}
+
 \chapter{Introduction}
 
-\section{This is a section}
-Every chapter is numbered and the sections inherit the chapter number followed by a dot and a section number. Figures, equations, tables, ect. also inherit the chapter numbering. 
+Studying how people move has always been an important issue in the fields of both economics \todo{cite something} and \todo{cite something else} engineering.
 
-\subsection{This is a sub section}
-Sub sections are also numbered. In general try not to use a deep hierarchy of sub sections (\texttt{\textbackslash paragraph\{\}} and the like). The document will become segmented which will make the document appear less coherent. 
+From the earliest works, the field has evolved by taking into account increasingly more factors that have an impact on how and when people decide to move.
+This chapter will be devoted to briefly explaining how the field grew in the past years and,
+finally, what are the problem this work addresses and how it inserts in the rich existing literature regarding traffic modelling.
 
-\subsubsection{This is a sub sub section}
-And those are not numbered. It is possible to adjust how deep hierarchy of numbering sections goes in Setup/Settings.tex. 
+\section{Evolution of Traffic Modelling}
+\label{sec:hist}
 
-The front and back cover have been made to replicate the examples in the design guide \url{https://www.designguide.dtu.dk/#stnd-printmedia}. The name of department heading is omitted  because it is located in the top right corner (no need to write it twice). Take a look at \url{https://www.inside.dtu.dk/en/medarbejder/om-dtu-campus-og-bygninger/kommunikation-og-design/skabeloner/rapporter} if you want to make your cover separately. 
+Historically, traffic modelling was initially done via static models,
+which neglect how the road conditions vary through time:
+initial works,\todo{describe some initial work, with citation} for.
 
-Citing is done with the \texttt{biblatex} package \cite{biblatex}. Cross referencing (figures, tables, ect.) is taken care by the \texttt{cleveref} package. Just insert the name of the label in \textbackslash \texttt{cref\{\}} and it will automatically format the cross reference. For example writing the \texttt{cleveref} command \textbackslash \texttt{cref\{fig:groupedcolumn\}} will output ``\cref{fig:groupedcolumn}''. Using \textbackslash \texttt{Cref\{\}} will capitalise the first letter and \textbackslash \texttt{crefrange\{\}\{\}} will make a reference range. An example: \Cref{fig:stackedbar} is an example of a stacked bar chart and \crefrange{fig:stackedcolumn}{fig:groupedcolumn} are three consecutive figures.
+This approach was challenged by two seminal papers by William Vickrey (\cite{f32d6720-dd02-34b7-a4ba-c4c21193efe7, 4ffb5da1-1f49-3898-98a7-209781744dc0}),
+which gave the first example of what are now known as \textit{dynamic} traffic models,
+laying the foundation of bottleneck modelling.
+According to this theory, the road network has some junctions whose capacity is limited,
+that means that there is a maximal flow of vehicles that can pass through them at any time.
+These junctions are called \textit{bottleneck}, since they restrict the traffic flow as a bottleneck does with a flowing liquid.
+Identifying the location and capacity of bottlenecks allows thus the forecasting of how traffic changes in the day,
+depending on how people will choose to move.
 
-\section{Font and symbols test}
-Symbols can be written directly in the document meaning there is no need for special commands to write special characters. I love to write special characters like æøå inside my \TeX{} document. Also á, à, ü, û, ë, ê, î, ï could be nice. So what about the ``¿'' character. What about ° é ® † ¥ ü | œ ‘ @ ö ä ¬ ‹ « © ƒ ß ª … ç ñ µ ‚ · ¡ “ £ ™ [ ] '. Some dashes - – —, and the latex form - -- --- 
+Vickrey's work was later extended by \textcite{de1983stochastic}, which look for a stochastic equilibrium solution, and \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}, which took into account elastic demand and better formalize the initial model.
 
-This is a font test \newline 
-Arial Regular \newline 
-\textit{Arial Italic} \newline 
-\textbf{Arial Bold} \newline 
-\textbf{\textit{Arial Bold Italic}}
+According to this models, the users faces a cost for each choice of departure time,
+and this cost is parametric on some characteristic of the users,
+and depends on the time the user desire to arrive at its destination.
+By minimizing the cost, each user chooses thus an optimal departure time:
+the system is then studied at equilibrium, when none of the users can act better than how they are currently doing.
+
+This behaviour will yield, depending on the users' preferences,
+a different travel time pattern (that is, the way the travel time from origin to destination varies through time),
+that will be more or less complex depending on the studied network and the used cost function.
+
+In the original work, the function expressing the cost given the departure time has (in the simplest case) the following form:
+
+\todo{Is this too much?}\begin{equation}
+  \label{eq:cost_intro}
+  C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
+\end{equation}
+where \(\alpha, \beta\) and \(\gamma\) are user-dependant parameters, and \textit{time early}, \textit{time late} are, respectively, how much time a user arrives before the desired arrival time and how much time they arrive after it.
+
+The cost increases here linearly in the schedule delay (but differently, depending on wether it is negative or positive) and on the time spent travelling and is, a priori, not differentiable where the departure time yields a perfectly on-time arrival
+(that is, when the arrival time is equal to the desired arrival time),
+since an earlier departure would increase the cost by a quantity proportional to \(\beta\),
+while a later one would increase the cost by a quantity proportional to \(\gamma\).
+
+More recent works try make the cost function more flexible,
+by making a tradeoff with its simplicity:
+\todo{Find a paper with quadratic cost}, for instance,
+use a smoother cost function, made by considering the cost to be quadratic on schedule delay. \todo{Find possibly more papers that use different travel time functions}
+
+Once a cost function has been chosen, a wide variety of works find the equilibrium for a given network and a given population,
+with both an analytical and numerical approach.
+
+Among the work that find the analytical equilibrium, initial works such as \textcite{de1983stochastic} were dealing with a single bottleneck.
+They were later extended, taking into account more complex network: initially, \textcite{doi:10.1287/trsc.24.3.217} considers a Y-shaped network,
+in which some of the users go trough two different bottlenecks and some others only trough one.
+This model was extended by \textcite{doi:10.1287/trsc.27.2.148},
+who studied a Y-shaped network with three different bottlenecks.
+More recently, \textcite{AKAMATSU2015808} analytically studied a network with several bottlenecks.
+
+Similarly, initial works considered the users to be homogeneous.
+Later works relaxed this hypothesis, taking into account users with heterogeneous preferences or different desired arrival times.
+Notably, \textcite{arnott1988schedule} analytically solves the problem to equilibrium when the users are divided in a finite number of groups,
+each one of whose has different values of \(\alpha\) and \(\beta\),
+but constant ratio \(\gamma/\beta\).
+Furthermore, \textcite{amirgholy2017analytical} compute an analytical solution in the case of uniformly distributed preferences,
+and numerically approximate it in case of other distributions.
+
+Numerically, the implementation of Vickrey's model in simulators allows to find a solution for more complex situation and large scale networks,
+and to perform simulations on digital twins of real models.
+\textcite{de1997metropolis} developed a dynamic simulator, that iteratively finds an equilibrium solution for an arbitrarily complex network and user base.
+This simulator, and its second version \parencite{RePEc:ema:worpap:2024-03},
+were extensively used to simulate real networks and to evaluate effect of policies (see \cite{de2002real,de2005congestion,de2006modelling})
+
+For the development of this thesis,
+the next section will be devoted to a deeper study of equation \eqref{eq:cost_intro}.
+For a deeper review of the development of bottleneck modelling, please refer to \cite{LI2020311}.
+
+
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../main"
+%%% End:
