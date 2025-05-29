@@ -13,10 +13,66 @@ real data from the sources described above.
 The first step is thus giving an overview of the methods that are suitable for inferring the parameters from the data,
 and explaining what was the chosen method and the reasons that determined its choice.
 
-\section{Inference Methods}
+\section{Inference Method}
 \label{sec:inference}
 
+It is well known how the inference methods are divided in Bayesian and Frequentist inference
+(for a really in-depth review of the discussion, see \cite{bandyopadhyay2011philosophy}).
+The main inference methods are thus either Bayesian methods (for an overview, see \cite{gelman2013bayesian}) or simpler Maximum Likelihood \parencite{doi:10.1098/rsta.1922.0009}.
 
+For justifying the used method, a more formal statement of the problem is necessary.
+As stated in the introduction, we are assuming that each user is minimizing a cost function,
+that has the form in \eqref{eq:cost_intro}:
+\begin{equation}
+  \label{eq:cost_init_inf}
+  C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
+\end{equation}
+Let then \(t^*\) be the desired arrival time,
+\(tt(t)\) the travel time if leaving from the origin at time \(t\) and
+\([\bullet]^+\) the function that is known in machine learning as \textit{ReLU}, that is,
+\([x]^+ = \max(0, x)\).
+
+The \textit{time early} becomes thus the difference between the desired arrival time \(t^*\) and the actual arrival time \(t + tt(t)\), cut at zero:
+\[\text{time early} = [t^* - tt(t) - t]^+\]
+Similarly, for \textit{time late}
+\[\text{time late} = [tt(t) + t - t^*]^+\]
+The expression for the cost in \eqref{eq:cost_init_inf} becomes thus
+
+\begin{equation}
+  \label{eq:cost_inf}
+  C(t; \alpha, \beta, \gamma, t^*) = \alpha tt(t) + \beta[t^* - tt(t) - t]^+ + \gamma[tt(t) + t - t^*]^+
+\end{equation}
+
+Each user is thus minimizing (over the variable \(t\))
+a function that is parametric, with four different parameters:
+the user preferences \(\alpha, \beta, \gamma\) and the desired arrival time \(t^*\).
+This minimization will yield an optimal departure time \(t^{opt}\),
+that will vary in function of the parameters:
+\begin{equation}
+  \label{eq:t_opt}
+  t^{opt} = t^{opt}(\alpha, \beta, \gamma, t^*) = \min_{t \in (0, 24)} C(t; \alpha, \beta, \gamma, t^*)
+\end{equation}
+
+Suppose now that all four parameters are distributed across the different commuters,
+and the parameter of each commuter are sampled from four different random variables,
+whose probability distribution functions are parametrized by a value \(\theta\).
+The minimization process yields another random variable, parametrized by the same value \(\theta\),
+which describes the optimal departure time \(t^{opt}\).
+Let \(T^{opt}\) be this random variable, and
+\[ f_{T^{opt}}(t; \theta) \]
+its Probability Density Function.
+
+
+
+ is worth nothing that, in our case, the approaches do not give substantially different models:
+the limited information we have about the parameters would indeed not allow us to define a sufficiently informative prior,
+and (as is well known and simple to verify) bayesian estimation with uninformative priors reduce to maximum likelihood estimations.
+A decision was thus taken to estimate the parameters by simply maximising the likelihood,
+not taking in consideration any information on the prior.
+
+To maximise the likelihood, two main approaches are viable:
+one could either analytically find the expression for the likelihood
+empirical likelihood \parencite{10.1093/biomet/75.2.237}
 
 %%% Local Variables:
 %%% mode: LaTeX
