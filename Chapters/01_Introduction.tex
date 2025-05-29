@@ -15,6 +15,8 @@ Historically, traffic modelling was initially done via static models,
 which neglect how the road conditions vary through time:
 initial works,\todo{describe some initial work, with citation} for.
 
+\subsection{Creation of bottleneck modelling}
+
 This approach was challenged by two seminal papers by William Vickrey (\cite{f32d6720-dd02-34b7-a4ba-c4c21193efe7, 4ffb5da1-1f49-3898-98a7-209781744dc0}),
 which gave the first example of what are now known as \textit{dynamic} traffic models,
 laying the foundation of bottleneck modelling.
@@ -36,6 +38,8 @@ This behaviour will yield, depending on the users' preferences,
 a different travel time pattern (that is, the way the travel time from origin to destination varies through time),
 that will be more or less complex depending on the studied network and the used cost function.
 
+\subsection{Changing the Cost Function}
+
 In the original work, the function expressing the cost given the departure time has (in the simplest case) the following form:
 
 \todo{Is this too much?}\begin{equation}
@@ -53,6 +57,9 @@ More recent works try make the cost function more flexible,
 by making a tradeoff with its simplicity:
 \todo{Find a paper with quadratic cost}, for instance,
 use a smoother cost function, made by considering the cost to be quadratic on schedule delay. \todo{Find possibly more papers that use different travel time functions}
+
+\subsection{Finding the Equilibrium Solution}
+
 
 Once a cost function has been chosen, a wide variety of works find the equilibrium for a given network and a given population,
 with both an analytical and numerical approach.
@@ -94,10 +101,14 @@ the desired arrival time at destination, that will be denoted as \(t^*\) through
 the parameter \(\alpha\), which determines the cost of each unit of time spent travelling;
 the parameters \(\beta, \gamma\), which are, respectively,
 the cost of arriving early and late to destination by one unit of time.
+For working with these parameters, an intuitive understanding of their meaning and how can they vary is fundamental.
 % Note that, for each user, minimizing the cost function is the same as minimizing a rescaled version of it:
+
+\subsection{Meaning of the Cost Function Parameters}
 
 For the morning peak, the desired arrival time \(t^*\) will usually be the starting time at work:
 note indeed that the usual behaviour of planning to arrive some time earlier to work is likely caused by risk aversion, which will not be taken in account in this thesis (for further discussion on this, see \cite{doi:10.1177/0361198118792336}).
+
 Values for \(\alpha, \beta\) and \(\gamma\) depend, on the other hand, on the user.
 While \(\alpha\) can be assumed to depend on the whole set of the social-economics characteristic of the user,
 the parameters \(\beta, \gamma\) can have a more intuitive meaning:
@@ -107,7 +118,9 @@ it may indeed be that the professor closes the door of the class when starting t
 Lastly, a young Italian could have a high value of \(\beta\) when going to a social gathering:
 the embarrassment in having to wait the others alone could be, in some cultures, pretty costly.
 
-Extensive work has been done to estimate the values of these parameters:
+\subsection{Estimation of the Parameters $\alpha, \beta, \gamma$}
+
+Work has been done to estimate the values of the parameters:
 \textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd} fits a discrete-choice model on a survey in which 527 commuters in the USA stated when they arrive to work, and estimates some values for the ratios \(\beta/\alpha, \gamma/\alpha\).
 The values they use are
 \begin{equation}
@@ -117,19 +130,20 @@ The values they use are
 The result found there are extensively used in literature, including in \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}.
 Other works, such as \textcite{doi:10.3141/1807-04} and \textcite{4ffb5da1-1f49-3898-98a7-209781744dc0} use arbitrary values,
 not validated with data but similar to the values in \eqref{eq:beta_gamma_small}:
-they indeed use values such as, (in \cite{4ffb5da1-1f49-3898-98a7-209781744dc0})
+they indeed use values such as (in \cite{4ffb5da1-1f49-3898-98a7-209781744dc0})
 \begin{equation}
   \label{eq:beta_gamma_vickrey}
   \frac{\beta}{\alpha} = 0.5,\qquad \frac{\gamma}{\alpha} = 2
 \end{equation}
 \textcite{https://doi.org/10.1111/iere.12692} presents a brief review of the results.
 
-The estimation of these parameters has anyway always been based on survey data or,
+The estimation of these parameters presents anyway some drawbacks:
+it has indeed always been based on survey data or,
 more in general, on data that rely on \textit{Stated Preferences} (what the user \textit{says} is true)
 rather than on \textit{Revealed Preferences} (what the behaviour of the users \textit{reveals} about the true value of the parameter).
 These estimation methods, while often making it easier to conduct analyses,
 suffer from some intrinsic shortcomings,
-and some of these weaknesses are highlighted in \parencite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd}:
+and some of these weaknesses are highlighted by \textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd}:
 when asked for a time, the user may indeed state an approximated one instead of the real experienced one,
 or they may change their preference to some that they think could be more acceptable by someone potentially reading their answers (e. g., their employer).
 This makes some corrections of the found data fundamental,
