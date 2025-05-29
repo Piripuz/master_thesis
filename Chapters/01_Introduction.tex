@@ -152,11 +152,49 @@ in order to take into account all the biases the user could have.
 Moreover, surveys are extremely costly and complicated to make:
 in particular about past choices, having enough knowledge of the subject
 and being able to estimate parameters from revealed preferences
-makes the estimation of them cheaper and more scalable.
+makes the estimation of them cheaper and better scalable.
 The problem with this is that,
 for having reliable estimates of parameters via revealed preferences,
 both a deep knowledge of the subject and high-quality data about it are needed.
 
+Data can be found in different ways.
+The deep knowledge of the subject is, on the other hand, the goal of the thesis.
+
+\subsection{Data about Travel Time}
+
+For acquiring data about travel time, many different techniques can be used.
+Traditionally, travel time is estimated by using data from ground-based sensors,
+obtained with techniques such as video image processing, license plate matching, cellular phone tracking or loop detectors \parencite{turner1996advanced,YEON2008325}.
+More modern ways of finding such data include working with data from GPS sensors \parencite{mazare2012trade} or even elaborating data coming from drone imaging \parencite{fonod2025songdo}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\textwidth]{pems}
+  \caption{The area covered by the CalTrans PeMS dataset, a dataset including data from over 46,000 loop detectors spread in the freeway system of California, USA. Data about instantaneous speed and various characteristics of the vehicles are available, with a definition (in time) of up to 5 minutes.}
+  \label{fig:pems}
+\end{figure}
+
+Loop detectors are widely used, and a vast literature relies on their data for travel time estimation \parencite{YILDIRIMOGLU201345}.
+In particular, a widely used dataset is the Performance Measurement System (PeMS) by California Department of Transportation (CalTrans),
+which is freely accessible and whose data, spanning across several years,
+can have a really high definition,
+allowing large scale studies to be performed with a sufficient precision.
+Figure~\ref{fig:pems} shows an overview of the area in which PeMS data are available.
+
+Other than this, data from the private sector are available as well.
+Google offers some (limited) free API,
+that can be leveraged to directly obtain data about forecasted travel time for every desired route.
+TomTom is another private society which offers similar services:
+through their API, information about the current situation of the traffic can be found,
+and traffic patterns can be retrieved by sending many requests at different times.
+
+Collecting data about travel time is thus a problem that can (for this application) be solved in many different ways.
+For calibrating the model what is missing is thus only a deeper knowledge of the subject,
+that could yield a precise estimate of the parameters and, as a consequence,
+a better knowledge of the population.
+This is exactly the aim of the thesis:
+to develop a model that, given some data about travel time and when people decide to depart from their origin,
+infer some characteristic about them.
 %%% Local Variables:
 %%% mode: LaTeX
 %%% TeX-master: "../main"
