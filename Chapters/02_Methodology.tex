@@ -21,6 +21,12 @@ It is well known how the inference methods are divided in Bayesian and Frequenti
 The main inference methods are thus either Bayesian methods (for an overview, see \cite{gelman2013bayesian}) or simpler Maximum Likelihood \parencite{doi:10.1098/rsta.1922.0009}.
 
 For justifying the used method, a more formal statement of the problem is necessary.
+\todo{Maybe it makes sense to postpone the concept presented in the introduction after the next section, and have a more general intro here}
+After that, I will return to the distinction above and choose the method that is the most suitable for doing the estimation.
+
+\subsection{Theoretical Preliminaries}
+\label{sec:theo_pre}
+
 As stated in the introduction, we are assuming that each user is minimizing a cost function,
 that has the form in \eqref{eq:cost_intro}:
 \begin{equation}
@@ -55,12 +61,27 @@ that will vary in function of the parameters:
 
 Suppose now that all four parameters are distributed across the different commuters,
 and the parameter of each commuter are sampled from four different random variables,
-whose probability distribution functions are parametrized by a value \(\theta\).
-The minimization process yields another random variable, parametrized by the same value \(\theta\),
+whose probability distribution functions \todo{maybe by introducing the parameter \(\theta\), the approach is already not bayesian (actually, maybe not)} are parametrized by a parameter \(\theta \in \R^n, n \geq 1\).
+The minimization process yields another random variable, parametrized by the same parameter \(\theta\),
 which describes the optimal departure time \(t^{opt}\).
 Let \(T^{opt}\) be this random variable, and
 \[ f_{T^{opt}}(t; \theta) \]
 its Probability Density Function.
+
+The inference problem is thus the following:
+a dataset is given,
+which is close to what would result from sampling from the random variable \(T^{opt}\).
+What is the value of the parameter \(\theta\) that the best explains the dataset?
+
+In the following lines, different methods to address this question are presented.
+
+\subsection{Maximum Likelihood Estimation}
+\label{sec:max_lik}
+
+
+\subsection{Bayesian Estimation}
+\label{sec:bayes}
+
 
 
 
