@@ -65,7 +65,10 @@ whose probability distribution functions \todo{maybe by introducing the paramete
 The minimization process yields another random variable, parametrized by the same parameter \(\theta\),
 which describes the optimal departure time \(t^{opt}\).
 Let \(T^{opt}\) be this random variable, and
-\[ f_{T^{opt}}(t; \theta) \]
+\begin{equation}
+  \label{eq:pdf_opt}
+  f_{T^{opt}}(t; \theta)
+\end{equation}
 its Probability Density Function.
 
 The inference problem is thus the following:
@@ -83,7 +86,61 @@ and discuss how are they applicable to the examined problem
 
 \subsection{Maximum Likelihood Estimation}
 \label{sec:max_lik}
+The Maximum Likelihood Estimation is the simplest, older and probably most widely used method examined here.
 
+The methods relies on a simple idea:
+for each value of the parameter \(\theta\),
+each data point will have a certain \textit{likelihood} (or, in the discrete case, probability) of being a realization of the random variable \(T^{opt}\).
+It is thus a good idea to look for the value of \(\theta\) that maximises the likelihood for the whole given dataset:
+this value will thus be called the Maximum Likelihood Estimator (MLE) estimate.
+
+More formally, let \(f_{T^{opt}}(t; \theta)\) be (as in \eqref{eq:pdf_opt}) the probability density function for the random variable \(T^{opt}\).
+
+The \textit{likelihood} of the parameter \(\theta\) given the observation of a data point \(s\) is defined as
+\begin{equation}
+  \label{eq:lik_one_point}
+  \lik(\theta | s)  = f_{T^{opt}}(s; \theta)
+\end{equation}
+
+More generally, let
+\[S = \{t_1, \dots, t_N\}\]
+be the given dataset of the actual departure times,
+that can be thought of as independent samples of the random variable \(T^{opt}\).
+
+\todo{Terribly written}
+Since the joint probability of independent events can be computed by multiplying the probabilities of the individual events,
+the likelihood of the parameter given the dataset \(S\) will be defined as
+\begin{equation}
+  \label{eq:lik_def}
+  \lik(\theta | S) = \prod_{s \in S} f_{T^{opt}}(s; \theta)
+\end{equation}
+
+The MLE estimate \(\hat{\theta}\) is now simply defined as the value of the parameter \(\theta\) that maximises the likelihood:
+\begin{equation}
+  \label{eq:mle_estimate}
+  \hat{\theta} = \argmax_\theta \lik(\theta | S)
+\end{equation}
+
+The maximization of the likelihood function can be performed in different ways:
+when possible, an analytical maximization could be the fastest and most precise estimation method.
+Finding an analytical solution is anyway not always viable,
+since the function can have a convoluted analytical expression.
+Widely used methods include thus numerical optimization methods,
+often via gradient descent
+(in the cases in which the likelihood is differentiable, and the gradient is easy to compute)
+or even via gradient-free optimizers using, for instance,
+the simplex method \parencite{10.1093/comjnl/7.4.308}.
+
+Even being this the simplest method, it presents some challenges:
+the likelihood is indeed not trivial to estimate,
+as the random variable \(T^{opt}\) is defined itself as the minimization of a cost function.
+Moreover, the computation of the likelihood has to be done fast enough to allow an optimizer to run on it,
+in case the computed likelihood does not allow an analytical maximization (that is highly likely,
+given how the likelihood is defined).
+
+These problems, which will equally affect the other estimation methods,
+will be tackled in section \todo{Put section number}LIKELIHOOD.
+I will thus here present the other main estimation method.
 
 \subsection{Bayesian Estimation}
 \label{sec:bayes}
