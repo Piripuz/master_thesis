@@ -2,8 +2,8 @@
 \label{chap:methodology}
 
 This chapter will present the methodology used throughout the thesis.
-It will thus be articulated in different parts:
-the first step will be building the model,
+It will be articulated in different parts:
+the first step will involve building the model
 and finding a suitable method for retrieving the parameters from data.
 After this, the method must be tested on several different scenarios of increasing complexity.
 These include an initial synthetic dataset built accordingly to the model,
@@ -16,13 +16,13 @@ and explaining what was the chosen method and the reasons that determined its ch
 \section{Inference Method}
 \label{sec:inference}
 
-It is well known how the inference methods are divided in Bayesian and Frequentist inference
-(for a really in-depth review of the discussion, see \cite{bandyopadhyay2011philosophy}).
-The main inference methods are thus either Bayesian methods (for an overview, see \cite{gelman2013bayesian}) or simpler Maximum Likelihood \parencite{doi:10.1098/rsta.1922.0009}.
+For retrieving parameters from the data, different methods could be used,
+each one of which is better suited for a different problem.
+In order to choose one of these methods, a more formal statement of the problem is necessary.
 
-For justifying the used method, a more formal statement of the problem is necessary.
-\todo{Maybe it makes sense to postpone the concept presented in the introduction after the next section, and have a more general intro here}
-After that, I will return to the distinction above and choose the method that is the most suitable for doing the estimation.
+In the next lines, the inference problem is more formally stated,
+in order to acquire a deeper understanding of it and to be able to choose the right inference method.
+After that, the available methods will be presented and the most suitable method will be chosen from them.
 
 \subsection{Theoretical Preliminaries}
 \label{sec:theo_pre}
@@ -73,7 +73,13 @@ a dataset is given,
 which is close to what would result from sampling from the random variable \(T^{opt}\).
 What is the value of the parameter \(\theta\) that the best explains the dataset?
 
-In the following lines, different methods to address this question are presented.
+For answering this question, the parameter has to be inferred from the data,
+and an approach for doing this has to be chosen.
+It is well known how the inference methods are divided in Bayesian and Frequentist inference
+(for a really in-depth review of the discussion, see \cite{bandyopadhyay2011philosophy}).
+The main inference methods are thus either Bayesian methods (for an overview, see \cite{gelman2013bayesian}) or simpler Maximum Likelihood \parencite{doi:10.1098/rsta.1922.0009}.
+The following sections describe better the different approaches,
+and discuss how are they applicable to the examined problem
 
 \subsection{Maximum Likelihood Estimation}
 \label{sec:max_lik}
