@@ -145,14 +145,34 @@ I will thus here present the other main estimation method.
 \subsection{Bayesian Estimation}
 \label{sec:bayes}
 
+The bayesian approach is a philosophically (beyond practical) different way of looking at the problem.
+According to this approach, parameters are not indeed seen as real variables that can maximised,
+but rather as random variables themselves,
+some prior knowledge of which can be integrated in the model.
 
+Consider, for instance, an inference problem in which
+the height \(h\) of a group of people has to be estimated.
+A likelihood that is maximised for an unrealistic value of the parameter (e. g., \(h = 15 \unit{\cm}\)) is extremely unhelpful when doing an MLE,
+and would lead to a wrong estimation.
+Using bayesian methods, on the other hand,
+it is possible to consider some prior knowledge about the parameter before doing the estimation
+(for instance, the parameter can be believed to be distributed close to the average height of a person).
+Data will thus enhance this knowledge,
+specified trough the choice of a \textit{prior} distribution,
+and transform it to another distribution, called \textit{posterior} distribution.
 
-
- is worth nothing that, in our case, the approaches do not give substantially different models:
-the limited information we have about the parameters would indeed not allow us to define a sufficiently informative prior,
-and (as is well known and simple to verify) bayesian estimation with uninformative priors reduce to maximum likelihood estimations.
+Sadly, in our case, having a meaningful prior distribution is quite difficult:
+as noted in section \ref{cha:introduction},
+knowledge about the distribution of them is limited.
 A decision was thus taken to estimate the parameters by simply maximising the likelihood,
 not taking in consideration any information on the prior.
+
+It is thus important to study the likelihood,
+in order to be able to perform the parameter estimation at the core of the project.
+
+\section{Likelihood Estimation}
+\label{sec:lik_est}
+
 
 To maximise the likelihood, two main approaches are viable:
 one could either analytically find the expression for the likelihood
