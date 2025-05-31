@@ -170,8 +170,22 @@ not taking in consideration any information on the prior.
 It is thus important to study the likelihood,
 in order to be able to perform the parameter estimation at the core of the project.
 
-\section{Likelihood Estimation}
+\section{ Estimation of the Likelihood}
 \label{sec:lik_est}
+To estimate the likelihood, two main approaches are viable:
+one could either analytically find the expression for the likelihood,
+that requires doing a more extensive and heavier theoretical work,
+but yields a more precise and (potentially) better performing method,
+or choose to sample data points (by directly minimizing the cost function)
+to perform a subsequent maximization on what is known as \textit{empirical likelihood} \parencite{10.1093/biomet/75.2.237}:
+a nonparametric estimation of the likelihood function from a set of samples.
+
+While the standard approach could provide a way of quickly computing the likelihood,
+(enhancing as well the knowledge of the subject),
+empirically approximating it could yield an acceptable approximation and would not require as much theoretical understanding as the direct computation.
+But, since theoretical understanding of the problem is not something to be neglected,
+both methods deserve to be presented.
+
 
 
 To maximise the likelihood, two main approaches are viable:
