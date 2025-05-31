@@ -238,6 +238,47 @@ This problem could be avoided by using modern high performance computing framewo
 and powerful machines.
 It is anyway a major drawback and suggests, if possible, the adoption of alternative methods.
 
+\subsection{Direct Computation of the Likelihood}
+\label{sec:lik_comp}
+
+As mentioned earlier, the obvious method of computing a likelihood is the direct computation of it.
+
+Even looking obvious, this approach is not completely trivial to develop:
+note indeed that the random variable \(T^{opt}\) is defined by minimizing the cost function,
+in which several other random variables appear.
+
+For obtaining an analytical expression for the Probability Density Function \(f_{T^{opt}}(t; \theta)\), different steps are thus required:
+first of all, a complete understanding of how changing the different parameters affects the cost function has to be developed.
+Subsequently, where the cost is minimized has to be studied;
+the dependency of the point that minimizes the cost on each one of the parameters has to be characterized.
+Lastly, the characterization has to be extended to the case in which the parameters are distributed rather than real values.
+
+This process could be particularly laborious,
+but once done it could provide an elegant and precise estimation method:
+having a full characterization of the points minimizing the cost function \(C(t; \alpha, \beta, \gamma, t^*)\) would indeed require a deep knowledge of the problem,
+and this is, herein, interesting by itself on top of being useful.
+
+Despite being challenging,
+this approach is the chosen one:
+it will yield a complete characterization of the distribution of the random variable \(T^{opt}\).
+
+Once the analytical expression for the likelihood is found,
+the estimation is not done at all:
+computing the likelihood will indeed require computations that can only be computationally approximated,
+and whose approximation with a good precision requires a big computational effort.
+The following section will delve a bit deeper in the problem,
+and present some solutions that can help in mitigating the issues.
+
+\subsection{Speeding Up the Likelihood Computation}
+\label{sec:lik_speed}
+
+
+
+
+\section{Maximization of the Likelihood}
+\label{sec:max_lik_meth}
+
+
 
 
 %%% Local Variables:
