@@ -192,7 +192,7 @@ both methods deserve to be presented.
 Empirical estimation of the likelihood is a method that was firstly defined by \textcite{10.1093/biomet/75.2.237}.
 It consists in the estimation of the likelihood based on the \textit{empirical Cumulative Distribution Function} (eCDF)  \(\hat{F}(x)\) (simply, the ratio between the number of samples before the point in which the function is evaluated and the number of the total samples),
 and only requires an arbitrary number of independent and identically distributed (i.i.d.) samples.
-
+\missingfigure{Figure about eCDF vs CDF?}
 The next paragraph will briefly explain how does the method work.
 
 Consider a set \(S = \{t_1, \dots, t_N\}\) of \(N\) i.i.d. samples from the distribution we want to calculate the likelihood of.
@@ -231,12 +231,12 @@ a sufficient number of samples has to be drawn from the hypothesized parameter d
 and a minimization has to be performed over the cost function after each set of parameters is drawn.
 Moreover, this method would not allow the computation of the gradient of the likelihood;
 the minimization would thus have to be computed using gradient-free optimizers,
-which typically involve a big number of function evaluations \parencite{Larson_Menickelly_Wild_2019} which would be,
+which typically involves a big number of function evaluations \parencite{Larson_Menickelly_Wild_2019} which would be,
 in this case, particularly complex.
 
 This problem could be avoided by using modern high performance computing frameworks,
 and powerful machines.
-It is anyway a major drawback, and suggests, if possible, the adoption of alternative methods.
+It is anyway a major drawback and suggests, if possible, the adoption of alternative methods.
 
 
 
