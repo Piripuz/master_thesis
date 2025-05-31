@@ -186,11 +186,59 @@ empirically approximating it could yield an acceptable approximation and would n
 But, since theoretical understanding of the problem is not something to be neglected,
 both methods deserve to be presented.
 
+\subsection{Empirical Approximation of the Likelihood}
+\label{sec:emp_approx_lik}
+
+Empirical estimation of the likelihood is a method that was firstly defined by \textcite{10.1093/biomet/75.2.237}.
+It consists in the estimation of the likelihood based on the \textit{empirical Cumulative Distribution Function} (eCDF)  \(\hat{F}(x)\) (simply, the ratio between the number of samples before the point in which the function is evaluated and the number of the total samples),
+and only requires an arbitrary number of independent and identically distributed (i.i.d.) samples.
+
+The next paragraph will briefly explain how does the method work.
+
+Consider a set \(S = \{t_1, \dots, t_N\}\) of \(N\) i.i.d. samples from the distribution we want to calculate the likelihood of.
+The eCDF for the set of samples \(S\) will be defined as
+\begin{equation}
+  \label{eq:emp_cdf}
+  \hat{F}(t) = \frac{1}{N}\sum_{i = 1}^N \mathbb{1}_{t_i \leq t}
+\end{equation}
+where \(\mathbb{1}_A\) is the \textit{indicator} of event \(A\),
+evaluating to 1 if \(A\) occurs, and to 0 otherwise.
+
+The empirical likelihood of a data point x can now simply be defined as
+
+\begin{equation}
+  \label{eq:emp_lik}
+  L(x) = \frac{\hat{F}(x) - \hat{F}(x - \delta)}{\delta}
+\end{equation}
+where \(\delta\) is a parameter,
+to be set as small as the size of the set \(S\) allows
+(note indeed that, if no samples appear between \(x\) and \(x - \delta\), the likelihood \(L(x)\) will be equal to zero).
+For a more in-depth discussion of the empirical likelihood and its properties, see \textcite{annurev:/content/journals/10.1146/annurev-statistics-040720-024710}.
+
+This method is certainly relevant for the problem examined in this thesis:
+the likelihood could indeed be computed regardless of the distributions of the parameters \(\alpha, \beta, \gamma, t^*\),
+as long as sampling from their distribution is easy enough.
+Once a sample has been taken from each of their distribution,
+minimizing the cost function yield a data point in the set \(S\).
+By drawing independent samples from the chosen distributions for the parameters,
+the set \(S\) can be built of a sufficient size.
+The likelihood of the given dataset can then be estimated against the sampled data,
+and subsequently maximized.
+
+The biggest drawback of this effort concerns the computational complexity:
+for each estimation of the likelihood function,
+a sufficient number of samples has to be drawn from the hypothesized parameter distributions,
+and a minimization has to be performed over the cost function after each set of parameters is drawn.
+Moreover, this method would not allow the computation of the gradient of the likelihood;
+the minimization would thus have to be computed using gradient-free optimizers,
+which typically involve a big number of function evaluations \parencite{Larson_Menickelly_Wild_2019} which would be,
+in this case, particularly complex.
+
+This problem could be avoided by using modern high performance computing frameworks,
+and powerful machines.
+It is anyway a major drawback, and suggests, if possible, the adoption of alternative methods.
 
 
-To maximise the likelihood, two main approaches are viable:
-one could either analytically find the expression for the likelihood
-empirical likelihood \parencite{10.1093/biomet/75.2.237}
 
 %%% Local Variables:
 %%% mode: LaTeX
