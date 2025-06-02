@@ -322,7 +322,41 @@ An overview of the possible maximisation methods is thus given in the following 
 \section{Maximization of the Likelihood}
 \label{sec:max_lik_meth}
 
+The ideal way of finding the maximum of the likelihood would be differentiating it,
+invert the derivative and analytically compute the result.
+This is sadly not possible in general,
+since the expression for the likelihood could be very convoluted and,
+as a consequence,
+the derivative can become analytically intractable.
 
+To solve this problem,
+the maximum will be numerically approximated.
+Different techniques can be used for the approximation of it,
+and they will be presented in this section.
+
+\subsection{Grid Search}
+\label{sec:grid_search}
+
+The most basic and intuitive solution for maximising a function (after randomly selecting a point to be the maximum) is grid search:
+the function is evaluated on a set of equally spaced points spread over its domain,
+and the point in which the function assumes the highest value is chosen as the approximated maximum.
+
+Despite this being a naive solution,
+this method offers some advantages compared to other more sophisticated algorithms.
+A grid search is indeed unlikely to output a local minimum,
+since no information about wether the function is growing is ever used.
+Moreover, the algorithm is not inherently iterative,
+and as such greatly parallelizable.
+
+On the other hand,
+this solution has an undeniable drawback:
+the precision of the convergence is really low,
+and improving it requires an enormous computational effort.
+Some techniques have been proposed to overcome this limitation
+(as in \cite{pathak2024randomizedgridsearchhyperparametertuning,poštuvan2022adagridadaptivegridsearch}),
+but often combining it with an iterative maximization algorithm offers the best results.
+
+Iterative methods are thus examined in the next sections.
 
 
 %%% Local Variables:
