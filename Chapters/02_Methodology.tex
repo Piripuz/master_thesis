@@ -130,6 +130,7 @@ often via gradient descent
 (in the cases in which the likelihood is differentiable, and the gradient is easy to compute)
 or even via gradient-free optimizers using, for instance,
 the simplex method \parencite{10.1093/comjnl/7.4.308}.
+The optimization methods will be investigated further in section \ref{sec:max_lik_meth}
 
 Even being this the simplest method, it presents some challenges:
 the likelihood is indeed not trivial to estimate,
@@ -264,10 +265,10 @@ it will yield a complete characterization of the distribution of the random vari
 
 Once the analytical expression for the likelihood is found,
 the estimation is not done at all:
-computing the likelihood will indeed require computations that can only be computationally approximated,
+computing the likelihood will indeed require computations that can only be numerically approximated,
 and whose approximation with a good precision requires a big computational effort.
 The following section will delve a bit deeper in the problem,
-and present some solutions that can help in mitigating the issues.
+and presents some solutions that can help in mitigating the issues.
 
 \subsection{Speeding Up the Likelihood Computation}
 \label{sec:lik_speed}
