@@ -402,8 +402,13 @@ the need of computing the gradient.
 
 In our case, the gradient of the likelihood can be computed via, as presented in section \ref{sec:lik_speed},
 modern computational frameworks which allow implicit differentiation.
-The methods may anyway have some issues with numerical stability,
-and need careful tuning for avoiding regions that are out of the domain\footnote{As reported in a conversation with a JAX developer}
+The methods may anyway have issues with numerical stability,
+and need careful tuning for avoiding regions that are out of the domain\footnote{As reported in a conversation with a JAX developer}.
+This problem could, in principle,
+make the computation of the gradient not feasible.
+In this case, iterative algorithms such as gradient-less optimizers could still yield good results.
+
+
 
 %%% Local Variables:
 %%% mode: LaTeX
