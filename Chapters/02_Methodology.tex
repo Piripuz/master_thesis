@@ -272,9 +272,52 @@ and presents some solutions that can help in mitigating the issues.
 
 \subsection{Speeding Up the Likelihood Computation}
 \label{sec:lik_speed}
+\todo{I don't understand if this section has to go in methods or results: I am assuming the likelihood to be known, but it is not...}
+As stated in the previous paragraph, numerically computing the Probability Density Function of the variable \(T^{opt}\) will,
+by itself, not be a trivial task.
+Moreover, the computation has to be repeated a big number of times for performing the final MLE estimate for the parameter \(\theta\):
+the value of the pdf has indeed to be computed for each point in the dataset,
+and once this computation has been done the final result has to be maximised,
+requiring the whole computation to be performed as many times as the maximization algorithm requires to.
+Moreover, being able to perform a gradient descent on the result of the likelihood would greatly reduce the number of times the computation is performed,
+while the simpler algorithms would be considerably slower by requiring a bigger number of function evaluations.
 
+The problems in the evaluation of the likelihood are mainly two:
+the first one is the need of evaluating integrals of function whose primitive is not analytically computable;
+the second one is the need of inverting some functions whose inverse does not have a closed form analytical expression.
 
+Both problems are solvable,
+since there exists methods that find the solutions with arbitrary precision,
+as long as the functions are behaved well enough (that is the case in this problem).
 
+Regarding the integration, the solution can be approximated by using the \todo{add figure for this?} trapezoid method,
+that requires a finite number of function evaluations and yields a good estimate of the integral
+(for a deeper discussion on this, see \cite{Sueli_Mayers_2003}).
+An approximated integral via the trapezoid method can be thus computed and,
+if gradient descent has to be performed on its result,
+the derivative of it can be computed.
+The differentiation is anyway not feasible analytically, since it involves a great number of terms.
+In order to properly differentiate it,
+an automatic differentiation framework is needed.
+
+For what concerns inverting functions, the problem is again computationally tractable,
+as the inverse can be approximated iteratively by using a bisection method or,
+in some particular cases, a gradient descent algorithm.
+Anyway, differentiating the result of an iterative method does not even have a general meaning,
+and is thus not doable.
+A method recently developed at Google,
+called implicit differentiation \parencite{DBLP:journals/corr/abs-2105-15183},
+allows anyway to numerically approximate the gradient of the result of optimization techniques.
+The method is efficiently implemented for the automatic differentiation framework JAX \parencite{jax2018github}
+that, on top of allowing the computation of gradients,
+speeds up by several order of magnitude the written code (compared to standard python implementations)
+by leveraging just-in-time compilation and hardware acceleration.
+Utilizing this library will be fundamental in the development of the thesis,
+by allowing the computations to be ran in tolerable times even in normal, consumer-grade machines.
+
+After the likelihood has been efficiently computed,
+inferring the parameters requires it to be maximised.
+An overview of the possible maximisation methods is thus given in the following section.
 
 \section{Maximization of the Likelihood}
 \label{sec:max_lik_meth}
