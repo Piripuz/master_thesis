@@ -358,6 +358,52 @@ but often combining it with an iterative maximization algorithm offers the best 
 
 Iterative methods are thus examined in the next sections.
 
+\subsection{Gradient Descent Methods}
+\label{sec:grad_desc}
+
+Gradient descent (with the various modified versions of it) is arguably the most widely known and used method in optimization \parencite{ruder2017overviewgradientdescentoptimization}.
+It is based on a simple idea:
+it is easy to prove that, for a differentiable function,
+the direction in which the value of the function increases the fastest (clearly, locally)
+is the one pointed by the gradient.
+Once the gradient has been computed, evaluating it at a point gives thus a suggestion (as long as the function is behaved well enough) on the direction in which the maximum can be computed.
+
+More formally, let
+\begin{align*}
+  J: \R^d & \rightarrow \R \\
+  \theta & \mapsto J(\theta)
+\end{align*}
+the function that has to be minimised
+(if the function has to be maximised, it is sufficient to change the sign of it).
+
+Let \(\nabla J(\theta)\) be the gradient of it with respect to the variable \(\theta\),
+and \(\theta_0 \in \R^d\) some initial value from where the optimization has to be started.
+According to the gradient descent algorithm,
+the current estimation is updated as follows:
+\begin{equation}
+  \label{eq:grad_desc}
+  \theta_{i+1} = \theta_i - \alpha_i\nabla J(\theta_i)
+\end{equation}
+where \(\alpha_i\), called \textit{step size}, depends on the chosen optimization strategy.
+
+The step size can be either constant, yielding a more predictable but often slower or less precise convergence,
+or variable.
+In the case in which the step size is not constant,
+it can be changed in a variety of different ways,
+defining several different gradient descent algorithms with their strength and weaknesses
+\parencite{doi:10.1137/1011036,MR701288}.
+
+For a deeper discussion on these methods, including how the step size can be chosen,
+see \cite{10.5555/3317111}.
+
+Many of the strength and weaknesses of these method are anyway common across all of them,
+and the major weakness is, in many cases,
+the need of computing the gradient.
+
+In our case, the gradient of the likelihood can be computed via, as presented in section \ref{sec:lik_speed},
+modern computational frameworks which allow implicit differentiation.
+The methods may anyway have some issues with numerical stability,
+and need careful tuning for avoiding regions that are out of the domain\footnote{As reported in a conversation with a JAX developer}
 
 %%% Local Variables:
 %%% mode: LaTeX
