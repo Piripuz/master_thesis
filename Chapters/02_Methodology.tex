@@ -454,6 +454,57 @@ but occurs in different situations and can be an obstacle to the proper converge
 This method will thus be used only when unavoidable,
 and avoided in favour of gradient-based methods when possible.
 
+Once the likelihood has been maximised,
+the method has to be tested on scenarios in which the convergence can be evaluated,
+in order to prove it to actually be meaningful.
+The following sections will present how the evaluation will be performed,
+on various scenarios of increasing complexity.
+
+\section{Evaluation on Synthetic Data}
+\label{sec:eval_synth}
+
+The first, simplest scenario for testing the method consists in building a dataset of artificial observations of arrival time,
+from a purely theoretical (and well behaved) travel time function.
+Building the dataset without any connection with real scenarios won't yield important data regarding the usefulness of the method when real data will be used.
+It anyway provides a nice instrument for evaluating the convergence properties of the method.
+Moreover, evaluating the method on a tailored dataset efficiently separates the method from the underlying theory:
+this step will enable to evaluate the method without it being affected by potential faults of the bottleneck modelling we assume.
+
+To perform this evaluation, the first thing that needs to be done is building the dataset.
+
+\subsection{Building the Synthetic Dataset}
+\label{sec:synth_dataset}
+
+The dataset has to be build independently from the theory developed when estimating the likelihood,
+since a theory cannot be used for evaluating itself.
+
+The most independent way to build a synthetic dataset is thus to computationally minimise the cost function for each agent,
+and to find in this way the chosen departure time.
+
+Remind that, from \eqref{eq:cost_inf}, the cost is equal to
+\begin{equation*}
+  C(t; \alpha, \beta, \gamma, t^*) = \alpha tt(t) + \beta[t^* - tt(t) - t]^+ + \gamma[tt(t) + t - t^*]^+
+\end{equation*}
+
+To minimize it, a specification of the travel time function \(tt(t)\) is thus needed,
+on top of the parameters \(\alpha, \beta, \gamma, t^*\).
+The travel time function can be chosen to have an arbitrary analytical form,
+as long as it satisfies the theoretical properties one expects from it (that will be defined further ahead).
+On the other hand, the parameters will be sampled from the chosen distribution,
+parametrized by the parameter \(\theta\).
+
+Once the cost function has been defined,
+the minimization has to occur.
+Since the cost can have up to three local minima (as shown in section \todo{Section number} THEORY1),
+three different optimizers are run on it,
+each one of which aimed to one of the minima.
+The retrieved values are then compared, and the global minimum is found in this way.
+This procedure can be run for an arbitrary number of time,
+in order to obtain dataset of the wanted size \(N\).
+
+With this method, both the size of the dataset \(N\) and the parameter \(\theta\) can be tweaked as much as needed:
+convergence can in this way be evaluated for many shapes of the distribution,
+to ensure the robustness of the developed method.
 %%% Local Variables:
 %%% mode: LaTeX
 %%% TeX-master: "../main"
