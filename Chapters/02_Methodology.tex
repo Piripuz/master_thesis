@@ -505,6 +505,43 @@ in order to obtain dataset of the wanted size \(N\).
 With this method, both the size of the dataset \(N\) and the parameter \(\theta\) can be tweaked as much as needed:
 convergence can in this way be evaluated for many shapes of the distribution,
 to ensure the robustness of the developed method.
+
+Once the dataset has been built,
+the model will be tested with the artificial data.
+
+\subsection{Running the Model on Synthetic Data}
+\label{sec:run_synth_dataset}
+
+Being ran is exactly the purpose of the model and isn't thus particularly complex.
+Some comments on how the model is evaluated can anyway be made to comprehend it better.
+
+As explained in section \ref{sec:thesis_obj},
+the model's input must be the dataset about when people actually leave from the origin of their trip and the travel time function.
+In this case, both of these input are readily available and easy to get:
+the travel time function has some analytical form that has been decided earlier,
+while the dataset of departure times has just been built.
+
+Running the model will thus produce an estimate \(\hat{\theta}\) of the original distribution parameter \(\theta\).
+Convergence can then be evaluated by simply computing the Mean Square Error
+\begin{equation*}
+  MSE = \sqrt{\sum_i (\theta_i - \hat{\theta}_i)^2}
+\end{equation*}
+and studying how it changes when \(\theta\), \(N\) are changed.
+
+Moreover, the likelihood of different values of the parameter \(\theta\) can be computed.
+This allows, by evaluating a grid of different parameters,
+to do some plots of slices of the likelihood (necessary if the parameter satisfies \(\theta \in \R^d, d > 2\)),
+and having thus an overview on how well-behaved the likelihood is.
+
+Concluding, evaluating the method on a synthetic dataset is far from the final goal of the model.
+Anyway, it provides some important ways of evaluating the developed model,
+before dealing with more realistic but more difficultly interpretable scenarios.
+
+The next step is to evaluate the model on a scenario that is more realistic than a simple synthetic data,
+but for which the convergence can still be evaluated.
+Traffic simulators, and in particular METROPOLIS2 (in which the parameters \(\alpha, \beta, \gamma\) can be explicitly set for each agent)
+are extremely helpful in this stage.
+
 %%% Local Variables:
 %%% mode: LaTeX
 %%% TeX-master: "../main"
