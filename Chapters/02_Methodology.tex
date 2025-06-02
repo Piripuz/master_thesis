@@ -408,7 +408,51 @@ This problem could, in principle,
 make the computation of the gradient not feasible.
 In this case, iterative algorithms such as gradient-less optimizers could still yield good results.
 
+\subsection{Simplex Method}
+\label{sec:no_grad_opt}
 
+It may happen, in general, that no information is available other than the function values,
+making it impossible to compute the gradient,
+or particularly expensive to estimate it.
+
+For addressing this type of problems, some optimization techniques which only rely on the values of the function at some points,
+without needing anything else,
+have been developed.
+I will focus here on the method that is arguably the most popular among them,
+developed by \textcite{10.1093/comjnl/7.4.308}.
+For a deeper review of the different methods, see \cite{10.5555/1508119}.
+
+The simplex method, as its name suggests, is based on the estimation of the function on the edges of a simplex.
+The simplex is simply the extension of a triangle to an arbitrary-dimensional euclidean space:
+in dimension \(d\), the method will thus maintain \(d+1\) points,
+and update their position at each iterate.
+
+The update can be done in four different ways:
+depending on some conditions on the value of the function at the edges,
+\textit{reflection} reflect one of the points with respect to the centroid of the remaining ones;
+\textit{expansion} on top of reflecting a point, moves it away from the centroid of the other edges, by a linear factor;
+\textit{contraction} is similar to the expansion, but instead of moving the edge away from the centroid it moves it closer;
+finally, if none of the conditions for the other updates is satisfied,
+\textit{shrinking} is performed:
+each point is pulled towards the best one proportionally on their distance from it.
+When the simplex is lying on a \textit{flat} surface (that is, when the values of the function at its edges are close enough),
+the method is terminated and the edge in which the function assumes the lowest value is returned as the minimum.
+
+This method achieves convergence with a relatively little number of function evaluations,
+since the values of the function at the edges can be stored in memory.
+Despite this, it presents two major drawbacks.
+The first one is about the number of function evaluations:
+while the method does not require a big number of them if compared with gradient-free methods,
+the number of function evaluations it requires can exceed the ones required by gradient methods by different order of magnitude.
+The second drawback regards the optimum found by the method:
+as found by \textcite{doi:10.1137/S1052623496303482},
+the method can indeed converge to nonstationary points,
+where the gradient is not null and a gradient based optimizer would escape.
+This phenomenon can be reduced by tweaking the parameters,
+but occurs in different situations and can be an obstacle to the proper convergence of the estimate.
+
+This method will thus be used only when unavoidable,
+and avoided in favour of gradient-based methods when possible.
 
 %%% Local Variables:
 %%% mode: LaTeX
