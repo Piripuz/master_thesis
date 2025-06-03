@@ -132,6 +132,14 @@ purple,         fill=purple         \\%
 
 
 % Setup for diagrams and graphs (tikz pictures) 
+
+\usetikzlibrary{positioning,arrows.meta,quotes,external}
+\tikzexternalize[prefix=tikz_figures/]
+
+\makeatletter
+\renewcommand{\todo}[2][]{\tikzexternaldisable\@todo[#1]{#2}\tikzexternalenable}
+\makeatother
+
 % \usetikzlibrary{spy}    % For magnifying anything within a tikzpicture, see the line graph
 % \usepgfplotslibrary{statistics} % Package for the boxplot
 \pgfplotsset{ % Setup for diagrams
