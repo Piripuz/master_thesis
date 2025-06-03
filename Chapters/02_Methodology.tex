@@ -353,7 +353,7 @@ this solution has an undeniable drawback:
 the precision of the convergence is really low,
 and improving it requires an enormous computational effort.
 Some techniques have been proposed to overcome this limitation
-(as in \cite{pathak2024randomizedgridsearchhyperparametertuning,poštuvan2022adagridadaptivegridsearch}),
+(as in \cite{pathak2024randomizedgridsearchhyperparametertuning,poÅ¡tuvan2022adagridadaptivegridsearch}),
 but often combining it with an iterative maximization algorithm offers the best results.
 
 Iterative methods are thus examined in the next sections.
@@ -537,10 +537,102 @@ Concluding, evaluating the method on a synthetic dataset is far from the final g
 Anyway, it provides some important ways of evaluating the developed model,
 before dealing with more realistic but more difficultly interpretable scenarios.
 
-The next step is to evaluate the model on a scenario that is more realistic than a simple synthetic data,
+The next step is to evaluate the model on a scenario that is more realistic than a simple synthetic dataset,
 but for which the convergence can still be evaluated.
 Traffic simulators, and in particular METROPOLIS2 (in which the parameters \(\alpha, \beta, \gamma\) can be explicitly set for each agent)
 are extremely helpful in this stage.
+
+\section{Evaluation on Data from Traffic Simulator}
+\label{sec:eval_metr}
+
+A traffic simulator can provide precious insights on the value of the model:
+it indeed consists of a deeply customizable setting,
+suitable for providing data about the most simple scenarios (such as a single bottleneck)
+while converging to the reality as the scenario gets more and more complex.
+Moreover, as noted above,
+they can be used as a measure of the convergence without building real surveys on purpose,
+that can be very expensive and complex ways to test the convergence of a model.
+
+Many different traffic simulation programs have been written through the years
+(for a review of the existing ones, with their respective strengths and weaknesses, see \cite{NGUYEN2021100486}).
+To the best of my knowledge though,
+the one that the most respects the specifications of Vickrey's model \parencite{LI2020311} is METROPOLIS,
+a traffic simulator written by \textcite{de1997metropolis} and its succesor METROPOLIS2, by \textcite{RePEc:ema:worpap:2024-03}.
+I will mainly focus, in this thesis,
+on the faster and more recent METROPOLIS2,
+that provides a more precise convergence and more flexible simulation,
+at the cost of (currently) some of the ease of use.
+The next section will thus briefly cover the working principle of the simulator,
+to later delve into how it can be used for the thesis' purpose.
+
+\subsection{METROPOLIS2 Working Principle}
+\label{sec:metr}
+
+Traffic simulators can be usually distinguished into microscopic simulator,
+which model traffic at small scales such as the single neighbourhood \parencite{8569938},
+and macroscopic simulators, which model it to large scales,
+such as cities or whole countries \parencite{mcnally2007four}.
+
+METROPOLIS doesn't fit in any of these categories:
+it is indeed defined a \textit{mesoscopic} traffic simulator \parencite{RePEc:ema:worpap:2024-03},
+which adopts an intermediate approach between a micro- and macroscopic simulators.
+It is indeed built following an agent-based methodology,
+in which each user behaves independently,
+according to the travel time function defined by the collectivity.
+
+The simulator works in an iterative way,
+and at each iteration the agents improve their behaviour,
+based on last iteration's results.
+Once a number of iterations (or \textit{days}) has been decided,
+the simulation works by running three different models for each day, as shown in figure~\ref{fig:metr_func}:
+the \textit{demand} model, the \textit{supply} model and the \textit{learning} model.
+
+In the demand model, the agents decide,
+based on the last iteration's final network conditions,
+what decisions to make about their travel:
+when to leave, and what route to choose (or travel alternative, in case they can choose from more than one of these);
+in the supply model, the conditions of the network are computed:
+the decisions of all the users are taken into account, and the experienced travel time for that day
+(for each link in the network) is computed;
+finally, the learning model computes the \textit{expected} network conditions:
+according to a predefined learning function,
+the network conditions of all the previous days are averaged and what the users expect for the next day is decided.
+Equilibrium is reached when the decisions of the users don't relevantly change after each day,
+or equally when the expected network conditions reach a stationary situation.
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    [block/.style={draw,minimum width=#1,minimum height=2em},
+    block/.default=10em,high/.style={minimum height=3em},auto,
+    node distance=5mm, % initially 1cm
+    >=Stealth]
+    
+    \node (n0) {Input Parameters};
+    \node[block=3em,right=1cm of n0] (n1) {Demand Model};
+    \node[block=3em, right=2cm of n1] (n2) {Supply Model};
+    \node[block=3em, right=2cm of n2] (n3) {Learning Model};
+
+    \draw[->] (n0) -- (n1) coordinate[midway] (in);
+    \draw[->] (n1) edge node[midway,align=center] {Travel\\choices} (n2);
+    \draw[->] (n2) edge node[midway,align=center] {Actual\\Network\\Conditions} (n3);
+    
+    \coordinate (x) at ([yshift=-1cm]n3.south);
+    \coordinate (y) at (in |- x);
+    
+    \draw (n3.south) -- (x) edge node[midway,align=center] {Forecasted\\Network\\Conditions} (y) (y) edge[->] (in);
+  \end{tikzpicture}
+  \caption{Working principle of the traffic simulator METROPOLIS2:
+    for each day (or iteration), three different models are ran.
+    The demand model, given the forecasted network conditions, outputs the travel choices of the agents;
+    the supply model takes them in input and outputs the network conditions.
+    Finally, the Learning model combines the network condition with the historical observed network conditions (from past days) for outputting a forecast on next day's conditions.
+  The image was inspired by \textcite{RePEc:ema:worpap:2024-03}.}
+  \label{fig:metr_func}
+\end{figure}
+
+
+
+
 
 %%% Local Variables:
 %%% mode: LaTeX
