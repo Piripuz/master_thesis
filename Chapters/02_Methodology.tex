@@ -630,8 +630,84 @@ or equally when the expected network conditions reach a stationary situation.
   \label{fig:metr_func}
 \end{figure}
 
+When choosing the best departure time for each trip,
+the users decide accordingly to some probabilities, arising from a continuous logit model:
+if for a user departing at time \(t\) costs \(C_i(t)\),
+their time of departure will be modeled as a random variable whose Probability Density Function is
+\begin{equation}
+  \label{eq:cost_logit}
+  f_i(t) = \frac{e^{\frac{C_i(t)}{\mu}}}{\int_0^{24}e^{\frac{C_i(s)}{\mu}}ds}
+\end{equation}
+where the parameter \(\mu\) is a noise parameter:
+for \(\mu \rightarrow 0\), the random variable goes towards a dirac distributed one around the minimizer of the cost \(t^{opt}\),
+while for high values of \(\mu\) it tends towards an uniformly distributed random variable.
 
+For the convergence to equilibrium, the model relies heavily\footnote{As noted in private discussions with Lucas Javaudin and André de Palma} on the value of the noise parameter \(\mu\),
+and won't converge for low values of it.
+This will potentially create some problems when validating with it the model developed in the thesis:
+the heterogeneity in choices considered by the model will indeed be entirely explainable with differences across individuals,
+while in the simulated data there will be another source of randomness determined by the parameter \(\mu\).
 
+A theoretical analysis could be done to performed,
+to prove that a logit model would yield the same distribution of departure times as the deterministic case with some changes on the distributions of the parameters \(\alpha, \beta, \gamma, t^*\).
+This analysis is anyway considered out of the scope of this thesis and will not be performed:
+to achieve convergence,
+a value of \(\mu\) as low as possible will be chosen to keep the simulator converging,
+while having a dataset close enough to the deterministic case.
+
+On top of this problem, evaluating the model with simulated data present some technical challenges.
+the next section describe them, and the methods for addressing them.
+
+\subsection{Challenges in the Evaluation with Synthetic Data}
+\label{sec:sim_tech}
+
+Evaluating the model on simulated data is not straightforward,
+and for finalizing an evaluation several difficulties have to be overcame.
+In this section, all the necessary steps for performing a successful evaluation,
+and the corresponding difficulties, will be described.
+
+The first step needed for doing the model evaluation is retrieving the data.
+The first main challenge for this task regards running the simulator:
+METROPOLIS2 is indeed not a commercial software,
+its documentation is not complete and the user experience is not close to what a normal software offers.
+Thank to the kind support of Lucas Javaudin,
+the main author of the simulator, this difficulty was efficiently overcame.
+
+Once the software is ready to be used,
+the population on which the simulation is ran has to be determined.
+This is not a trivial task:
+equilibrium is indeed defined as the situation in which none of the agents have any interest in behaving differently from how they are doing;
+given the travel time function at equilibrium,
+agents will be (in average) indifferent on the choice of departure time they do,
+yielding a situation that is not interesting for the developed model,
+which is based on what the agents prefer to do.
+In other words, the model must be run out of equilibrium, that is when the travel time function is exogenous rather than endogenous.
+
+This could simply be achieved by only running the demand model on a given travel time function.
+This approach would anyway have two major drawbacks:
+on the one hand, it would require modifying the source code of the simulator,
+which is not open source;
+on the other hand, it would yield an evaluation procedure extremely similar to the one described in section \ref{sec:eval_synth}:
+each agent would indeed independently minimize a cost function
+(or a slightly modified version of it, if taking into account the logit model).
+This would make this method less powerful and generalizable,
+since it will constrain the evaluation to a purely theoretical setting.
+
+Instead of this another, more realistic approach will be taken:
+the studied commuters will be a minority of the totality,
+so that their choices will have a negligible effect on their experienced travel time
+(as happens in reality, where the decision of each commuter has a negligible effect on the travel time function).
+In the simplest case, the simulator will model the behaviour of two groups of users:
+the first one, representing the majority of the commuters,
+will have their parameters distributed according to some distribution,
+of interest only for the impact it has on the travel time function.
+The second group, representing a small minority of the commuters,
+will have the parameters distributed according to a distribution of the chosen form (as in section \ref{sec:run_synth_dataset}),
+parametrized by some parameter \(\theta\).
+The effective departure times of the users in the second group are used,
+and the maximum likelihood estimator will find the parameter \(\theta\) determining the distributions of the parameters of it.
+The travel time function, on the other hand,
+will mainly depend on the choices of the big group.
 
 
 %%% Local Variables:
