@@ -353,7 +353,7 @@ this solution has an undeniable drawback:
 the precision of the convergence is really low,
 and improving it requires an enormous computational effort.
 Some techniques have been proposed to overcome this limitation
-(as in \cite{pathak2024randomizedgridsearchhyperparametertuning,poÅ¡tuvan2022adagridadaptivegridsearch}),
+(as in \cite{pathak2024randomizedgridsearchhyperparametertuning,postuvan2022adagridadaptivegridsearch}),
 but often combining it with an iterative maximization algorithm offers the best results.
 
 Iterative methods are thus examined in the next sections.
@@ -463,7 +463,7 @@ on various scenarios of increasing complexity.
 \section{Evaluation on Synthetic Data}
 \label{sec:eval_synth}
 
-The first, simplest scenario for testing the method consists in building a dataset of artificial observations of arrival time,
+The first, simplest scenario for testing the method consists in building a dataset of artificial observations of departure times,
 from a purely theoretical (and well behaved) travel time function.
 Building the dataset without any connection with real scenarios won't yield important data regarding the usefulness of the method when real data will be used.
 It anyway provides a nice instrument for evaluating the convergence properties of the method.
@@ -602,12 +602,12 @@ or equally when the expected network conditions reach a stationary situation.
 \begin{figure}
   \centering
   \begin{tikzpicture}
-    [block/.style={draw,minimum width=#1,minimum height=2em},
+    [block/.style={draw,minimum width=#1,minimum height=3em},
     block/.default=10em,high/.style={minimum height=3em},auto,
     node distance=5mm, % initially 1cm
     >=Stealth]
     
-    \node (n0) {Input Parameters};
+    \node[align=center] (n0) {Input\\Parameters};
     \node[block=3em,right=1cm of n0] (n1) {Demand Model};
     \node[block=3em, right=2cm of n1] (n2) {Supply Model};
     \node[block=3em, right=2cm of n2] (n3) {Learning Model};
@@ -619,7 +619,7 @@ or equally when the expected network conditions reach a stationary situation.
     \coordinate (x) at ([yshift=-1cm]n3.south);
     \coordinate (y) at (in |- x);
     
-    \draw (n3.south) -- (x) edge node[midway,align=center] {Forecasted\\Network\\Conditions} (y) (y) edge[->] (in);
+    \draw (n3.south) -- (x) edge node[above,midway,align=center] {Forecasted Network Conditions} (y) (y) edge[->] (in);
   \end{tikzpicture}
   \caption{Working principle of the traffic simulator METROPOLIS2:
     for each day (or iteration), three different models are ran.
