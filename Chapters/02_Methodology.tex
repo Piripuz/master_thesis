@@ -762,6 +762,69 @@ By improving the simulation in these two ways,
 the simulated data can be made to progressively converge to real data,
 which is the final goal of the project.
 
+\section{Evaluation on Real Data}
+\label{sec:eval_real}
+
+Evaluating the model on real data poses several challenges,
+which cannot be easily overcame.
+In this section, the main ones are listed, and the problems in solving them are described.
+
+The first problem arises in retrieving the data:
+as briefly written in section~\ref{sec:data-about-travel},
+data about travel time are not difficult to retrieve.
+At the same time, data about experienced departure time of a population can be retrieved in different ways:
+surveys can be made (for instance, EPFL mobility survey is a nice data source, including what was the last departure time from home for each user),
+or some sensors can be used to retrieve Revealed Preferences, rather than Stated Preferences,
+for a population (e. g., by using a mobile phone application).
+Survey data have anyway the drawbacks that were explained in section~\ref{sec:estim-param-alpha},
+and other ways of finding these kind of data are out of the scope of this thesis
+(but may be the topic of future works).
+
+Data sets exclusively regarding travel times are anyway difficult to use for this use case:
+coherent data for departure times and travel times are indeed needed,
+to deploy the developed model.
+Using the data sources presented above,
+the only way to obtain these data is by using survey data for obtaining the departure times and using some private service,
+such as Google Maps API,
+for retrieving data about travel times for the exact routes drove by who answered the survey.
+This method has, as explained above, some drawbacks.
+It could be anyway used, as the data are sufficient to deploy the model.
+
+Apart from this, the evaluation on real data reveals another, deeper problem:
+as explained in chapter \ref{cha:introduction},
+studies involving Vickrey model and real data are extremely lacking.
+A recent paper \parencite{https://doi.org/10.1111/iere.12692} notes a deep problem in doing these kind of studies:
+slopes computed using real data are indeed way lower than what one would expect from theoretical studies on Vickrey's model at equilibrium\todo{As shown in figure...}.
+
+The model developed in this thesis is anyway not studying equilibrium dynamics,
+and is thus not directly affected by the highlighted problem.
+It is anyway affected by it in two different ways, in the theoretical and practical levels.
+On the theoretical level, the method could loose relevance:
+it is indeed based on a theory that is currently showing a relevant flaw,
+and the models developed by it could thus be flawed themselves in case the theory is shown not to work.
+On the practical level, on the other hand,
+having high slopes in the travel time function is essential for the model to work:
+with low enough slopes,
+the predicted values for the parameters of the studied population would be consistently different from the ones predicted by the theory, and shown in section \ref{sec:estim-param-alpha}.
+
+To solve this issue, different approaches are being developed:
+\textcite{https://doi.org/10.1111/iere.12692} suggests a particular distribution of the population,
+in which some travellers (which are called, in the paper, \textit{inframarginal}) have extremely high values of \(\beta/\alpha, \gamma/\alpha\).
+This solution is compatible with the model developed here:
+it indeed makes it possible to have a group of people with low values for the said parameters,
+and the existence of the group would be justified by the existence of the inframarginal travellers,
+who make the values reported in the existent theory possible.
+This solution is anyway not, as far as I'm concerned,
+a systematic solution to the weakness showed by the model.
+A group of researchers from EPFL and Cergy University (with which I am currently working) are currently working on an alternative solution of the problem,
+by taking into account the uncertainty on the travel time expected by the user.
+The model shows preliminary good results, and will be developed in the near future.
+It is anyway out of the scope of the thesis.
+
+These remarks on the difficulties of validating the model on real data close the chapter about methodology.
+The next chapter will describe the construction of the model,
+and show how the model performs on the evaluation frameworks,
+where the evaluation can be done.
 
 
 %%% Local Variables:
