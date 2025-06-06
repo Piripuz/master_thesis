@@ -41,9 +41,6 @@ where
 \item \([x]^+ = \max(0, x)\)
 \end{itemize}
 
-\subsubsection{Normalizing the paramter $\alpha$}
-\label{sec:norm_alpha}
-
 The first observation is that minimizing a function is equivalent to minimize a scaled version of it:
 instead of minimizing the function \(C(t_d)\),
 I will study the minimization problem on the function \(C(t_d)/\alpha\) or,
@@ -56,10 +53,7 @@ From now on a slightly different cost function will be considered:
 \end{equation}
 where the numerical values of the parameters \(\beta, \gamma\) are actually representing the values for \(\beta/\alpha, \gamma/\alpha\).
 
-\subsubsection{Expressing Travel Time in terms of Arrival Time}
-\label{sec:t_a_t_d}
-
-Note now that most of the cost function depend on when the user \textit{arrives} rather than when the user decides to leave.
+Note now that most of the cost function depend on when the user \textit{decides to arrive} rather than when the user decides to leave.
 Expressing it in terms of the arrival time may thus be more natural,
 and simplify the expression of the cost function.
 
@@ -103,7 +97,7 @@ we get a definition of the function \(tt_a\):
 The function is thus well defined as long as the function \(t_a(t_d)\) is invertible.
 But this is always true with some reasonable assumptions:
 if indeed the traffic is assumed to respect the \textit{First In First Out} principle
-(it is impossible that, by departing later, a commuter arrives earlier or at the same time),
+(according to which it is impossible that, by departing later, a commuter arrives earlier or at the same time),
 the function \(t_a(t_d)\) is strictly increasing, and thus invertible.
 
 More formally, we are assuming that, given \(t_1 > t_2\),
@@ -138,8 +132,30 @@ it will, in this case, yield the following bound for the derivative
   tt_a'(t) < 1
 \end{equation}
 
-These bounds will be always satisfied for real travel time functions,
+These bounds will always be satisfied for realistic travel time functions,
 and will have to be considered when defining theoretical travel time functions.
+
+Please note that, on top of being necessary (as long as the travel time function is differentiable, that is not a restrictive assumption),
+assumption \eqref{eq:bound_der_tt} is sufficient for defining the function \(tt_a\):
+Computing the derivative of the function \(t_a(t_d)\) yields indeed
+\begin{align*}
+  t_a'(t) & = \diff{}{t}(t + tt(t)) \\
+          & = 1 + tt'(t) \\
+          & > 1 - 1 = 0
+\end{align*}
+
+The function is thus strictly increasing, and so invertible.
+
+Under some weak assumptions, the function to be minimized is thus considerably simplified:
+as shown in~\eqref{eq:cost_simplified}, it is now enough to minimize the function
+
+\begin{equation}
+  \label{eq:cost_simplified_final}
+  C(t_a; \beta, \gamma, t^*) = tt_a(t_a) + \beta [t^* - t_a]^+ + \gamma [t_a - t^*]
+\end{equation}
+
+In the following pages,
+the points where the minima for this function occur will be studied.
 
 %%% Local Variables:
 %%% mode: LaTeX
