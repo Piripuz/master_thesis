@@ -1,0 +1,147 @@
+\chapter{Results}
+\label{chap:res}
+
+In this chapter, the results of the research will be presented.
+
+The first step for building the model is some analytical work:
+in section MINIMIZING where the cost function is minimized will be studied,
+and a characterization of the minima will be done.
+This characterization will then be used in section LIKELIHOOD,
+where the statistical framework will be developed and the likelihood function introduced.
+
+Once an expression for the likelihood function is found,
+it can be numerically implemented:
+details of the implementation, and its results on the various test types,
+are shown in the following sections.
+
+\section{Finding the Minimum of the Cost Function}
+\label{sec:minimum}
+
+For characterizing where the cost function is minimized,
+it is a good idea to simplify it as much as possible.
+Some theoretical preliminaries are hence necessary.
+
+\subsection{Theoretical Preliminaries}
+\label{sec:pre_minimizing}
+
+Recall, from equation \eqref{eq:cost_inf}, that we are assuming the cost to be
+
+\begin{equation*}
+  C(t; \alpha, \beta, \gamma, t^*) = \alpha tt(t) + \beta [t^* - tt(t) - t]^+ + \gamma[tt(t) + t - t^*]^+
+\end{equation*}
+
+where
+
+\begin{itemize}
+\item \(t^*\) is the desired arrival time
+\item \(\alpha\) is the value of time spent travelling
+\item \(\beta\) is the value of time spent waiting at the destination
+\item \(\gamma\) is the value of time arriving late at the destination
+\item \(tt(t_d)\) is the time spent travelling if departing at time \(t_d\)
+\item \([x]^+ = \max(0, x)\)
+\end{itemize}
+
+\subsubsection{Normalizing the paramter $\alpha$}
+\label{sec:norm_alpha}
+
+The first observation is that minimizing a function is equivalent to minimize a scaled version of it:
+instead of minimizing the function \(C(t_d)\),
+I will study the minimization problem on the function \(C(t_d)/\alpha\) or,
+equivalently, normalize the parameter \(\alpha\) to 1.
+
+From now on a slightly different cost function will be considered:
+\begin{equation}
+  \label{eq:cost_no_alpha}
+  C(t; \beta, \gamma, t^*) = tt(t) + \beta [t^* - tt(t) - t]^+ + \gamma[tt(t) + t - t^*]^+
+\end{equation}
+where the numerical values of the parameters \(\beta, \gamma\) are actually representing the values for \(\beta/\alpha, \gamma/\alpha\).
+
+\subsubsection{Expressing Travel Time in terms of Arrival Time}
+\label{sec:t_a_t_d}
+
+Note now that most of the cost function depend on when the user \textit{arrives} rather than when the user decides to leave.
+Expressing it in terms of the arrival time may thus be more natural,
+and simplify the expression of the cost function.
+
+For doing this, define the \textit{arrival time} \(t_a\), in function of the departure time \(t_d\):
+\[t_a(t_d) = t_d + tt(t_d)\]
+
+Suppose now that there exists a function \(tt_a(t)\) expressing the travel time in function of the arrival time:
+\begin{equation}
+  \label{eq:tt_a_def}
+  tt_a(t_a(t_d)) = tt(t_d)
+\end{equation}
+
+In this case, the expression \eqref{eq:cost_no_alpha} considerably simplifies:
+\begin{equation}
+  \label{eq:cost_t_d_t_a}
+  \begin{split}
+    C(t_d) & = tt(t_d) + \beta [t^* - tt(t_d) - t_d]^+ + \gamma[tt(t_d) + t_d - t^*]^+ \\
+           & = tt_a(t_a(t_d)) + \beta [t^* - t_a(t_d)]^+ + \gamma [t_a(t_d) - t^*]
+  \end{split}
+\end{equation}
+
+Note now that the arrival time can be directly observed:
+its dependency on the departure time \(t_d\) can thus be omitted,
+and the cost directly expressed in function of the arrival time \(t_a\).
+
+If~\eqref{eq:tt_a_def} is possible, \eqref{eq:cost_t_d_t_a} simply becomes
+\begin{equation}
+  \label{eq:cost_simplified}
+  C(t_a; \beta, \gamma, t^*) = tt_a(t_a) + \beta [t^* - t_a]^+ + \gamma [t_a - t^*]
+\end{equation}
+
+Being this a relevant simplification of the problem,
+it will be worth to study wether a function adhering to the specifications in \eqref{eq:tt_a_def} actually exists.
+
+By expressing \eqref{eq:tt_a_def} in terms of the arrival time \(t_a\),
+we get a definition of the function \(tt_a\):
+\begin{equation*}
+  tt_a(t_a) = tt(t_d(t_a))
+\end{equation*}
+
+The function is thus well defined as long as the function \(t_a(t_d)\) is invertible.
+But this is always true with some reasonable assumptions:
+if indeed the traffic is assumed to respect the \textit{First In First Out} principle
+(it is impossible that, by departing later, a commuter arrives earlier or at the same time),
+the function \(t_a(t_d)\) is strictly increasing, and thus invertible.
+
+More formally, we are assuming that, given \(t_1 > t_2\),
+\begin{equation*}
+  t_a(t_1) > t_a(t_2)
+\end{equation*}
+
+By applying the definition of the function \(t_a(t_d)\), we get
+\begin{align*}
+  t_1 + tt(t_1) & > t_2 + tt(t_2) \\
+  t_1 - t_2 & > - tt(t_1) - (-tt(t_2))
+\end{align*}
+for each choice of \(t_1 > t_2\).
+
+In particular, setting \(t_1 = t_2 + h\) yields
+\begin{align*}
+  - tt(t_2) - (- tt(t_2 + h)) & < h\\
+  \frac{tt(t_2) - tt(t_2 + h)}{h} & > -1
+\end{align*}
+Finally, computing the limit for \(h \rightarrow 0\) yields a bound for the derivative of the travel time function:
+\begin{equation}
+  \label{eq:bound_der_tt}
+  tt'(t) > -1
+\end{equation}
+that is, thus, a reasonable assumption.
+
+The same reasoning can be repeated for the function \(tt_a\),
+linking the arrival time to the travel time:
+it will, in this case, yield the following bound for the derivative
+\begin{equation}
+  \label{eq:bound_der_tt_a}
+  tt_a'(t) < 1
+\end{equation}
+
+These bounds will be always satisfied for real travel time functions,
+and will have to be considered when defining theoretical travel time functions.
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../main"
+%%% End:
