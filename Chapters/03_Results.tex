@@ -282,56 +282,212 @@ For simplicity, we moreover require the function to have at most a finite number
 Lastly, I recall (from \eqref{eq:bound_der_tt_a}) that the function has to have limited growth:
 \[tt_a'(t) < 1\]
 
-Where the global minimum of the cost function is realized can now be computed.
+It is thus now possible to define what will be, in the following pages,
+the most general type of function considered:
+
+\begin{definition}
+  \label{def:gen_tt}
+  Let \(f:\R \rightarrow \R\).
+
+  f is said a \textit{general travel time function} if it satisfies the following conditions:
+  \begin{enumerate}
+  \item \(f \in C^2(\R)\)
+  \item f is quasiconcave
+  \item \(\lim_{t \rightarrow \infty} f(t) = \lim_{t \rightarrow -\infty}f(t) = 0\)
+  \item \(f'(t) < 1\ \forall t\in \R\)
+  \item \(|f'^{-1}(\beta)|, |f'^{-1}(-\gamma)| < \infty\ \forall \beta, \gamma > 0\)
+  \end{enumerate}
+\end{definition}
+
+After this definition has been given, the point that realizes the global minimum of the cost function is realized can be characterized.
+Note that, first of all,
+the cost of an on-time arrival (namely, when \(t_a = t^*\)) is exactly the value of the travel time function at that time point:
+\begin{equation}
+  \label{eq:cost_ot}
+  C(t^*; \beta, \gamma, t^*) = tt_a(t^*)
+\end{equation}
+
+It is now important to identify when arriving early or late the cost can be less than the value of the travel time.
 
 Consider the sets of the local minima
-\begin{align*}
-  B & = \{t_a | tt_a'(t_a) = \beta, tt_a''(t_a) > 0\} \\
-  G & = \{t_a | tt_a'(t_a) = \gamma, tt_a''(t_a) > 0\}
-\end{align*}
+\begin{equation}
+  \label{eq:def_b_g}
+  \begin{split}
+    B & = \{t_a | tt_a'(t_a) = \beta, tt_a''(t_a) > 0\} \\
+    G & = \{t_a | tt_a'(t_a) = \gamma, tt_a''(t_a) > 0\}
+  \end{split}
+\end{equation}
 
 Given the assumptions, both sets will be finite.
-The members of them can thus be numbered:
 
+Note now that, given a value for the optimal arrival time \(t^*\),
+only some of these minima can be achieved.
+It is thus useful to define the following sets:
 \begin{align*}
-  B & = \{t^\beta_1, \dots, t^\beta_N\} \\
-  G & = \{t^\gamma_1, \dots, t^\gamma_M\}
+  B_{t^*} & = \{t_a \in B, t_a < t^*\} \\
+  G_{t^*} & = \{t_a \in G, t_a > t^*\}
 \end{align*}
 
-For each one of these points, a function will be defined:
 
+Consider now what happens when fixing the arrival time \(t_a\),
+and varying \(t^*\):
+as \(t^* = t_a\), equation \eqref{eq:cost_ot} holds:
 \begin{equation*}
-  f_i^\beta(t) =
-  \begin{cases}
-    tt_a(t) & \text{if } t < t_i^\beta \\
-    tt_a(t_i) + (t - t_i)\beta & \text{otherwise}
-  \end{cases}
+  C(t^*; \beta, \gamma, t^*) = tt(t^*)
 \end{equation*}
 
-and similarly,
+Consider now increasing \(t^*\):
+let
+\[t^* = t_a + \varepsilon,\ \varepsilon \geq 0\]
 
-\begin{equation*}
-  f_i^\gamma(t) =
-  \begin{cases}
-    tt_a(t_i) - (t - t_i)\gamma & \text{if } t < t_i^\gamma \\
-    tt_a(t) & \text{otherwise}
-  \end{cases}
-\end{equation*}
+The cost will become, from its definition in \eqref{eq:cost_simplified_final},
+\begin{align*}
+  C(t_a; \beta, \gamma, t_a+\varepsilon) & = tt(t_a) + \beta [t_a + \varepsilon - t_a]^+ + \gamma [t_a - t_a - \varepsilon]^+ \\
+  & = tt(t_a) + \beta\varepsilon \tag{\theequation}\label{eq:linear_increase_cost}
+\end{align*}
 
-Please note that all of the defined functions are \(C^1(\R)\):
-they are indeed composed by a linear part and the travel time function,
-split exactly in the point in which the linear part is tangent to the travel time function.
+When increasing \(t^*\), the cost of arriving at time \(t_a\) is thus linearly increasing on the distance between \(t^*\) and \(t_a\),
+with coefficient \(\beta\).
 
-The following claim completely characterizes the points that minimize the cost function:
+Similarly, consider decreasing \(t^*\):
+\[t^* = t_a - \varepsilon,\ \varepsilon \geq 0\]
 
+The cost will now be, analogously to \eqref{eq:linear_increase_cost},
+\begin{equation}
+  \label{eq:linear_increase_cost}
+  C(t_a; \beta, \gamma, t_a - \varepsilon) = tt(t_a) + \gamma\varepsilon
+\end{equation}
+
+Again, and similarly to \eqref{eq:linear_increase_cost},
+we see that when decreasing the optimal arrival time towards the actual arrival time \(t_a\),
+the cost of arriving at a fixed time increases linearly,
+with coefficient \(\gamma\).
+
+The following theorem shows that the minimum \(t^{opt}\) is realized by the point that,
+among the ones in \(B_{t^*}, G_{t^*}\),
+satisfy a simple condition:
 \begin{theorem}
-  Let \(t^{opt}(\beta, \gamma, t^*)\) be the value for the arrival time \(t_a\) that minimizes the cost function \(C(t_a)\), as defined in \eqref{eq:cost_simplified_final}.
-  Then the following equality holds:
+    Let \(tt_a(t_a)\) be a general travel time function, as in definition \ref{def:gen_tt},
+  and let (in increasing order) \(B = \{t^\beta_1, \dots, t^\beta_n\}\), \(G = \{t^\gamma_1, \dots, t^\gamma_m\}\).
+
+
+  Consider the collections of intervals \(B^* = \{(t^\beta_i, b_e(t^\beta_i))\}_i\) and \(G^* = \{(g_e(t^\gamma_i), t^\gamma_i)\}_i\), where
+
+  \begin{align*}
+    b_e(t_a) & = \min\{t | tt(t) = tt(t_a) + \beta(t - t_a), t > t_a\} \\
+    g_i(t_a) & = \max\{t | tt(t) = tt(t_a) - \gamma(t - t_a), t < t_a\} \\
+  \end{align*}
+  
+  if \(\exists i, j |b_e(t^\beta_i) < g_i(t^\gamma_j)\), then the function \(t^{opt}(t^*)\) will be as follows:
+
   \begin{equation}
-    \label{eq:eq_theo}
-    t^{opt}(\beta, \gamma, t^*) = \min\{\min_if_i^\gamma(t^*), \min_if_i^\beta(t^*), tt_a(t^*)\}
+    \label{char_opt}
+    t^{opt}(t^*) = 
+    \begin{cases}
+      \min \{t^\beta_i | t^* \in (t^\beta_i, b_e(t^\beta_i))\} & \text{if } \exists i |\ t^\beta_i < t^* < b_e(t^\beta_i) \\
+      \max \{t^\gamma_i | t^* \in (g_i(t^\gamma_i), t^\gamma_i)\} & \text{if } \exists i |\ g_i(t^\gamma_i) < t^* < t^\gamma_i \\
+      t^* & \text{otherwise}
+    \end{cases}
+  \end{equation}
+
+  Otherwise, let
+  \begin{align*}
+    t^\beta_{max} & = \argmax_{t \in B}b_e(t) \\
+    t^\gamma_{min} & = \argmin_{t \in G}g_i(t)
+  \end{align*}
+
+  For \(t^* \notin (t^\beta_{max}, t^\gamma_{min})\), the characterization \eqref{char_opt} holds.
+
+  For \(t^* \in (t^\beta_{max}, t^\gamma_{min})\), the function will be characterized by the following:
+  \begin{equation}
+    \label{eq:char_strange}
+    t^{opt}(t^*) =
+    \begin{cases}
+      t^\beta_{max} & \text{if } tt(t^\beta_{max}) + \beta(t^* - t^\beta_{max}) < tt(t^\gamma_{min}) - \gamma(t^* - t^\gamma_{min}) \\
+      t^\gamma_{min} & \text{otherwise}
+    \end{cases}
   \end{equation}
 \end{theorem}
+
+\begin{figure}
+  \centering
+  \includegraphics{comptt}
+  \caption{An arbitrary travel time function, with the possible minimizers for the cost.
+    All the red and green solid lines represent achievable costs,
+    by realizing an early or late arrival at the time highlighted by the dashed line.
+  Minimizing all the plotted functions yields a graphical representation of the cost as a function of the optimal arrival time \(t^*\).}
+  \label{fig:complex_tt}
+\end{figure}
+
+The proof of the theorem is omitted.
+The intuition around it can anyway be built by looking at figure~\ref{fig:complex_tt}:
+by arriving early or late, the user can achieve a linear growth of the cost.
+This makes these types of arrivals convenient as long as the travel time function grows superlinearly,
+that makes the cost of an on-time arrival growing accordingly.
+
+Once this general result is shown, for the rest of the thesis the analysis will be restricted to a more specific travel time function,
+which will be called \textit{proper travel time function}:
+\begin{definition}
+  \label{def:proper_tt}
+  Let \(f:\R\rightarrow\R\).
+
+  f is a \textit{proper travel time function} if \(f\) is a general travel time function and,
+  on top of this, 
+  two points \(k_1, k_2 \in \R\) can be found such that
+  \begin{itemize}
+  \item \(f|_{(k_1, k_2)}\) is concave
+  \item \(f|_{\R\setminus(k_1, k_2)}\) is convex
+  \end{itemize}
+\end{definition}
+
+Please note how this is not a highly restrictive requirement,
+when considering real-world scenarios:
+it is indeed exactly what one would expect from a travel time function,
+and the analytical solutions to Vickrey's model,
+including (especially) the ones with heterogeneous population \parencite{amirgholy2017analytical}.
+
+It is, anyway, a property that considerably simplifies the estimation work:
+by restricting the possible functions in this way,
+the derivative of it can only grow once, decrease and then stabilize to zero,
+as shown in figure~\ref{fig:prop_travel_time}.
+This property makes the definition particularly useful, as noted in the following observation
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{tt_proper}
+  \caption{Example of a well-behaved proper travel time function.
+    The behaviour of the derivative is the most complex one allowed:
+    it increases from zero, decreases and eventually again increases to reach zero.
+  This behaviour considerably simplifies the estimation, as noted in observation~\ref{obs:unique_min}}
+  \label{fig:prop_travel_time}
+\end{figure}
+
+\begin{obs}
+  \label{obs:unique_min}
+  Consider a proper travel time function \(tt_a(t_a)\).
+
+  Fixing values for \(\beta, \gamma \in \R^+\),
+  the sets \(B, G\) (as defined in \eqref{eq:def_b_g}) will consist of at most one element.
+\end{obs}
+
+This directly follows from definition~\ref{def:proper_tt}.
+
+Consider indeed where the function is convex
+(that is, out of the interval \((k_1, k_2)\), according to the notation in the definition).
+The derivative will be there injective.
+This can be easily seen by looking at it piecewise:
+in the interval \((-\infty, k_1)\), it is injective because monotonous,
+and its image is a subset of the positive numbers \(\R^+\) since it starts from zero and increases.
+In the interval \((k_2, \infty)\), a similar reasoning shows that the function has to be injective,
+and its image to be contained in the set of the negative numbers \(\R^-\).
+The derivative is thus injective where convex,
+and if considering only that part the sets indeed consist of at most one element.
+
+When the function is concave, on the other hand,
+the sets can't grow: in the definition of them it is indeed required,
+for each element to be part of them, the second derivative to be positive.
+
+
 
 %%% Local Variables:
 %%% mode: LaTeX
