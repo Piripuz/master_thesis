@@ -157,6 +157,182 @@ as shown in~\eqref{eq:cost_simplified}, it is now enough to minimize the functio
 In the following pages,
 the points where the minima for this function occur will be studied.
 
+\subsection{Description of the Local Minima}
+\label{sec:local_min}
+
+The cost function, in this new form, can now be studied.
+For finding the global minimum, the local minima will first of all be found.
+They will then be compared, and the global minimum will be found.
+
+Note now that, as long as the travel time function is differentiable,
+the cost is differentiable almost everywhere as well:
+the only non-differentiable operator used is indeed the operator \([\bullet ]^+\),
+and \([x]^+\) is not differentiable only for \(x = 0\).
+The cost function is thus differentiable in every point except for the two points
+\[ t^* - t_a = 0 \qquad t_a - t^* = 0 \]
+that turn out to be the same point:
+\begin{equation}
+  \label{eq:on_time}
+  t_a = t^*
+\end{equation}
+
+The point in \eqref{eq:on_time} can thus be a local minimum.
+
+Apart from this, the only other minima the cost function could have are the points in which its derivative is equal to zero (where the first order conditions are satisfied):
+the derivative of the cost function will be
+
+\begin{equation}
+  \label{eq:der_cost_1}
+  \begin{split}
+    C'(t_a) & = \diff{}{t_a}(tt_a(t_a) + \beta [t^* - t_a]^+ + \gamma [t_a - t^*]^+) \\
+            & = tt_a'(t_a) + \beta \diff{}{t}[t^* - t_a]^+ + \gamma \diff{}{t} [t_a - t^*]^+
+  \end{split}
+\end{equation}
+Note now that, clearly,
+\begin{equation*}
+  \diff{}{t}[f(t)]^+ =
+  \begin{cases}
+    0 & \text{if } f(t) < 0) \\
+    f'(t) & \text{otherwise}
+  \end{cases}
+\end{equation*}
+
+Inserting this in \eqref{eq:der_cost_1} yields
+\begin{equation}
+  \label{eq:der_cost_2}
+  C'(t_a) =
+  \begin{cases}
+    tt_a'(t_a) - \beta & \text{if } t_a < t^* \\
+    tt_a'(t_a) + \gamma & \text{if } t_a > t^*
+  \end{cases}
+\end{equation}
+
+By setting the derivative of the cost equal to zero,
+we thus have the first order conditions:
+a point \(t_a\) can be a local minimum only if it satisfies one of the following three conditions:
+
+\begin{equation}
+  \label{eq:three_minima}
+  \begin{split}
+    t_a & < t^*, tt_a'(t_a) = \beta \\
+    t_a & = t^* \\
+    t_a & > t^*, tt_a'(t_a) = -\gamma
+  \end{split}
+\end{equation}
+
+I name the three minima to, respectively,
+\textit{early minimum} (since the minimum is achieved before the desired arrival time),
+\textit{on-time minimum} (since it is achieved when arriving exactly at the desired arrival time)
+and \textit{late minimum} (since it is achieved when arriving late).
+
+Figure~\ref{fig:cost} displays the cost function, built by utilizing a dummy
+(but not too far from an analytical solution for a bottleneck model at equilibrium)
+travel time function.
+The function in the figure shows three local minima, each one of which is of a different kind.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{cost}
+  \caption{Cost function, for a travel time function defined by gluing two gaussians of different variance.
+    The various minima, and their occurrence where explained in \eqref{eq:three_minima},
+    are visible.
+  The parameter used for this particular cost function are \(\beta = 0.6, \gamma = 1.2, t^* = 9.4\)}
+  \label{fig:cost}
+\end{figure}
+
+After the local minima have been found,
+where the global minimum is realized has to be found.
+
+\subsection{Characterization of the Global Minimum}
+\label{sec:glob_min}
+
+For characterizing the point which realizes the global minimum,
+its dependency on the different parameters has to be explained.
+
+The approach will here be incremental:
+I will start by fixing the parameters \(\beta, \gamma\) and looking at how the minimum depends on the parameter \(t^*\).
+After the dependency on \(t^*\) is explained, the extension to the case in which \(\beta, \gamma\) vary will be pretty natural.
+
+It is now necessary to formalize some hypothesis on the travel time function.
+I will thus recall some definitions, that will be used for constraining the travel time function.
+
+the first definition regards a property which will be fundamental for the implementation of the model,
+and that is, indeed, respected by most travel time functions (when considering only one out of the morning and evening peaks)
+\begin{definition}
+  Let \(f:\R \rightarrow \R\).
+  
+  \(f\) is said to be \textit{quasiconcave} if the preimage of any set of the form \((a, \infty)\) is convex.
+\end{definition}
+
+Please note that quasiconcave functions are unimodal (meaning that they only have one local maximum).
+
+The next definition is a rather standard definition in mathematics:
+\begin{definition}
+  \(C^k(\R)\) is the space of all the functions whose domain is the set of real numbers \(\R\) that are continuous, differentiable and whose \(k\)-th derivative is continuous
+\end{definition}
+
+The travel time function will be required to be quasiconcave and \(C^2(\R)\).
+On top of this, it is reasonable to require it to go to zero as the time goes to infinite:
+\begin{equation*}
+  \lim_{t \rightarrow \infty} tt_a(t) = \lim_{t \rightarrow -\infty}tt_a(t) = 0
+\end{equation*}
+
+For simplicity, we moreover require the function to have at most a finite number of points whose derivative is equal to \(\beta\) or \(-\gamma\), for each possible value of \(\beta, \gamma\).
+
+Lastly, I recall (from \eqref{eq:bound_der_tt_a}) that the function has to have limited growth:
+\[tt_a'(t) < 1\]
+
+Where the global minimum of the cost function is realized can now be computed.
+
+Consider the sets of the local minima
+\begin{align*}
+  B & = \{t_a | tt_a'(t_a) = \beta, tt_a''(t_a) > 0\} \\
+  G & = \{t_a | tt_a'(t_a) = \gamma, tt_a''(t_a) > 0\}
+\end{align*}
+
+Given the assumptions, both sets will be finite.
+The members of them can thus be numbered:
+
+\begin{align*}
+  B & = \{t^\beta_1, \dots, t^\beta_N\} \\
+  G & = \{t^\gamma_1, \dots, t^\gamma_M\}
+\end{align*}
+
+For each one of these points, a function will be defined:
+
+\begin{equation*}
+  f_i^\beta(t) =
+  \begin{cases}
+    tt_a(t) & \text{if } t < t_i^\beta \\
+    tt_a(t_i) + (t - t_i)\beta & \text{otherwise}
+  \end{cases}
+\end{equation*}
+
+and similarly,
+
+\begin{equation*}
+  f_i^\gamma(t) =
+  \begin{cases}
+    tt_a(t_i) - (t - t_i)\gamma & \text{if } t < t_i^\gamma \\
+    tt_a(t) & \text{otherwise}
+  \end{cases}
+\end{equation*}
+
+Please note that all of the defined functions are \(C^1(\R)\):
+they are indeed composed by a linear part and the travel time function,
+split exactly in the point in which the linear part is tangent to the travel time function.
+
+The following claim completely characterizes the points that minimize the cost function:
+
+\begin{theorem}
+  Let \(t^{opt}(\beta, \gamma, t^*)\) be the value for the arrival time \(t_a\) that minimizes the cost function \(C(t_a)\), as defined in \eqref{eq:cost_simplified_final}.
+  Then the following equality holds:
+  \begin{equation}
+    \label{eq:eq_theo}
+    t^{opt}(\beta, \gamma, t^*) = \min\{\min_if_i^\gamma(t^*), \min_if_i^\beta(t^*), tt_a(t^*)\}
+  \end{equation}
+\end{theorem}
+
 %%% Local Variables:
 %%% mode: LaTeX
 %%% TeX-master: "../main"
