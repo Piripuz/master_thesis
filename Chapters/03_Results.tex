@@ -462,30 +462,57 @@ This property makes the definition particularly useful, since it makes the follo
   \label{fig:prop_travel_time}
 \end{figure}
 
-\begin{obs}
-  \label{obs:unique_min}
-  Consider a proper travel time function \(tt_a(t_a)\).
+\begin{prop}
+  \label{prop:unique_min}
+  Let \(tt_a:\R\rightarrow\R\) be a proper travel time function, \(\beta, \gamma \in \R^+\).
 
-  Fixing values for \(\beta, \gamma \in \R^+\),
-  the sets \(B, G\) (as defined in \eqref{eq:def_b_g}) will consist of at most one element.
-\end{obs}
+  The sets \(B, G\) (as defined in \eqref{eq:def_b_g}) will consist of at most one element.
+\end{prop}
 
-This directly follows from definition~\ref{def:proper_tt}.
+\begin{proof}
+  Let \(k_1, k_2\) be defined as in definition~\ref{def:proper_tt}.
 
-Consider indeed where the function is convex
-(that is, out of the interval \((k_1, k_2)\), according to the notation in the definition).
-The derivative will be there injective.
-This can be easily seen by looking at it piecewise:
-in the interval \((-\infty, k_1)\), it is injective because monotonous,
-and its image is a subset of the positive numbers \(\R^+\) since it starts from zero and increases.
-In the interval \((k_2, \infty)\), a similar reasoning shows that the function has to be injective,
-and its image to be contained in the set of the negative numbers \(\R^-\).
-The derivative is thus injective where convex,
-and if considering only that part the sets indeed consist of at most one element.
+  First of all, note that, for \(t\in[k_1, k_2]\), the function \(tt_a(t)\) is convex and satisfies thus
+  \[tt_a''(t) < 0\]
 
-When the function is concave, on the other hand,
-the sets can't grow: in the definition of them it is indeed required,
-for each element to be part of them, the second derivative to be positive.
+  Since in~\eqref{eq:def_b_g} the second derivative is required to be positive,
+  no points in the interval \([k_1, k_2]\) are in the sets \(B, G\):
+  \begin{equation*}
+    B\cap[k_1, k_2] = G\cap[k_1, k_2] = \emptyset
+  \end{equation*}
+
+  The sets \(B, G\) will thus be completely defined by the points in \(\R\setminus[k_1, k_2]\).
+
+  Consider now the points \(t\in(-\infty, k_1)\).
+  The function is here concave, and the derivative is thus monotonous.
+  Moreover, the hypotheses (namely, the unimodality) imply the function to be there increasing:
+  the derivative is thus positive.
+
+  The derivative is thus an injective function in the set \(\R^+ = (0, \infty)\):
+  \begin{equation*}
+    tt_a'|_{(-\infty, k_1)}:(-\infty, k_1) \xhookrightarrow{} \R^+
+  \end{equation*}
+
+  Being the function injective, the preimage of any value consists of at most one point.
+  By considering the function only on \((-\infty, k_1)\),
+  the set \(B\) is made of at most one point,
+  while the set \(G\) is empty (since \(-\gamma < 0\)).
+
+  A similar reasoning shows that, when restricting the function to the set \((k_2, \infty)\),
+  the result is injective on the set \(\R^- = (-\infty, 0)\):
+  \begin{equation*}
+    tt_a'|_{(k_2, \infty)}:(k_2, \infty) \hookrightarrow{} \R^-
+  \end{equation*}
+
+  Considering thus the restriction of \(tt_a\) to the interval \((k_2, \infty)\),
+  the set \(G\) is made of at most one point,
+  while \(B\) is empty (since \(\beta > 0\)).
+
+  Considering thus the function on all its domain (that is, \(\R\)),
+  the sets \(B, G\) will both be made of at most one point.
+
+\end{proof}
+
 
 
 
