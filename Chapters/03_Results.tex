@@ -663,12 +663,15 @@ The characterization follows by observations~\ref{obs:char_opt_time_simple} and~
 it can thus be computed as follows:
 \begin{enumerate}
 \item Given \(\beta, \gamma\), the four points \(b_i(\beta), b_e(\beta), g_i(\gamma), g_e(\gamma)\) are found, by using their definitions:
-  \begin{align*}
-    b_i(\beta) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(\beta) \\
-    b_e(\beta) & = t | tt_a(t) = \beta (t - b_i(\beta)) + tt_a(b_i(\beta)),\ t > b_i(\beta) \\
-    g_e(\gamma) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(-\gamma) \\
-    g_i(\gamma) & = t | tt_a(t) = \gamma (g_e(\gamma) - t) + tt_a(g_e(\gamma)),\ t < g_e(\gamma)
-  \end{align*}
+  \begin{equation}
+    \label{eq:def_b_ieg_ie}
+    \begin{split}
+      b_i(\beta) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(\beta) \\
+      b_e(\beta) & = t | tt_a(t) = \beta (t - b_i(\beta)) + tt_a(b_i(\beta)),\ t > b_i(\beta) \\
+      g_e(\gamma) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(-\gamma) \\
+      g_i(\gamma) & = t | tt_a(t) = \gamma (g_e(\gamma) - t) + tt_a(g_e(\gamma)),\ t < g_e(\gamma)
+    \end{split}
+  \end{equation}
 \item If \(b_e(\beta) < g_i(\gamma)\), observation~\ref{obs:char_opt_time_simple} can be used:
   given \(t^*\), the global minimum is realized by
     \begin{equation*}
@@ -695,8 +698,76 @@ it can thus be computed as follows:
   \end{equation*}
 \end{enumerate}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{monotone_t_a}
+  \caption{The dependency of the optimal arrival time \(t^{opt}\) on the desired arrival time \(t^*\).
+    As can be seen, on-time arrivals are realized everywhere but in the intervals described by the points defined below.
+    The shaded zones display where early, late and on-time arrivals occur.
+    Note that the time of early and late arrivals, while varying on the parameters \(\beta, \gamma\),
+  is constant on the desired arrival time.}
+  \label{fig:t_opt_on_star}
+\end{figure}
 
+The dependency on the solution on the parameter \(t^*\) is thus completely explained:
+when increasing \(t^*\), the departure time \(t^{opt}\) will be piecewise the identity,
+and constant when not.
+Figure~\ref{fig:t_opt_on_star} shows this dependency, in the case in which \(g_i(\gamma) < b_e(\beta)\):
+no on-time arrivals are indeed there realized, as can be seen by the absence of a growing part in the middle of the plot.
 
+On top of characterizing the dependency of \(t^{opt}\) on \(t^*\),
+the dependency on the parameters \(\beta, \gamma\) is characterized as well, through the functions defined in~\eqref{eq:def_b_ieg_ie}.
+
+Before concluding the section, the following proposition gives a deeper understanding of how this dependency is realized
+(on top of being useful in the next section)
+\begin{prop}
+  Let \(tt_a\) be a proper travel time function.
+
+  The interval \((b_i(\beta), b_e(\beta))\) is decreasing in \(\beta\) (with respect to the ordering given by being contained).
+
+  Similarly, the interval \((g_i(\gamma), g_e(\gamma))\) is decreasing in \(\gamma\).
+\end{prop}
+\begin{proof}
+  The proof is here given for the early case (with \(\beta\)).
+  To prove the late case, the reasoning is exactly symmetrical.
+
+  Consider thus \(\beta_1 > \beta_2\).
+  The claim of the proposition is that
+  \[(b_i(\beta_1), b_e(\beta_1)) \in (b_i(\beta_2), b_e(\beta_2))\]
+  that is equivalent to
+  \begin{equation*}
+    b_i(\beta_1) > b_i(\beta_2),\qquad b_e(\beta_1) < b_e(\beta_2)
+  \end{equation*}
+
+  Consider initially the claim \(b_i(\beta_1) > b_i(\beta_2)\).
+
+  Recall that,
+  in the points of the travel time function in which the image of the function \(b_i\) lies,
+  the travel time function is convex, and its derivative is thus increasing.
+  Since the derivative is increasing, inverting it (that is substantially what the function \(b_i\) does) yields another increasing function:
+  this means that, since \(\beta_1 > \beta_2\),
+  \begin{equation*}
+    b_i(\beta_1) > b_i(\beta_2)
+  \end{equation*}
+
+  Consider now the second claim, that \(b_e(\beta_1) < b_e(\beta_2)\).
+
+  This follows, as well, directly from the convexity of the function in the image of \(b_i\):
+  being the function convex,
+  the tangents to the function \(tt_a\) at the points \(b_i(\beta_1), b_i(\beta_2)\) will intersect in a point between them.
+  Having the tangent at point \(b_i(\beta_1)\) a higher slope,
+  it will be higher than the other line at any point after the intersection.
+
+  Observing that \(b_e(\beta_1) \geq b_i(\beta_1)\) concludes the proof.
+\end{proof}
+
+This proposition is interesting:
+it indeed shows that, as \(\beta\) is increased,
+the window of \(t^*\) for which an early arrival is realized shrinks (and, similarly, the same happens for \(\gamma\)).
+
+This concludes the section about the analytical minimization of the cost function.
+The next section will study how, given distributed parameters \(\beta, \gamma, t^*\),
+the likelihood of a data point can be analytically computed.
 
 
 %%% Local Variables:
