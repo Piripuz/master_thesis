@@ -6,7 +6,7 @@ In this chapter, the results of the research will be presented.
 The first step for building the model is some analytical work:
 in section~\ref{sec:minimum},the points in which the cost function is minimized are studied,
 and a characterization of the minima is done.
-This characterization is then be used in section LIKELIHOOD\todo{Section label},
+This characterization is then be used in section \ref{sec:lik},
 where the statistical framework is developed and the likelihood function introduced.
 
 Once an expression for the likelihood function is found,
@@ -721,6 +721,7 @@ the dependency on the parameters \(\beta, \gamma\) is characterized as well, thr
 Before concluding the section, the following proposition gives a deeper understanding of how this dependency is realized
 (on top of being useful in the next section)
 \begin{prop}
+  \label{prop:monotonous_interv}
   Let \(tt_a\) be a proper travel time function.
 
   The interval \((b_i(\beta), b_e(\beta))\) is decreasing in \(\beta\) (with respect to the ordering given by being contained).
@@ -768,6 +769,187 @@ the window of \(t^*\) for which an early arrival is realized shrinks (and, simil
 This concludes the section about the analytical minimization of the cost function.
 The next section will study how, given distributed parameters \(\beta, \gamma, t^*\),
 the likelihood of a data point can be analytically computed.
+
+\section{Computation of the Likelihood}
+\label{sec:lik}
+
+Once the theory has been developed,
+the likelihood can be analytically estimated.
+
+For introducing the statistical framework,
+it is important to understand what are the parameters that introduce stochasticity in the model.
+
+\subsection{Stocasticity in the Parameters}
+
+As introduced in section~\ref{sec:thesis_obj}, the parameters \(\beta, \gamma, t^*\) will be considered as random variables
+with probability density functions, respectively, \(f_\beta, f_\gamma, f_{T^*}\).
+
+The first important question to ask is wether the parameters can be considered as independent.
+
+Clearly, the parameters \(\beta, \gamma\) are not independent:
+rich people will, in general, have them higher while poorer people will have them lower.
+This suggests that the positive correlation between them is not negligible at all.
+
+Recall thus that, in the theory developed in this pages,
+the value of the parameter \(\alpha\) has been normalized to one:
+supposing \(\beta/\alpha, \gamma/\alpha\) to be independent is way more reasonable than supposing \(\beta, \gamma\) to be so.
+This assumption is thus made. For a discussion on wether groups of people have dependant \(\beta/\alpha, \gamma/\alpha\), see \cite{LindseyBook}.
+
+Moreover, the distribution of the parameter \(t^*\) is assumed to be independent from the schedule delay preferences.
+Again, some insights on the studied population could be used to confirm or deny this hypothesis.
+Being the method anyway embryonic and general, this hypothesis is made as well.
+
+Once the parameters are assumed to be distributed,
+the likelihood of an arrival time can be computed.
+The next section introduces the computations that will be made,
+and gives an high level description of the problem.
+
+\subsection{Description of the Likelihood}
+\label{sec:descr-likel}
+
+As explained in section~\ref{sec:lik_comp},
+the goal of this section is describing how the Probability Density Function for the random variable \(T^{opt}\), \(f_{T^{opt}}\), can be computed.
+
+In other words, given an arrival time \(t_a\),
+the likelihood function has to express how likely that time is to be an actual arrival,
+given that the parameters \(\beta, \gamma, t^*\) are distributed according to their density functions \(f_\beta, f_\gamma, f_{T^*}\).
+
+First of all, note that an arrival time can only be an early, late or on-time arrival.
+Define thus the random variable \(Q\),
+which can take values in \(\{-1, 0, 1\}\) and for which
+\(Q = 0\) if the time \(t_a\) is an on-time arrival,
+\(Q = -1\) if the arrival time \(t_a\) is a realization of an early arrival and, lastly,
+\(Q = 1\) if \(t_a\) is a late arrival.
+
+The probability of a realization \(T^{opt} = t_a\) will thus be
+\begin{multline}
+  \label{eq:decomposition_prob}
+  \prob(T^{opt} = t_a) = \prob(T^{opt} = t_a, Q = -1) + \\
+  + \prob(T^{opt} = t_a | Q = 0)\prob(Q = 0)
+  + \prob(T^{opt} = t_a, Q = 1)
+\end{multline}
+that induces, for the Probability Density Functions,
+
+\begin{equation}
+  \label{eq:decomposition_pdf}
+  f_{T^{opt}}(t_a) = f_{T^{opt}, Q}(t_a, -1)
+  + f_{T^{opt} | Q}(t_a | 0)\mathbb{P}(Q = 0) + f_{T^{opt}, Q}(t_a, 1)
+\end{equation}
+
+The members of equation~\eqref{eq:decomposition_pdf} can be studied separately:
+first of all,
+the likelihood of on-time arrivals \(f_{T^{opt} | Q}(t_a | 0)\mathbb{P}(Q = 0)\) will be studied.
+
+After that, an expression for the likelihood for early and late arrivals will be found.
+
+\subsection{Likelihood of On-Time Arrivals}
+\label{sec:lik_ot}
+
+As seen in section \ref{sec:glob_min},
+on-time arrivals occur when the parameter \(t^*\) is out of some intervals defined by the parameters \(\beta\), \(\gamma\).
+Given an arrival time \(t_a\),
+it is an on-time arrival if it is equal to \(t^*\) and, moreover, it is out of the said intervals.
+
+More formally, the event \textit{being an on-time arrival} can be decomposed in \textit{being a realization of the random variable \(T^*\)} and \textit{not being into an interval that would yield an internal minimum}.
+
+These events are independent, since \(T^*\) is assumed to be independent from the variables \(\gamma\) and \(\beta\) that decide the intervals.
+
+Since the events are independent, their probabilities can be multiplied.
+The Probability Density Function for the conditional random variable will thus be
+
+\begin{equation}
+  \label{eq:pdf_ot}
+    f_{T_a | Q}(t_a | 0) = \frac{f_{T^*}(t_a)\mathbb{P}( t_a \not\in (b_i(\beta), b_e(\beta)) \cup (g_i(\gamma), g_e(\gamma)))}{\int_{-\infty}^\infty f_{T^*}(t_a)\mathbb{P}( t_a \not\in (b_i(\beta), b_e(\beta)) \cup (g_i(\gamma), g_e(\gamma)))dt_a}
+\end{equation}
+where the denominator is nothing but a normalization constant, found by integrating the numerator over all the domain of \(t_a\).
+
+Clearly, \(f_{T^*}\) is known.
+
+For the probability of not being in the interval, on the other hand, we have 
+
+\begin{equation}
+  \label{eq:prob_not_interv}
+  \mathbb{P}( t_a \not\in (b_i(\beta), b_e(\beta)) \cup (g_i(\gamma), g_e(\gamma)))dt_a = \int_{b\in \mathbb{R} \vert t_a \not\in (b_i(b), b_e(b))}\int_{g \in \mathbb{R} \vert t_a \not\in (g_i(g), g_e(g))}f_\beta(b)f_\gamma(g)\, dg\, db
+\end{equation}
+
+It is now possible to take advantage of proposition~\ref{prop:monotonous_interv}:
+the monotonicity of the intervals imply that there exist two functions
+\begin{align*}
+  \beta_0:\R&\rightarrow(0, \beta_{max}) \\
+  t&\mapsto \max\{b | t \in (b_i(b), b_e(b))\} \\[1em]
+  \gamma_0:\R&\rightarrow(0, \gamma_{max}) \\
+  t&\mapsto \max\{g | t \in (g_i(g), g_e(g))\}
+\end{align*}
+where
+\begin{align*}
+  \beta_{max} = \max_t tt_a'(t) \\
+  \gamma_{max} = -\min_t tt_a'(t)
+\end{align*}
+
+The function defined in this way satisfy
+\begin{align}
+  \label{eq:threshold_def}
+  \begin{split}
+     t_a \not\in (b_i(\beta), b_e(\beta)) \iff \beta > \beta_0(t_a) \\
+    t_a \not\in (g_i(\gamma), g_e(\gamma)) \iff \gamma > \gamma_0(t_a)
+  \end{split}
+\end{align}
+
+Note that the codomain of the two functions is well defined:
+the values \(\beta_{max}, \gamma_{max}\) limit indeed the values that can be taken by the parameters \(\beta\), \(\gamma\) before a situation in which no early
+(or late, depending on the parameter)
+arrival is possible anymore.
+
+By using these functions, the expression in \eqref{eq:prob_not_interv} can be simplified, becoming
+\begin{equation}
+  \label{eq:prob_not_interv_simpl}
+  \mathbb{P}( t_a \not\in (b_i(\beta), b_e(\beta)) \cup (g_i(\gamma), g_e(\gamma)))dt_a = \int_{\beta_0(t_a)}^{\beta_{\text{max}}}\int_{\gamma_0(t_a)}^{\gamma_{\text{max}}}f_\beta(b)f_\gamma(g)\, dg\, db
+\end{equation}
+
+Plugging this into \eqref{eq:pdf_ot} yields
+\begin{equation}
+  \label{eq:pdf_ot_simpl}
+  f_{T_a | Q}(t_a | 0) = \frac{f_{T^*}(t_a)\int_{\beta_0(t_a)}^{\beta_\text{max}}f_\beta(b)\, db\int_{\gamma_0(t_a)}^{\gamma_\text{max}}f_\gamma(g)\, dg}{\int_{-\infty}^\infty f_{T^*}(t_a)\int_{\beta_0(t_a)}^{\beta_\text{max}}f_\beta(b)\, db\int_{\gamma_0(t_a)}^{\gamma_\text{max}}f_\gamma(g)\, dgdt_a}
+\end{equation}
+
+Note now that the denominator of equation~\eqref{eq:pdf_ot_simpl} is exactly equal to \(\prob(Q = 0)\).
+
+The final expression for the likelihood of a point being an on-time arrival is thus
+\begin{equation}
+  \label{eq:lik_ot}
+  f_{T^{opt} | Q}(t_a | 0)\mathbb{P}(Q = 0) = f_{T^*}(t_a)\int_{\beta_0(t_a)}^{\beta_\text{max}}f_\beta(b)\, db\int_{\gamma_0(t_a)}^{\gamma_\text{max}}f_\gamma(g)\, dg
+\end{equation}
+
+\subsection{Likelihood for Early and Late arrivals}
+\label{sec:lik_early_late}
+
+Consider now the probability \(f_{T^{opt}, Q}(t_a, -1)\) of a point being an arrival and being an early arrival.
+
+A reasoning analogous to what done in section~\ref{sec:lik_ot} shows that an early arrival is realized when,
+differently from an on-time arrival,
+the point \(t^*\) falls into the interval \((b_i(\beta), \min\{b_e(\beta), t_s(\beta, \gamma)\})\) and,
+on top of this, the point \(b_i(\beta)\) coincides with \(t_a\).
+
+These events are not anymore independent,
+and the conditional probabilities have to be computed.
+
+The member of the likelihood relative to the early arrival is thus
+\begin{align*}
+    f_{T_a, \hat{Q}}(t_a, -1) & = \mathbb{P}(t^* \in (b_i(\beta), \min(b_e(\beta), t_s(\beta, \gamma)))) | b_i(\beta) = t_a)f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+ \\
+  & = \mathbb{P}(t^* \in (t_a, \min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), \gamma))))f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+ \\
+  & = \int_1^\infty f_\gamma(x) (F_{T^*}(\min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), x))) - F_{T^*}(t_a)) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+\tag{theequation}\label{pdf_early}
+\end{align*}
+
+Similarly, if considering late arrivals,
+
+\begin{equation}
+  \label{pdf_late}
+  f_{T_a, \hat{Q}}(t_a, 1) = \int_0^1 f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+
+\end{equation}
+
+The various members of equation~\eqref{eq:decomposition_pdf} have thus been computed.
+Summing them together yields an expression for the total likelihood,
+as wanted at the beginning of the section.
 
 
 %%% Local Variables:
