@@ -367,6 +367,7 @@ The following theorem shows that the minimum \(t^{opt}\) is realized by the poin
 among the ones in \(B_{t^*}, G_{t^*}\),
 satisfy a simple condition:
 \begin{theorem}
+  \label{theo:characterization}
     Let \(tt_a(t_a)\) be a general travel time function, as in definition \ref{def:gen_tt},
   and let (in increasing order) \(B = \{t^\beta_1, \dots, t^\beta_n\}\), \(G = \{t^\gamma_1, \dots, t^\gamma_m\}\).
 
@@ -375,7 +376,7 @@ satisfy a simple condition:
 
   \begin{align*}
     b_e(t_a) & = \min\{t | tt(t) = tt(t_a) + \beta(t - t_a), t > t_a\} \\
-    g_i(t_a) & = \max\{t | tt(t) = tt(t_a) - \gamma(t - t_a), t < t_a\} \\
+    g_i(t_a) & = \max\{t | tt(t) = tt(t_a) - \gamma(t - t_a), t < t_a\}
   \end{align*}
   
   if \(\exists i, j |b_e(t^\beta_i) < g_i(t^\gamma_j)\), then the function \(t^{opt}(t^*)\) will be as follows:
@@ -512,6 +513,188 @@ This property makes the definition particularly useful, since it makes the follo
   the sets \(B, G\) will both be made of at most one point.
 
 \end{proof}
+
+From now on, these points will be denoted as
+
+\begin{equation}
+  \label{eq:t_beta_t_gamma}
+  B = \{t^\beta\}\qquad G = \{t^\gamma\}
+\end{equation}
+
+The cases in which at least one of the sets is empty will naturally follow from the one in which none of them is,
+since are only simpler.
+
+If the function is a proper travel time function, the following functions are thus well defined:
+
+\begin{equation}
+  \label{eq:def_b_i}
+  \begin{split}
+    b_i:(0, \max_t tt_a'(t)]&\rightarrow \R \\
+    \beta & \mapsto t^\beta
+  \end{split}
+\end{equation}
+and similarly, for \(\gamma\),
+
+\begin{equation}
+  \label{eq:def_g_e}
+  \begin{split}
+    g_e:(0, -\min_t tt_a'(t)]&\rightarrow \R \\
+    \gamma & \mapsto t^\gamma
+  \end{split}
+\end{equation}
+
+Define now, similarly to what done in theorem~\ref{theo:characterization}, the functions \(b_e, g_i\):
+\begin{equation}
+  \label{eq:def_b_e_g_i}
+  \begin{split}
+    b_e(\beta) & = t | tt_a(t) = \beta (t - b_i(\beta)) + tt_a(b_i(\beta)),\ t > b_i(\beta) \\
+    g_i(\gamma) & = t | tt_a(t) = \gamma (g_e(\gamma) - t) + tt_a(g_e(\gamma)),\ t < g_e(\gamma)
+  \end{split}
+\end{equation}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{tt_functions}
+  \caption{A theoretical proper travel time function,
+    drawn with the tangent lines corresponding to the optimal late and early arrival.
+    The four functions \(b_i, b_e, g_i\) and \(g_e\) are shown:
+  they locate the points in which an early (or late) arrival becomes (or ends to be) profitable.}
+  \label{fig:tt_functions}
+\end{figure}
+
+Note that \(b_e, g_i\) are well defined as long as \(tt_a\) is a proper travel time function.
+Figure~\ref{fig:tt_functions} shows the purpose of the defined functions:
+an early or late arrival is convenient (and will thus be realized) if and only if the desired arrival time \(t^*\) falls in the interval described by the functions:
+theorem~\ref{theo:characterization} reduces thus, in this case, to the following observation:
+\begin{obs}
+  \label{obs:char_opt_time_simple}
+  If \(tt_a\) is a proper travel time function, and \(\beta, \gamma\) are such that \(b_e(\beta) < g_i(\gamma)\), the optimal arrival time \(t^{opt}\) is characterized as follows:
+  \begin{equation}
+    \label{eq:char_opt_time_simple}
+    t^{opt} =
+    \begin{cases}
+      b_i(\beta) & \text{if } t^*\in(b_i(\beta), b_e(\beta)) \\
+      g_e(\gamma) & \text{if } t^*\in(g_i(\gamma), g_e(\gamma)) \\
+      t^* & \text{otherwise}
+    \end{cases}
+  \end{equation}
+\end{obs}
+
+This is a simple consequence of theorem~\ref{theo:characterization}.
+
+In the case in which the costs of arriving early and late intersect \textit{below} the travel time function
+(that is, when \(b_e(\beta) > g_i(\gamma)\)),
+the situation is slightly more complex:
+for tackling this case, it is necessary to determine the point in which they intersect.
+
+Let thus \(t_s(\beta, \gamma)\) be the point corresponding to a desired arrival time \(t^*\) for which arriving late or early makes no difference.
+This point will be interesting when its cost will be smaller than the cost of arriving on time (since, when the cost of arriving on time will be smaller,
+we can just forget the position of this point and yield an on-time arrival for every point in a \label{eq:char_opt_time_comp}
+neighbourhood of it).
+In this case, we have three points \(b_e(\beta), g_i(\gamma)\) and \(t_s(\beta, \gamma)\),
+and the only allowed orderings (in the case in which at least two of them are distinct) for them are two:
+either
+\begin{equation}\label{eq:simple_ordering}
+  b_e(\beta) < t_s(\beta, \gamma) < g_i(\gamma)
+\end{equation}
+or
+\begin{equation}\label{eq:complex_ordering}
+  b_e(\beta) > t_s(\beta, \gamma) > g_i(\gamma)
+\end{equation}
+
+The proof of this is trivial, and is thus omitted.
+
+In case \eqref{eq:simple_ordering}, the assumption \(b_e(\beta) < g_i(\gamma)\) clearly holds, and there's nothing more to discuss.
+
+Otherwise, minimizing the cost function will yield an early arrival until the point \(t_s(\beta, \gamma)\), and a late arrival after that point.
+The following observation would thus hold:
+\begin{obs}
+  \label{obs:char_opt_time_comp}
+  If \(tt_a\) is a proper travel time function, and \(\beta, \gamma\) are such that \(b_e(\beta) > g_i(\gamma)\), the optimal arrival time \(t^{opt}\) is characterized as follows:
+  \begin{equation}
+    t^{opt} =
+    \begin{cases}
+      b_i(\beta) & \text{if } t^*\in(b_i(\beta), t_s(\beta, \gamma)) \\
+      g_e(\gamma) & \text{if } t^*\in(t_s(\beta, \gamma), g_e(\gamma)) \\
+      t^* & \text{otherwise}
+    \end{cases}
+  \end{equation}
+\end{obs}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{tt_functions_int}
+  \caption{A theoretical proper travel time functions, with lines corresponding to optimal early and late arrivals.
+    Here, the hypothesis in observation~\ref{obs:char_opt_time_simple} are not satisfied:
+    the point \(t_s(\beta, \gamma)\) has thus to be studied,
+  and its position is depicted in the plot.}
+  \label{fig:tt_functions_int}
+\end{figure}
+
+In other words, no on-time arrival is realized during the traffic peak.
+Figure~\ref{fig:tt_functions_int} shows this case, in which the location of the point \(t_s(\beta, \gamma)\) has to be computed
+
+It is thus useful to, given \(\beta\), \(\gamma\), find an expression for the point \(t_s\).
+
+The line representing the cost of arriving early, in function of \(t^*\), is
+\begin{equation*}
+  C_b(t) = (t - b_i(\beta))\beta + tt_a(b_i(\beta))
+\end{equation*}
+similarly, arriving late costs
+\begin{equation*}
+  C_g(t) = -(t - g_e(\gamma))\gamma + tt_a(g_e(\gamma))
+\end{equation*}
+
+The point in which arriving late costs as much as arriving early is thus the one that realizes
+\begin{equation}
+  \label{eq:t_s_numbers}
+  \begin{split}
+    C_b(t_s) & = C_g(t_s) \\
+    (t_s - b_i(\beta))\beta + tt_a(b_i(\beta)) & = -(t_s - g_e(\gamma))\gamma + tt_a(g_e(\gamma)) \\
+    (\beta + \gamma)t_s & = \beta b_i(\beta) - tt_a(b_i(\beta)) + \gamma g_e(\gamma) + tt_a(g_e(\gamma)) \\
+    t_s(\beta, \gamma) & = \frac{\beta b_i(\beta) - tt_a(b_i(\beta)) + \gamma g_e(\gamma) + tt_a(g_e(\gamma))}{(\beta + \gamma)}
+  \end{split}
+\end{equation}
+
+Even being this expression convoluted, it is an analytical expression for the function \(t_s\).
+This conclude the section, by fully characterizing the function \(t^{opt}(t^*, \beta, \gamma)\).
+
+The characterization follows by observations~\ref{obs:char_opt_time_simple} and~\ref{obs:char_opt_time_comp}:
+it can thus be computed as follows:
+\begin{enumerate}
+\item Given \(\beta, \gamma\), the four points \(b_i(\beta), b_e(\beta), g_i(\gamma), g_e(\gamma)\) are found, by using their definitions:
+  \begin{align*}
+    b_i(\beta) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(\beta) \\
+    b_e(\beta) & = t | tt_a(t) = \beta (t - b_i(\beta)) + tt_a(b_i(\beta)),\ t > b_i(\beta) \\
+    g_e(\gamma) & = (tt_a'|_{\{t | tt_a''(t) > 0\}})^{-1}(-\gamma) \\
+    g_i(\gamma) & = t | tt_a(t) = \gamma (g_e(\gamma) - t) + tt_a(g_e(\gamma)),\ t < g_e(\gamma)
+  \end{align*}
+\item If \(b_e(\beta) < g_i(\gamma)\), observation~\ref{obs:char_opt_time_simple} can be used:
+  given \(t^*\), the global minimum is realized by
+    \begin{equation*}
+    t^{opt} =
+    \begin{cases}
+      b_i(\beta) & \text{if } t^*\in(b_i(\beta), b_e(\beta)) \\
+      g_e(\gamma) & \text{if } t^*\in(g_i(\gamma), g_e(\gamma)) \\
+      t^* & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+\item Otherwise, the point \(t_s\) is computed as of~\eqref{eq:t_s_numbers}:
+  \begin{equation*}
+    t_s(\beta, \gamma) = \frac{\beta b_i(\beta) - tt_a(b_i(\beta)) + \gamma g_e(\gamma) + tt_a(g_e(\gamma))}{(\beta + \gamma)}
+  \end{equation*}
+\item Observation~\ref{obs:char_opt_time_comp} can finally be used:
+  the global minimum will be realized by
+  \begin{equation*}
+    t^{opt} =
+    \begin{cases}
+      b_i(\beta) & \text{if } t^*\in(b_i(\beta), t_s(\beta, \gamma)) \\
+      g_e(\gamma) & \text{if } t^*\in(t_s(\beta, \gamma), g_e(\gamma)) \\
+      t^* & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+\end{enumerate}
+
 
 
 
