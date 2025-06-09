@@ -958,7 +958,7 @@ as wanted at the beginning of the section.
 \label{sec:final_lik}
 
 By plugging \eqref{eq:lik_ot}, \eqref{eq:lik_late} and \eqref{eq:lik_early} into \eqref{eq:decomposition_pdf},
-I get a final expression for the likelihood function:
+I get a final expression for the probability density function:
 \begin{multline}
   \label{eq:lik_final}
   f_{T_a}(t_a) = f_{T^*}(t_a)\int_{\beta_0(t_a)}^{\beta_\text{max}}f_\beta(b)\, db\int_{\gamma_0(t_a)}^{\gamma_\text{max}}f_\gamma(g)\, dg \\
@@ -966,7 +966,29 @@ I get a final expression for the likelihood function:
   + f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+  \int_0^\infty f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ 
 \end{multline}
 
-The expression is quite convoluted, but is a close form analytical expression
+Given one data point \(t_a\), the travel time function \(tt_a\) and probability density functions for the parameters \(\beta, \gamma, t^*\),
+the likelihood of the data point can now be computed.
+
+Suppose now the probability density functions to be parametrized by a parameter \(\theta\in\R^d\).
+
+Given the travel time function and a data point \(t_a\),
+the function \(f_{T_a}\) defined above can be regarded as a likelihood function:
+\begin{equation*}
+  \mathcal{L}(\theta) = f_{T_a}(t_a | \theta)
+\end{equation*}
+
+If now, instead of a single observation, a dataset of observations \(S = \{t_i\}_i\) is given,
+the likelihood function can be generalized to evaluate the likelihood of the whole dataset:
+\begin{equation*}
+  \mathcal{L}(\theta) = \prod_i f_{T_a}(t_i | \theta)
+\end{equation*}
+
+Finally, reasons of numerical stability convince us to evaluate the natural logarithm of the likelihood,
+and to work with it instead of directly with the result of the likelihood.
+
+The likelihood function has thus been developed, and can be computed and minimized.
+
+The expression of it can be quite convoluted, but is a close form analytical expression
 (given the definitions of the auxiliary functions given in the previous sections),
 and can be numerically approximated.
 The next section shows how the approximation can be made.
@@ -1118,15 +1140,143 @@ As expected, higher density zones are observed where early and late arrivals are
 \end{figure}
 
 To show whether this characteristic is properly described by the theoretical likelihood developed in section~\ref{sec:lik},
-note that the histogram of the empirical distribution should converge,
-as the sample size increases, to the shape of the probability density function.
-The probability density function \eqref{eq:lik_final} is thus plotted,
+the probability density function \eqref{eq:lik_final} is thus plotted,
 alongside an histogram made by sampling a big number of arrival times,
 in figure~\ref{fig:hist_pdf}.
+Note that the histogram of the empirical distribution should converge,
+as the sample size increases, to the shape of the probability density function.
 
 
+As you can see, the theoretical and empirical likelihood are extremely close:
+not only the theoretical expression for the likelihood matches the empirical distribution for one of the three peaks representing early, late and on-time arrivals,
+but even the proportions between them are respected.
 
+This confirms that, given the correct parameter \(\theta\),
+the likelihood correctly captures how the resulting arrival times are distributed.
+To be able to perform the optimization though,
+the likelihood has to be well behaved as the parameter \(\theta\) changes.
+This is looked at in the next section
 
+\subsection{Optimizing the Likelihood on a Synthetic Dataset}
+
+The final goal of modelling the likelihood is, as said above,
+running an optimizer over the result of it.
+
+To be sure to have a meaningful and consistent convergence,
+it is important to have a well-behaved function that,
+even if not convex, shows the least number of local minima possible.
+
+Sadly, plotting a function that acts on a 5-dimensional space is impossible.
+It is anyway possible to freeze some of the parameters to some value and,
+given the generated dataset, plot a slice of the function on some of its parameters.
+If the frozen parameters are frozen to their original value,
+the minimum of the plotted function has to converge (as the number of samples increases)
+to the global minimum of the function (that is, the parameter used to generate the dataset).
+
+The parameter used to generate the dataset over which the likelihood is evaluated can then be changed,
+to evaluate how well-behaved the likelihood is for different types of parameters.
+
+The most meaningful insights come, in this case, by plotting the values for the parameters \(\mu_\beta, \mu_\gamma\) while leaving the others unchanged.
+
+The first insight from doing this procedure regards the parameter \(\sigma\):
+it is indeed the one that the most changes the panorama of the likelihood,
+and how it does so is particularly interpretable.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{contour_beautiful}
+  \caption{Contour plot for a slice of the likelihood function,
+    obtained by evaluating the likelihood of the dataset given the value of the parameter \(\theta\) from which the dataset was generated,
+    changing the first two components of it \((\mu_\beta, \mu_\gamma)\).
+    The red dot shows the location of the original parameters, used to generate the dataset.
+    The value of the variance is here \(\sigma = 0.3\),
+  and the sample size is \(n = 1000\)}
+  \label{fig:contour_mid_var}
+\end{figure}
+
+Figure~\ref{fig:contour_mid_var} shows the said plot,
+when the parameter \(\sigma\), regarding the variance of the scheduling preferences \(\beta, \gamma\),
+has a value that is not too big neither too low (namely, \(\sigma = 0.3\) for that plot).
+The likelihood is here well behaved,
+even if not convex, and clearly shows a big minimum:
+convergency should not here yield any problem.
+Moreover, the minimum is realized (in this case) exactly in the point where the parameter that generated the dataset lies.
+This depends, in general, on the size of the dataset.
+It being true for a small dataset is anyway another sign of the likelihood being well behaved.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{contour_ugly}
+  \caption{Same plot done in figure~\ref{fig:contour_mid_var}, but for another value of the variance \(\sigma\).
+    Here, indeed the variance is \(\sigma = 0.03\).
+    This, while being an unrealistically low value for it, shows how the likelihood is behaved for low values of the variance:
+    a big part of the plot,
+  for high values of the parameters \(\mu_\beta, \mu_\gamma\) shows that the likelihood is extremely close to a constant function.}
+  \label{fig:contour_low_var}
+\end{figure}
+
+When the variance is too low, on the other hand,
+the situation is not as simple.
+Figure~\ref{fig:contour_low_var} show this case:
+the function is close to constant when changing the parameters that decide the mean of the schedule delay preferences,
+and an iterative optimizer could easily get stuck in these zones.
+Close to the global minimum we can anyway observe a steep decrease of the value of the function.
+
+The reason behind this phenomenon is quite intuitive:
+with a small variance, both the data and the likelihood function will show a sharp peak for the early and late arrivals.
+Changing the parameters \(\mu_\beta, \mu_\gamma\) moves the peak in time,
+and the peaks of the likelihood function will be moved to zones in which the density of the observed data is constant.
+The likelihood will thus there be constant.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{contour_flat}
+  \caption{Same plot as in figure~\ref{fig:contour_mid_var},
+    with an high value of the variance \(\sigma = 1.3\).
+  A flat minima can be seen, and the sample size of \(n = 1000\) arrival times is here not big enough to perfectly capture the location of the minimum.}
+  \label{fig:contour_high_var}
+\end{figure}
+
+Finally, when the parameter \(\sigma\) is large,
+figure \ref{fig:contour_high_var} shows that the minimum becomes flat,
+and may not perfectly coincide with the parameter value.
+
+This is, again, easy to understand:
+as the parameters have a higher variance,
+the variance of the observed arrival times will increase as well
+(as long as the travel time function doesn't have points in which its second derivative assumes really high values, that is not the case here).
+Its minima will thus be flatter,
+and in order to estimate the original parameter with the same precision,
+a greater number of samples will be needed.
+
+To tackle all this problems, a smart choice of the initial condition for the optimizer is enough:
+a rough grid search will thus find the best initial condition for the iterative optimizer that will subsequently run.
+
+Carefully choosing the right initial condition can relevantly improve the convergence:
+in the case of low variance,
+the optimizer will indeed avoid getting stuck in a zone where the slope is not high enough.
+Moreover, in case of really flat minima,
+starting with a grid search can ensure that the minimum is not completely missed.
+Lastly, figure~\ref{fig:contour_mid_var} shows, near to \(\mu_\beta = 4\),
+a small local minimum.
+The good initial condition will, even in this case, avoid convergence to this local minimum.
+
+Once the grid search is done,
+an iterative optimizer is used to find the minimum.
+We currently run a Nelder-Mead optimizer,
+achieving relative errors (with respect to the initial parameter value)
+of less than \(10\%\) for values of the variance small enough,
+and up to \(15\%\) when increasing the variance,
+consistently when changing the values of the other parameters on a dataset composed of 1000 samples.
+
+While these values could appear not extremely encouraging,
+the precision of the convergence is actually satisfying:
+the optimizer has indeed to converge in a 5-dimensional space,
+and two of these dimensions are variances.
+For variances, in particular, errors could be better tolerated than how much they can be tolerated for the means.
+
+Once good results have been achieved on synthetic data,
+the nest step is validating the model on data from simulation.
 
 
 
