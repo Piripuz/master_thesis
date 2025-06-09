@@ -3,248 +3,78 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-Studying how people move has always been an important issue in the fields of both economics \todo{cite something} and \todo{cite something else} engineering.
+\section{Background}
+Urban mobility poses growing challenges for large cities, where rising travel demand interacts with limited infrastructure. Among the most pressing issues is congestion, which imposes significant delay costs on both individuals and the system as a whole. A recent empirical study in California shows that congestion leads to an average delay of four to five minutes per morning commuter per day, amounting to an annual economic loss of approximately six billion USD, equivalent to 1.67\% of the state's GDP \parencite{kim2022congestion}. These delays reflect not just inefficiencies in traffic flow but deeper structural issues in how urban mobility is managed. To address these challenges, travel demand management (TDM) has emerged as a key strategy aimed at influencing when, where, and how people travel,
+rather than simply expanding infrastructure. TDM policies try to reduce peak demand, encourage shifts to more efficient modes, and make better use of existing capacity. Examples include congestion pricing, parking restrictions, high-occupancy vehicle (HOV) lanes, and incentives for carpooling or public transit use.  
 
-From the earliest works, the field has evolved by taking into account increasingly more factors that have an impact on how and when people decide to move.
-This chapter will be devoted to briefly explaining how the field grew in the past years and,
-finally, what are the problem this work addresses and how it inserts in the rich existing literature regarding traffic modelling.
+TDM schemes play a critical role in addressing urban congestion by influencing when, how, and by which mode people travel.  Human mobility in cities is a complex system shaped by the interactions of three main entities: travelers, who make individualized decisions about departure time, route, and mode; governments, which regulate infrastructure through pricing, emissions rules, and access restrictions; and service providers, who manage and adapt transportation services based on demand. The objectives of these actors often conflict, and the lack of coordination among them leads to systemic inefficiencies such as congestion, underutilized capacity, and inequitable access. 
 
-\section{Evolution of Traffic Modelling}
-\label{sec:hist}
+Generally, implementing effective TDM strategies requires a deep understanding of travelers' scheduling preferences and responsiveness to policy interventions. TDM effectiveness depends on accurate information about travelers' scheduling preferences-how they trade off travel time, cost, and departure flexibility. Traditionally, this information has been gathered through stated-preference (SP) surveys, which are costly, time-consuming, and often limited in scale. In contrast, revealed-preference (RP) data (such as historical traffic counts, travel times, and mode shares) are readily available and increasingly rich due to advancements in sensing and data collection technologies. This raises a key research question: Can commuters' scheduling preferences be reliably inferred from large-scale RP data without relying on direct surveys? Addressing this question is crucial for designing data-driven, adaptive TDM strategies in complex urban environments.
 
-Historically, traffic modelling was initially done via static models,
-which neglect how the road conditions vary through time:
-initial works,\todo{describe some initial work, with citation} for.
+Transport modeling initially relied on static models, which assume that congestion levels remain constant across time. Despite this strong assumption, static models are still widely used in practice (see also \textcite{duranton2011fundamental}). This assumption was first challenged by \textcite{Vickrey1963, Vickrey1969}, who introduced the \textit{bottleneck model}, in which users trade off congestion costs against early or late arrivals relative to a preferred arrival time \( t^* \). Building on this, \textcite{arnott1993structural} extended the framework to incorporate elastic demand, simple networks, and user heterogeneity (see \textcite{Li2020} for a comprehensive synthesis).
 
-\subsection{Creation of bottleneck modelling}
+To reflect observed variations in departure times, \textcite{de1983stochastic} introduced a \textit{stochastic departure time model}, known as the \(\alpha\)–\(\beta\)–\(\gamma\) model. In this model, \(\alpha\) denotes the value of time, while \(\beta\) and \(\gamma\) represent the penalties for early and late arrivals, respectively. The idea is simple: travelers face three types of costs. First, travel time, which we weigh using a value of time parameter,  \(\alpha\);
+second, a penalty for arriving early, determined by the weight \(\beta\);
+third, a penalty for arriving late, proportional to \(\gamma\).
+People are assumed to choose their arrival time to minimize this total cost.
+Their ideal arrival time (i. e., the start of a work shift) is denoted as $t^*$, and can vary across individuals. 
 
-This approach was challenged by two seminal papers by William Vickrey (\cite{f32d6720-dd02-34b7-a4ba-c4c21193efe7, 4ffb5da1-1f49-3898-98a7-209781744dc0}),
-which gave the first example of what are now known as \textit{dynamic} traffic models,
-laying the foundation of bottleneck modelling.
-According to this theory, the road network has some junctions whose capacity is limited,
-that means that there is a maximal flow of vehicles that can pass through them at any time.
-These junctions are called \textit{bottleneck}, since they restrict the traffic flow as a bottleneck does with a flowing liquid.
-Identifying the location and capacity of bottlenecks allows thus the forecasting of how traffic changes in the day,
-depending on how people will choose to move.
+More recently, large-scale simulation tools such as METROPOLIS 1 \& 2 have incorporated departure time choice into integrated travel behavior modeling. These tools simulate users' learning processes and day-to-day adaptations until a stationary state is reached-i.e., where anticipated and experienced travel times converge throughout the day (see \textcite{javaudin2024metropolis2}).
 
-Vickrey's work was later extended by \textcite{de1983stochastic}, which look for a stochastic equilibrium solution, and \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}, which took into account elastic demand and better formalize the initial model.
-
-According to this models, the users faces a cost for each choice of departure time,
-and this cost is parametric on some characteristic of the users,
-and depends on the time the user desires to arrive at its destination.
-By minimizing the cost, each user chooses thus an optimal departure time:
-the system is then studied at equilibrium, when none of the users can act better than how they are currently doing.
-
-This behaviour will yield, depending on the users' preferences,
-a different travel time pattern (that is, the way the travel time from origin to destination varies through time),
-that will be more or less complex depending on the studied network and the used cost function.
-
-\subsection{Changing the Cost Function}
-
-In the original work, the function expressing the cost given the departure time has (in the simplest case) the following form:
-
-\todo{Is this too much?}\begin{equation}
-  \label{eq:cost_intro}
-  C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
-\end{equation}
-where \(\alpha, \beta\) and \(\gamma\) are user-dependant parameters, and \textit{time early}, \textit{time late} are, respectively, how much time a user arrives before the desired arrival time and how much time they arrive after it.
-
-The cost increases here linearly in the schedule delay (but differently, depending on wether it is negative or positive) and on the time spent travelling and is, a priori, not differentiable where the departure time yields a perfectly on-time arrival
-(that is, when the arrival time is equal to the desired arrival time),
-since an earlier departure would increase the cost by a quantity proportional to \(\beta\),
-while a later one would increase the cost by a quantity proportional to \(\gamma\).
-
-More recent works try make the cost function more flexible,
-by making a tradeoff with its simplicity:
-\todo{Find a paper with quadratic cost}, for instance,
-use a smoother cost function, made by considering the cost to be quadratic on schedule delay. \todo{Find possibly more papers that use different travel time functions}
-
-\subsection{Finding the Equilibrium Solution}
-
-
-Once a cost function has been chosen, a wide variety of works find the equilibrium for a given network and a given population,
-with both an analytical and numerical approach.
-
-Among the work that find the analytical equilibrium, initial works such as \textcite{de1983stochastic} were dealing with a single bottleneck.
-They were later extended, taking into account more complex network: initially, \textcite{doi:10.1287/trsc.24.3.217} considers a Y-shaped network,
-in which some of the users go trough two different bottlenecks and some others only trough one.
-This model was extended by \textcite{doi:10.1287/trsc.27.2.148},
-who studied a Y-shaped network with three different bottlenecks.
-More recently, \textcite{AKAMATSU2015808} analytically studied a network with several bottlenecks.
-
-Similarly, initial works considered the users to be homogeneous.
-Later works relaxed this hypothesis, taking into account users with heterogeneous preferences or different desired arrival times.
-Notably, \textcite{arnott1988schedule} analytically solves the problem to equilibrium when the users are divided in a finite number of groups,
-each one of whose has different values of \(\alpha\) and \(\beta\),
-but constant ratio \(\gamma/\beta\).
-Furthermore, \textcite{amirgholy2017analytical} compute an analytical solution in the case of uniformly distributed preferences,
-and numerically approximate it in case of other distributions.
-
-Numerically, the implementation of Vickrey's model in simulators allows to find a solution for more complex situation and large scale networks,
-and to perform simulations on digital twins of real models.
-\textcite{de1997metropolis} developed a dynamic simulator, that iteratively finds an equilibrium solution for an arbitrarily complex network and user base.
-This simulator, and its second version \parencite{RePEc:ema:worpap:2024-03},
-were extensively used to simulate real networks and to evaluate effect of policies (see \cite{de2002real,de2005congestion,de2006modelling})
-
-For the development of this thesis,
-the next section will be devoted to a deeper study of equation \eqref{eq:cost_intro}.
-For a deeper review of the development of bottleneck modelling, please refer to \cite{LI2020311}.
-
-\section{Scheduling Delay Preferences}
-
-As seen in the previous section, every user will make a decision regarding when to depart from their origin and,
-in the simplest case, acts minimizing the cost function \eqref{eq:cost_intro}:
-\begin{equation*}
-  C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
-\end{equation*}
-Given the travel time pattern, this decision will be made depending on some parameters, namely:
-the desired arrival time at destination, that will be denoted as \(t^*\) throughout the thesis;
-the parameter \(\alpha\), which determines the cost of each unit of time spent travelling;
-the parameters \(\beta, \gamma\), which are, respectively,
-the cost of arriving early and late to destination by one unit of time.
-For working with these parameters, an intuitive understanding of their meaning and how can they vary is fundamental.
-% Note that, for each user, minimizing the cost function is the same as minimizing a rescaled version of it:
-
-\subsection{Meaning of the Cost Function Parameters}
-
-For the morning peak, the desired arrival time \(t^*\) will usually be the starting time at work:
-note indeed that the usual behaviour of planning to arrive some time earlier to work is likely caused by risk aversion, which will not be taken in account in this thesis (for further discussion on this, see \cite{doi:10.1177/0361198118792336}).
-
-Values for \(\alpha, \beta\) and \(\gamma\) depend, on the other hand, on the user.
-While \(\alpha\) can be assumed to depend on the whole set of the social-economics characteristic of the user,
-the parameters \(\beta, \gamma\) can have a more intuitive meaning:
-for instance, experience may suggest me that a Master student will have very low value for both of them when writing their thesis, since the work can be carried out at whatever time, without any constraint on when to arrive to the office.
-The same Master student will on the other hand have a really high value of \(\gamma\) when following classes:
-it may indeed be that the professor closes the door of the class when starting the class, resulting in a big loss of knowledge for the student arriving late.
-Lastly, a young Italian could have a high value of \(\beta\) when going to a social gathering:
-the embarrassment in having to wait the others alone could be, in some cultures, pretty costly.
-
-\subsection{Estimation of the Parameters $\alpha, \beta, \gamma$}
-\label{sec:estim-param-alpha}
-
-Work has been done to estimate the values of the parameters:
-\textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd} fits a discrete-choice model on a survey in which 527 commuters in the USA stated when they arrive to work, and estimates some values for the ratios \(\beta/\alpha, \gamma/\alpha\).
-The values they use are
-\begin{equation}
-  \label{eq:beta_gamma_small}
-  \frac{\beta}{\alpha} = 0.61,\qquad \frac{\gamma}{\alpha} = 2.38
-\end{equation}
-The result found there are extensively used in literature, including in \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}.
-Other works, such as \textcite{doi:10.3141/1807-04} and \textcite{4ffb5da1-1f49-3898-98a7-209781744dc0} use arbitrary values,
-not validated with data but similar to the values in \eqref{eq:beta_gamma_small}:
-they indeed use values such as (in \cite{4ffb5da1-1f49-3898-98a7-209781744dc0})
-\begin{equation}
-  \label{eq:beta_gamma_vickrey}
-  \frac{\beta}{\alpha} = 0.5,\qquad \frac{\gamma}{\alpha} = 2
-\end{equation}
-\textcite{https://doi.org/10.1111/iere.12692} presents a brief review of the results.
-
-The estimation of these parameters presents anyway some drawbacks:
-it has indeed always been based on survey data or,
-more in general, on data that rely on \textit{Stated Preferences} (what the user \textit{says} is true)
-rather than on \textit{Revealed Preferences} (what the behaviour of the users \textit{reveals} about the true value of the parameter).
-These estimation methods, while often making it easier to conduct analyses,
-suffer from some intrinsic shortcomings,
-and some of these weaknesses are highlighted by \textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd}:
-when asked for a time, the user may indeed state an approximated one instead of the real experienced one,
-or they may change their preference to some that they think could be more acceptable by someone potentially reading their answers (e. g., their employer).
-This makes some corrections of the found data fundamental,
-in order to take into account all the biases the user could have.
-
-Moreover, surveys are extremely costly and complicated to make:
-in particular about past choices, having enough knowledge of the subject
-and being able to estimate parameters from revealed preferences
-makes the estimation of them cheaper and better scalable.
-The problem with this is that,
-for having reliable estimates of parameters via revealed preferences,
-both a deep knowledge of the subject and high-quality data about it are needed.
-
-Data can be found in different ways.
-The deep knowledge of the subject is, on the other hand, the goal of the thesis.
-
-\subsection{Data about Travel Time}
-\label{sec:data-about-travel}
-
-For acquiring data about travel time, many different techniques can be used.
-Traditionally, travel time is estimated by using data from ground-based sensors,
-obtained with techniques such as video image processing, license plate matching, cellular phone tracking or loop detectors \parencite{turner1996advanced,YEON2008325}.
-More modern ways of finding such data include working with data from GPS sensors \parencite{mazare2012trade} or even elaborating data coming from drone imaging \parencite{fonod2025songdo}.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=.9\textwidth]{pems}
-  \caption{The area covered by the CalTrans PeMS dataset, a dataset including data from over 46,000 loop detectors spread in the freeway system of California, USA. Data about instantaneous speed and various characteristics of the vehicles are available, with a definition (in time) of up to 5 minutes.}
-  \label{fig:pems}
-\end{figure}
-
-Loop detectors are widely used, and a vast literature relies on their data for travel time estimation \parencite{YILDIRIMOGLU201345}.
-In particular, a widely used dataset is the Performance Measurement System (PeMS) by California Department of Transportation (CalTrans),
-which is freely accessible and whose data, spanning across several years,
-can have a really high definition,
-allowing large scale studies to be performed with a sufficient precision.
-Figure~\ref{fig:pems} shows an overview of the area in which PeMS data are available.
-
-Other than this, data from the private sector are available as well.
-Google offers some (limited) free API,
-that can be leveraged to directly obtain data about forecasted travel time for every desired route.
-TomTom is another private society which offers similar services:
-through their API, information about the current situation of the traffic can be found,
-and traffic patterns can be retrieved by sending many requests at different times.
-
-Collecting data about travel time is thus a problem that can (for this application) be solved in many different ways.
-For calibrating the model what is missing is thus only a deeper knowledge of the subject,
-that could yield a precise estimate of the parameters and, as a consequence,
-a better knowledge of the population.
-This is exactly the aim of the thesis:
-to develop a model that, given some data about travel time and when people decide to depart from their origin,
-infer some characteristic about them.
+Despite these advances, a central challenge remains: estimating the parameters \(\beta\), \(\gamma\), and \( t^* \) \textit{from RP data alone}. In large-scale networks, travel times for a given origin-destination (O-D) pair are not necessarily in equilibrium even at stationarity. This complicates the inference of user preferences based solely on observed data.
 
 \section{Objective of the Thesis}
-\todo{Expand this section?}
-\todo{Change name of section?}
-\label{sec:thesis_obj}
 
-As seen above,
-Vickrey's model is widely recognised as the mechanism that yield the creation of the traffic queues.
+This thesis aims to design an effective method for inferring commuters' scheduling preferences from their observed arrival times, given an exogenous traffic congestion pattern. In our setting, the inputs are fairly intuitive: we observe when people actually arrive and the travel time they experienced. This types of data can be sourced from navigation platforms like Waze or Google Maps. Our goal is to use this information to estimate the distribution of scheduling preferences across the population, without resorting to a costly travel survey. 
 
-Commuters are anyway heterogeneous,
-and each one of them sees the traffic pattern as an exogenous variable
-(that is, a variable they cannot change by changing their behaviour),
-and chooses how to behave based on that and on their preferences.
 
-Assume thus that a group of users (small with respect to the totality of the commuters) share similar preferences.
-Based on the traffic pattern, these commuters will choose when to leave,
-and their choices can be objectively observed.
+The main objective is to infer travelers' scheduling preferences (characterized by $\alpha, \beta, \gamma$) and their desired arrival times $t^*$ from data, as illustrated in Figure \ref{fig:zhenyu_arrow}. 
 
-The goal of this thesis is to develop a model that,
-given the observation of the departure times of the group of people,
-\todo{expand a bit on the goal of the model, probably putting Zhenyu's big arrow is a good idea}
-finds some parameters regarding how the preferences of the people belonging to that group are distributed.
-The method will be extensible to model different groups of people in the same scenario,
-in order to be fitted to realistic or real scenarios.
 
-On top of this, most of the approaches (to the best of my knowledge) to Vickrey's model are purely analytical,
-and are not based on data.
-Moreover, equilibrium studies dealing with data are, in the last years, facing some issues (as described in \cite{https://doi.org/10.1111/iere.12692}).
-Effort to make the model verifiable with data,
-even if the travel time pattern is assumed to be entirely exogenous,
-is thus important as it helps in going towards a better understanding of how traffic is created,
-what are the factors that have the biggest impacts in creating it and, eventually,
-how could it be avoided.
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{problem.pdf}
+    \caption{A schema, showing the main objectives of the thesis.
+      The goal is developing a model that, given observable data about how the arrival times for a group of users are distributed,
+      and the travel time they experience,
+    is able to retrieve the scheduling preferences for the said group of users.}
+ \label{fig:zhenyu_arrow}
+\end{figure}
 
+
+\section{Summary of Contributions} 
+
+
+% A key contribution of this study is the development of a structural framework to infer travelers' scheduling preferences from observed arrival time patterns under an exogenously given congestion profile. We model individual decision-making as a cost-minimization problem, where each traveler chooses an arrival time by balancing congestion delays with personal penalties for arriving earlier or later than their preferred time. This framework captures heterogeneity in scheduling preferences across the population and allows us to estimate the probability distribution of arrivals throughout the day. Leveraging real-world data, we employ maximum likelihood estimation (MLE) to recover the underlying parameters governing scheduling behavior, providing a data-driven and scalable alternative to traditional survey-based methods.
+
+
+% We aim to infer travelers' scheduling preferences from their observed arrival times, given an exogenous traffic congestion pattern.
+
+In this work, we develop a methodology for calibrating the parameters for the distribution for travelers' scheduling preferences \(\beta\)–\(\gamma\) and the desired arrival time \( t^* \) in dynamic departure time models. Our approach targets specific population groups, possibly defined by socio-economic attributes and trip purposes, and uses only attainable RP data, offering a scalable and cost-efficient alternative to survey-based methods.
+Our contributions can be summarized as follow:
+
+First of all, we develop a model that explicitly characterizes the distribution of observed arrival times as a function of three key components: individual scheduling preferences (\(\beta, \gamma\)), desired arrival time (\(t^*\)), and experienced travel time as a function of arrival time (\(tt_a(t_a)\)). Each traveler selects an arrival time that minimizes their overall trip cost by considering the within-day congestion pattern along with their individual scheduling preferences. We characterize the optimal arrival time under different $\beta$, $\gamma$, and $t^*$. This framework allows us to capture the behavioral trade-offs travelers make when choosing when to arrive.
+
+Then, by evaluating the likelihood of observed arrival time datasets, we are able to apply a maximum likelihood estimation (MLE) to recover the parameters describing the distributions of \(\beta, \gamma, t^*\) that best represent the scheduling preferences of a user group, without requiring stated-preference surveys.
+
+Lastly, we process real data from PeMS and generate simulated data from METROPOLIS2 to gain insights regarding the real-world time-varying congestion pattern between OD pairs.  We validate our inference method on a synthetic dataset, demonstrating that it can accurately recover the wanted parameters, confirming thus the model's precision.
+
+
+\section{Organization of the Thesis}
 The rest of the thesis is structured in this way:
-\todo{Put section labels}Chapter~\ref{chap:methodology} describes the methods that will be used,
+Chapter~\ref{chap:methodology} describes the methods that will be used,
 explaining what methods could be used for each part of the estimation,
 what method was chosen and how the estimation will be performed.
 Chapter~\ref{chap:res} shows the results of the estimations:
 initially, analytical results will be obtained;
 once the analytical computations are done,
 results regarding the numerical implementations of the developed method will be shown.
-In Chapter DISCUSSION the results presented earlier are discussed:
+In Chapter~\ref{chap:methodology} the results presented earlier are discussed:
 their strength and weaknesses are presented,
 and their contributions to the current research is shown.
-Lastly, Chapter CONCLUSION consists of a recap of the work that has been done;
+Lastly, Chapter~\ref{chap:conclusion} consists of a recap of the work that has been done;
 finally, directions for possible future works in the field are presented.
+
 
 %%% Local Variables:
 %%% mode: LaTeX
