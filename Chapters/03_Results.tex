@@ -874,12 +874,15 @@ For the probability of not being in the interval, on the other hand, we have
 
 It is now possible to take advantage of proposition~\ref{prop:monotonous_interv}:
 the monotonicity of the intervals imply that there exist two functions
-\begin{align*}
-  \beta_0:\R&\rightarrow(0, \beta_{max}) \\
-  t&\mapsto \max\{b | t \in (b_i(b), b_e(b))\} \\[1em]
-  \gamma_0:\R&\rightarrow(0, \gamma_{max}) \\
-  t&\mapsto \max\{g | t \in (g_i(g), g_e(g))\}
-\end{align*}
+\begin{equation}
+  \label{eq:def_b_0_g_0}
+  \begin{split}
+    \beta_0:\R&\rightarrow(0, \beta_{max}) \\
+    t&\mapsto \sup\{b | t \in (b_i(b), b_e(b))\} \\[1em]
+    \gamma_0:\R&\rightarrow(0, \gamma_{max}) \\
+    t&\mapsto \sup\{g | t \in (g_i(g), g_e(g))\}
+  \end{split}
+\end{equation}
 where
 \begin{align*}
   \beta_{max} = \max_t tt_a'(t) \\
@@ -937,19 +940,102 @@ The member of the likelihood relative to the early arrival is thus
 \begin{align*}
     f_{T_a, \hat{Q}}(t_a, -1) & = \mathbb{P}(t^* \in (b_i(\beta), \min(b_e(\beta), t_s(\beta, \gamma)))) | b_i(\beta) = t_a)f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+ \\
   & = \mathbb{P}(t^* \in (t_a, \min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), \gamma))))f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+ \\
-  & = \int_1^\infty f_\gamma(x) (F_{T^*}(\min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), x))) - F_{T^*}(t_a)) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+\tag{theequation}\label{pdf_early}
+  & = \int_0^\infty f_\gamma(x) (F_{T^*}(\min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), x))) - F_{T^*}(t_a)) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+\tag{\theequation}\label{eq:lik_early}
 \end{align*}
 
 Similarly, if considering late arrivals,
 
 \begin{equation}
-  \label{pdf_late}
-  f_{T_a, \hat{Q}}(t_a, 1) = \int_0^1 f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+
+  \label{eq:lik_late}
+  f_{T_a, \hat{Q}}(t_a, 1) = \int_0^\infty f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+
 \end{equation}
 
 The various members of equation~\eqref{eq:decomposition_pdf} have thus been computed.
 Summing them together yields an expression for the total likelihood,
 as wanted at the beginning of the section.
+
+\subsection{Final Expression for the Likelihood}
+\label{sec:final_lik}
+
+By plugging \eqref{eq:lik_ot}, \eqref{eq:lik_late} and \eqref{eq:lik_early} into \eqref{eq:decomposition_pdf},
+I get a final expression for the likelihood function:
+\begin{multline}
+  \label{eq:lik_final}
+  f_{T_a}(t_a) = f_{T^*}(t_a)\int_{\beta_0(t_a)}^{\beta_\text{max}}f_\beta(b)\, db\int_{\gamma_0(t_a)}^{\gamma_\text{max}}f_\gamma(g)\, dg \\
+  + f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+\int_0^\infty f_\gamma(x) (F_{T^*}(\min(b_e(tt_a'(t_a)), t_s(tt_a'(t_a), x))) - F_{T^*}(t_a)) dx\  \\
+  + f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+  \int_0^\infty f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ 
+\end{multline}
+
+The expression is quite convoluted, but is a close form analytical expression
+(given the definitions of the auxiliary functions given in the previous sections),
+and can be numerically approximated.
+The next section shows how the approximation can be made.
+
+\subsection{Numerical Computation of the Likelihood}
+\label{sec:numerical_lik}
+
+For the reasons noted in section~\ref{sec:lik_speed}
+the result of the expression for the likelihood in~\eqref{eq:lik_final} can't be directly computed.
+There are indeed several problems, listed below:
+\begin{enumerate}
+\item The integrals cannot be analytically computed
+\item The functions \(b_i, g_e\) require inverting the derivative of the travel time function \(tt_a'\),
+  where it is convex.
+\item The functions \(b_e, g_i\), depending on the expression of the travel time function \(tt_a\),
+  may be impossible to compute directly, as can be seen from their definition in~\eqref{eq:def_b_ieg_ie}.
+\item The functions \(\beta_0, \gamma_0\), as defined in~\eqref{eq:def_b_0_g_0},
+  are the result of a maximization over an infinite set.
+\end{enumerate}
+
+These problems prevent a numerical computation of the solution via the direct implementation of a closed form analytical expression.
+Each one of them can anyway be solved in a different way:
+\begin{enumerate}
+\item The integrals can be approximated via the trapezoid rule,
+  to a desired precision.
+\item The derivative of the travel time function is strictly monotone where it has to be inverted.
+  A bisection algorithm can thus find the solution.
+
+  Otherwise, a gradient descent algorithm can be directly implemented on a shifted travel time function:
+  looking for the point \(t^\beta\)satisfying
+  \begin{equation*}
+    tt_a'(t^\beta) = \beta
+  \end{equation*}
+  and supposing that the function is, in \(t^\beta\), convex,
+  is equivalent to looking for the minimum of the function
+  \begin{equation*}
+    tt_a(t) - \beta t
+  \end{equation*}
+
+  This minimization problem can be solved via a gradient descent algorithm.
+
+  Again, both methods can solve the problem up to a desired precision.
+\item The functions \(b_e, g_i\) can be again approximated via a bisection algorithm:
+  they are indeed determined by the point in which a line intersects a function,
+  and this intersection is realized only once.
+  Finding suitable initial conditions is thus easily doable.
+\item Finally, the functions \(\beta_0, \gamma_0\) can again be approximate via a bisection algorithm.
+  It is indeed clear that \(0 < \beta_0(t) < \beta_{max}\):
+  by using these initial condition,
+  at each iteration wether the point \(t\) falls into the interval defined in~\eqref{eq:def_b_0_g_0} can be checked.
+  The bisection will be made accordingly.
+\end{enumerate}
+
+These operations, while being able to precisely approximate the wanted points,
+are all iterative algorithms and are thus extremely resource-heavy,
+in particular if performed several times
+(note that one of these operations may be performed on the result of another one of them,
+multiplying the computational complexity of the two operations).
+
+Since python was decided to be the language of choice for this problem
+(due to its flexibility and suitability to work with data from different sources),
+the use of an high-performance library was needed.
+
+The choice of JAX allowed me to reduce the execution time of the likelihood computation by up to four orders of magnitude when compared to standard python code,
+by being able to compile the code and to partially parallelize it.
+
+The numerical approximation of the likelihood is thus entirely written in JAX,
+and its implementation can be found \todo{Add link}here
+
 
 
 %%% Local Variables:
