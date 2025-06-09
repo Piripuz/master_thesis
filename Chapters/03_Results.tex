@@ -1278,7 +1278,129 @@ For variances, in particular, errors could be better tolerated than how much the
 Once good results have been achieved on synthetic data,
 the nest step is validating the model on data from simulation.
 
+\section{Evaluation on Data from Simulation}
+\label{sec:res_eval_metr}
 
+Evaluating the model with data taken from traffic simulators is a considerable step towards finding the parameters in real situation:
+if indeed the simulator converges (by considering more and more complex situations) to the reality,
+the step from simulated data to real data could be smaller than the one from synthetic data to simulated data.
+
+As noted in section~\ref{sec:eval_metr},
+the evaluations presents anyway some difficulties,
+that were sadly not totally overcame during the time frame given to the study.
+
+The first difficulty regards the smoothing of the travel time data.
+
+\subsection{Building the Travel Time Function}
+
+In order to find a well suited travel time function,
+a parametric function will be built and then fitted to the data.
+
+The function needs to respect the properties needed to be a proper time function (as of definition~\ref{def:proper_tt}),
+and to approximate the data with sufficient precision.
+To build this type of function,
+the properties of the hyperbola are used:
+an hyperbola can indeed be defined so that a branch of it is a convex function that goes to zero at minus infinite,
+and tends towards a line with a given steepness at infinite.
+
+Consider thus the function
+\begin{equation}
+  \label{eq:hyperbola}
+  \frac{\sqrt{(x - c)^2 + a} + x - c}{b}
+\end{equation}
+that is displayed in figure~\ref{fig:hyp}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.4\textwidth]{hyp}
+  \caption{The branch of hyperbola in equation~\eqref{eq:hyperbola},
+  and its oblique asymptote determined by the parameter \(b\), in a dashed line}
+  \label{fig:hyp}
+\end{figure}
+
+The parameter \(b\) controls the steepness of the oblique asymptote,
+while \(a\) controls how \textit{sharp} the change of direction is.
+\(c\) is simply shifting the function on the horizontal axis.
+
+This function is well-suited to represent the convex part of the travel time function.
+For representing the central, concave part, a simple polynomial can be used,
+constrained to have a smooth connection with this function.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{tdata_f}
+  \caption{Data retrieved by a simulation on METROPOLIS2, as explained in section~\ref{sec:eval_metr}.
+    On top of the data, a function built by linking two branches of hyperbola and a polynomial is fitted to the data and plotted.
+  The result shows a great fit, excellently interpolating the data.}
+  \label{fig:func_on_data}
+\end{figure}
+
+The resulting parametric function is then fitted to the data,
+by using a simple optimization algorithm.
+The result is shown in figure~\ref{fig:func_on_data}:
+as can be seen, the smooth function perfectly approximates the noisy data.
+
+Moreover, it has smooth derivatives, and allows the estimation to be performed.
+
+After the travel time function is built, the data about departure times have to be studied.
+
+\subsection{Data about Realized Departure Time}
+
+On top of the travel time function,
+the simulation should provide data about realized arrival times by the simulated users,
+in order to be able to deploy the model.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{hist_data}
+  \caption{Distribution of arrival times for the two groups of simulated users.
+    Arrivals of the bigger group are evenly spread, since the group is travelling at equilibrium.
+  On the other hand, arrival times for the users in group 2 is following a distribution similar to the ones seen in the previous section, regarding the synthetic dataset.}
+  \label{fig:hist_data}
+\end{figure}
+
+Recall now that, in the simplest case, two groups of users are simulated:
+the first group, whose users can be thought of as at equilibrium,
+and the second group,
+a small group of users for whose the travel time function is almost exogenous.
+
+The arrival times of users in group 1 and group 2 are shown in figure~\ref{fig:hist_data}:
+the arrivals of the bigger group are, as expected,
+uniformly spread across an interval of time.
+
+The users in the smaller group, on the other hand,
+adapt their arrival times to an exogenous travel time:
+their arrival times are thus more distributed,
+and the distribution of them could help in retrieving the parameter.
+
+Sadly, this is not the case:
+by looking at the travel time function in figure~\ref{fig:func_on_data},
+it is immediately clear how the function sharply changes direction,
+and its derivative, from being close to zero,
+rapidly increases to its maximum value.
+
+This means that,
+if following the concepts behind our model,
+all the early arrivals should be concentrated in that very point,
+regardless of the variance in parameter \(\beta\).
+This is anyway clearly not the case in figure~\ref{fig:hist_data}:
+the data shown there show a peak, but the peak is not as sharp as it would be expected.
+
+This discrepancy between the synthetic data and the simulated data is explained,
+according to us,
+by the implementation of the logit model in the simulator:
+the simulated users arriving earlier than the expected early arrival time
+(or later than the expected late arrival)
+are realizing that arrival time not because it minimizes the cost,
+but only because the cost of it is similar to the minimizer.
+This prevents any estimation to be done on simulated data, and requires a change in the model.
+
+Since the estimation cannot be done on simulated data,
+trying to perform it with real data would be pointless,
+given the effort needed to collect real data.
+
+The next chapter discusses the results achieved in the thesis:
+some methods to solve this issue are described there as well.
 
 %%% Local Variables:
 %%% mode: LaTeX
