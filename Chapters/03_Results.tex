@@ -1030,11 +1030,103 @@ Since python was decided to be the language of choice for this problem
 (due to its flexibility and suitability to work with data from different sources),
 the use of an high-performance library was needed.
 
-The choice of JAX allowed me to reduce the execution time of the likelihood computation by up to four orders of magnitude when compared to standard python code,
+The choice of JAX allowed to reduce the execution time of the likelihood computation by up to four orders of magnitude when compared to standard python code,
 by being able to compile the code and to partially parallelize it.
 
 The numerical approximation of the likelihood is thus entirely written in JAX,
 and its implementation can be found \todo{Add link}here
+
+Once the likelihood has been computed,
+minimizing it yields the model described in the introduction.
+It is thus now possible to use the developed evaluation techniques,
+to study how the estimator performs on different scenarios.
+
+\section{Evaluation on Synthetic Dataset}
+\label{sec:eval_synth_dataset}
+
+As mentioned in section~\ref{sec:synth_dataset},
+the evaluation on synthetic dataset can give some insights on sow the model works,
+but doesn't help in proving its efficiency with real data,
+that may be, a priori, extremely different from what simulated.
+
+The insights this method gives on how the model works in the simplest case may anyway be helpful:
+it will indeed be possible to plot an empirical likelihood function to compare it with the theoretical result,
+and the optimizers will be calibrated to achieve a good convergence.
+
+In order to build a synthetic dataset as explained in section~\ref{sec:synth_dataset},
+it is necessary to sample from the distributions of the parameters \(\beta, \gamma, t^*\).
+The distribution of the parameters,
+and the parameter \(\theta\) to be estimated (which parametrizes the distributions),
+have thus to be defined.
+
+\subsection{Parameters to Estimate}
+
+Not many examples exist in the literature regarding what kind of distribution the parameters follow.
+Recently, \textcite{https://doi.org/10.1111/iere.12692} suppose a bizarre distribution,
+consisting of a small number of commuters with some really high values of \(\beta, \gamma\),
+differently from the majority of them.
+This distribution would have really different mean and variance,
+allowing the majority of the users to behave differently from the mean user.
+Behaving that the mean user should, on the other hand,
+be close enough to the majority of them, we suppose
+(for the modelled group) the parameters to be normally distributed
+(truncated not to allow impossible values, such as \(\beta, \gamma < 0\)).
+Moreover, the distributions of the parameters \(\beta, \gamma\) are assumed to have the same variance.
+
+Being the distribution completely characterized by its mean and variance,
+these will be the parameters to be estimated:
+
+\begin{equation}
+  \label{eq:theta_def}
+  \theta = (\mu_\beta, \mu_\gamma, \mu_t, \sigma, \sigma_t)
+\end{equation}
+
+Where \(\mu_\beta, \mu_\gamma, \mu_t\) are the means of the parameters \(\beta, \gamma, t^*\),
+\(\sigma_t\) is the variance of \(t^*\) and \(\sigma\) the variance of \(\beta, \gamma\).
+
+Fixing a value for the parameter \(\theta\),
+it becomes possible to sample from these distributions,
+and to consequently build the synthetic dataset.
+
+The next section shows how this can be done, and the distribution yielded from this procedure.
+
+\subsection{The Synthetic Dataset}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{t_as_bins_tt}
+  \caption{Histogram depicting the distribution of the arrival times when directly minimizing the cost function.
+    The green and red bands show where (respectively) early and late arrivals are expected to occur,
+    and the higher density of points in these zones confirm this.
+  For obtaining this distribution, a value of \(\theta = (0.8, 1.4, 9.5, 0.3, 1)\) has been used.}
+  \label{fig:t_as}
+\end{figure}
+
+Figure~\ref{fig:t_as} shows the result of building the dataset, given a travel time function and a value for the parameter \(\theta\).
+As expected, higher density zones are observed where early and late arrivals are expected to be realized
+(that is, when the derivative of the travel time function is close to the mean of the parameters \(\beta, -\gamma\)).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{hist_ll}
+  \caption{Histogram of the arrival times when sampling a big number of points (in this case, 100,000 points are sampled),
+    plotted with a scaled version of the likelihood function.
+    It can be seen how the theoretically computed likelihood closely follows the empirical distribution of the points,
+    confirming the accuracy of the theoretical work done in section~\ref{sec:lik}.}
+  \label{fig:hist_pdf}
+\end{figure}
+
+To show whether this characteristic is properly described by the theoretical likelihood developed in section~\ref{sec:lik},
+note that the histogram of the empirical distribution should converge,
+as the sample size increases, to the shape of the probability density function.
+The probability density function \eqref{eq:lik_final} is thus plotted,
+alongside an histogram made by sampling a big number of arrival times,
+in figure~\ref{fig:hist_pdf}.
+
+
+
+
 
 
 
