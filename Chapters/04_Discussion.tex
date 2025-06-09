@@ -1,0 +1,111 @@
+\chapter{Discussion}
+\label{chap:discussion}
+
+The goal of this master thesis was to develop a model that,
+by uniquely relying on Revealed Preferences,
+could retrieve the distribution of scheduling preferences of a group of commuters.
+The development of the model has been divided in two different stages:
+at first, a theoretical understanding of the problem was developed,
+to be able to properly interpret the real data and,
+more technically, to develop an analytical expression for the likelihood.
+After this, the model was applied to different scenarios,
+to evaluate its properties and to see wether it forecasts the actual scheduling delay preferences of the users.
+
+The main contribution of this work are certainly related to the theoretical understanding of the problem:
+how a rational agent minimizing the cost acts was studied,
+and an analytical expression for the choices they make retrieved.
+This analytical expression has moreover an intuitive geometrical meaning,
+directly relating the derivative of the travel time function to the scheduling preferences of each individual:
+we indeed fully characterize the period of time for which early and late arrivals are achieved,
+and show how closely related they are to the derivative of the travel time function.
+
+These results are obtained by assuming the travel time function to be exogenous,
+in a situation in which the studied group of users is out from equilibrium.
+This approach differs from the majority of the work in the field,
+that is mainly addressed to solve various equilibrium problems.
+Reversing the problem, and supposing the whole system to be at equilibrium for studying the behaviour of a part of it,
+yields anyway some interesting problems.
+
+Moreover, congestion is indeed seen, by each commuter,
+as an exogenous variable:
+methods that use this out of equilibrium approach should be the methods of election for inferring how commuters decide to move,
+since
+(while not necessarily differing much from the ones considering congestion at equilibrium)
+neglecting the impact each commuter has on the traffic may simplify the studied problems,
+and yield more general methods.
+
+The validation of the method on synthetic dataset was successful.
+As stated different times,
+this doesn't help in proving the generalizability of the model (since it just proves that a theory is coherent with itself),
+but does help in showing that the theoretical work done is relevant,
+and that the numerical implementation is precise enough.
+
+Sadly, different problems have been observed with the method.
+The first one is noted in section~\ref{sec:data-about-realized}:
+taking into account heteregenoities in choices,
+by choosing a continuous logit model to describe the probability each departure time is chosen by an user,
+the method does not work anymore,
+and a deep revision of the model is made necessary.
+
+A continuous logit model is anyway a direct specification of the Probability Density Function for the agent making the choice:
+given the cost \(C(t)\),
+according to it the choices are indeed assumed to be distributed following the Probability Density Function
+\begin{equation*}
+  f(t) = \frac{e^{C(t)/\mu}}{\int e^{C(t)/\mu}}
+\end{equation*}
+
+Implementing this method could so even simplify the estimation method,
+and require less knowledge of the subject.
+This would be the drawback of the method as well:
+a minor understanding of the subject would be developed if implementing the logit model.
+
+This problem can thus be overcame.
+A deeper problem, that cannot be solved as easily,
+would then arise when working with real data:
+on real data, slopes are way lower than what would be expected if the population had parameters close to the ones reported in the literature \parencite{https://doi.org/10.1111/iere.12692}.
+
+This means that, if performing an estimation on real data,
+every observation will be an on-time arrival,
+unless the parameters are allowed to sensibly differ from the ones reported in the literature.
+
+Two different approaches could solve this problem:
+one would leave untouched the theoretical work done in this thesis,
+while the other would require a completely different approach.
+
+The first approach consists in trying to tackle the problem from a statistical point of view:
+the values reported in the literature can indeed be thought of as mean of the parameters,
+allowing the parameters to be distributed more complexly across the population.
+Considering a more flexible distribution,
+observations of early and late arrivals can be explained by the model developed above and would,
+at the same time,
+not contradict the mean values reported by the literature.
+
+This approach could explain the real data, but has some drawbacks:
+it is indeed assuming a particular type of heterogeneity in the population not because the heterogeneity has been directly observed,
+but rather because this type of heterogeneity would explain a problem in a theory that has not been,
+historically,
+frequently validated with data.
+
+The second approach is slightly more complex, and is based on the introduction of some uncertainty in how travel time is perceived by the users:
+if, instead of a deterministic travel time,
+travel time is treated as a stochastic process (that is, a random variable for each time instant),
+when minimizing the expected value of the cost (whose derivative has now no more discontinuities, as long as the distribution of the travel time function is behaved well enough)
+the first order conditions yield
+\begin{equation*}
+  tt_a'(t_a) = \frac{\beta + \gamma}{\alpha}F_\varepsilon(t^* - t_a) - \frac{\gamma}{\alpha}
+\end{equation*}
+where \(F_\varepsilon\) is the Cumulative Distribution function for the random variable \(\varepsilon\) expressing the uncertainty in travel time.
+
+This means that arrivals are realized, depending on how the variable \(\varepsilon\) is distributed,
+for values of the derivative of the travel time lower than \(\beta\) (and higher than \(-\gamma\)).
+While not being the canonical risk aversion,
+this uncertainty induces a behaviour that is similar to it,
+and that could explain better the real data.
+
+Sadly, this would substantially change the model developed in these slides,
+and can thus only be a direction for future research.
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../main"
+%%% End:
