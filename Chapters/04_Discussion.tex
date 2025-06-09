@@ -62,11 +62,20 @@ a minor understanding of the subject would be developed if implementing the logi
 This problem can thus be overcame.
 A deeper problem, that cannot be solved as easily,
 would then arise when working with real data:
-on real data, slopes are way lower than what would be expected if the population had parameters close to the ones reported in the literature \parencite{https://doi.org/10.1111/iere.12692}.
+on real data, slopes are way lower than what would be expected if the population had parameters close to the ones reported in the literature.
+This problem is reported by \textcite{https://doi.org/10.1111/iere.12692} using data from highways,
+and confirmed by us when dealing with urban data.
 
-This means that, if performing an estimation on real data,
+This problem implies that, if performing an estimation on real data,
 every observation will be an on-time arrival,
 unless the parameters are allowed to sensibly differ from the ones reported in the literature.
+
+Note that this does not prevent our method to be applied:
+the estimation could be performed,
+as long as the retrieved arrival times are consistent with what expected by Vickrey's model.
+Doing an estimation with this problem would anyway not be particularly meaningful,
+since the model on which the estimation is performed could itself be flawed:
+a more structural approach, able to solve the problem when dealing with equilibrium situations as well, is needed to have a meaningful estimation.
 
 Two different approaches could solve this problem:
 one would leave untouched the theoretical work done in this thesis,
