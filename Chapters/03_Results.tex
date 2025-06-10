@@ -4,9 +4,9 @@
 In this chapter, the results of the research will be presented.
 
 The first step for building the model is some analytical work:
-in section~\ref{sec:minimum},the points in which the cost function is minimized are studied,
+in Section~\ref{sec:minimum},the points in which the cost function is minimized are studied,
 and a characterization of the minima is done.
-This characterization is then be used in section \ref{sec:lik},
+This characterization will then be used in Section \ref{sec:lik},
 where the statistical framework is developed and the likelihood function introduced.
 
 Once an expression for the likelihood function is found,
@@ -19,7 +19,7 @@ are shown in the following sections.
 
 For characterizing where the cost function is minimized,
 it is a good idea to simplify it as much as possible.
-Some theoretical preliminaries are hence necessary.
+Some theoretical preliminaries are therefore necessary.
 
 \subsection{Theoretical Preliminaries}
 \label{sec:pre_minimizing}
@@ -77,7 +77,7 @@ In this case, the expression \eqref{eq:cost_no_alpha} considerably simplifies:
 
 Note now that the arrival time can be directly observed:
 its dependency on the departure time \(t_d\) can thus be omitted,
-and the cost directly expressed in function of the arrival time \(t_a\).
+and the cost directly expressed as a function of the arrival time \(t_a\).
 
 If~\eqref{eq:tt_a_def} is possible, \eqref{eq:cost_t_d_t_a} simply becomes
 \begin{equation}
@@ -86,7 +86,7 @@ If~\eqref{eq:tt_a_def} is possible, \eqref{eq:cost_t_d_t_a} simply becomes
 \end{equation}
 
 Being this a relevant simplification of the problem,
-it will be worth to study wether a function adhering to the specifications in \eqref{eq:tt_a_def} actually exists.
+it will be worth to study whether a function adhering to the specifications in \eqref{eq:tt_a_def} actually exists.
 
 By expressing \eqref{eq:tt_a_def} in terms of the arrival time \(t_a\),
 we get a definition of the function \(tt_a\):
@@ -148,7 +148,6 @@ The function is thus strictly increasing, and so invertible.
 
 Under some weak assumptions, the function to be minimized is thus considerably simplified:
 as shown in~\eqref{eq:cost_simplified}, it is now enough to minimize the function
-
 \begin{equation}
   \label{eq:cost_simplified_final}
   C(t_a; \beta, \gamma, t^*) = tt_a(t_a) + \beta [t^* - t_a]^+ + \gamma [t_a - t^*]^+
@@ -225,7 +224,7 @@ I name the three minima to, respectively,
 \textit{on-time minimum} (since it is achieved when arriving exactly at the desired arrival time)
 and \textit{late minimum} (since it is achieved when arriving late).
 
-Figure~\ref{fig:cost} displays the cost function, built by utilizing a dummy
+Figure~\ref{fig:cost} displays the cost function, built using a dummy
 (but not too far from an analytical solution for a bottleneck model at equilibrium)
 travel time function.
 The function in the figure shows three local minima, each one of which is of a different kind.
@@ -250,11 +249,11 @@ For characterizing the point which realizes the global minimum,
 its dependency on the different parameters has to be explained.
 
 The approach will here be incremental:
-I will start by fixing the parameters \(\beta, \gamma\) and looking at how the minimum depends on the parameter \(t^*\).
+We will start by fixing the parameters \(\beta, \gamma\) and looking at how the minimum depends on the parameter \(t^*\).
 After the dependency on \(t^*\) is explained, the extension to the case in which \(\beta, \gamma\) vary will be pretty natural.
 
 It is now necessary to formalize some hypothesis on the travel time function.
-I will thus recall some definitions, that will be used for constraining the travel time function.
+We will thus recall some definitions, that will be used for constraining the travel time function.
 
 The first definition regards a property which will be fundamental for the implementation of the model,
 and that is, indeed, respected by most travel time functions (when considering only one out of the morning and evening peaks)
@@ -266,7 +265,7 @@ and that is, indeed, respected by most travel time functions (when considering o
 
 Please note that it is easy to prove that each quasiconcave function is unimodal (meaning that they only have one local maximum).
 
-The next definition is a rather standard one in mathematics:
+The next definition is rather standard in mathematics:
 \begin{definition}
   \(C^k(\R)\) is the space of all the functions whose domain is the set of real numbers \(\R\) that are continuous, differentiable at least \(k\) times and whose \(k\)-th derivative is continuous
 \end{definition}
@@ -365,7 +364,7 @@ with coefficient \(\gamma\).
 
 The following theorem shows that the minimum \(t^{opt}\) is realized by the point that,
 among the ones in \(B_{t^*}, G_{t^*}\),
-satisfy a simple condition:
+satisfies a simple condition:
 \begin{theorem}
   \label{theo:characterization}
     Let \(tt_a(t_a)\) be a general travel time function, as in definition \ref{def:gen_tt},
@@ -486,7 +485,7 @@ This property makes the definition particularly useful, since it makes the follo
 
   Consider now the points \(t\in(-\infty, k_1)\).
   The function is here concave, and the derivative is thus monotonous.
-  Moreover, the hypotheses (namely, the unimodality) imply the function to be there increasing:
+  Moreover, the hypotheses (namely, the unimodality) imply that the function is there increasing:
   the derivative is thus positive.
 
   The derivative is thus an injective function in the set \(\R^+ = (0, \infty)\):
@@ -588,7 +587,7 @@ the situation is slightly more complex:
 for tackling this case, it is necessary to determine the point in which they intersect.
 
 Let thus \(t_s(\beta, \gamma)\) be the point corresponding to a desired arrival time \(t^*\) for which arriving late or early makes no difference.
-This point will be interesting when its cost will be smaller than the cost of arriving on time (since, when the cost of arriving on time will be smaller,
+This point will be interesting when its cost is lower than the cost of arriving on time (since, when the cost of arriving on time is lower,
 we can just forget the position of this point and yield an on-time arrival for every point in a \label{eq:char_opt_time_comp}
 neighbourhood of it).
 In this case, we have three points \(b_e(\beta), g_i(\gamma)\) and \(t_s(\beta, \gamma)\),
@@ -604,7 +603,7 @@ or
 
 The proof of this is trivial, and is thus omitted.
 
-In case \eqref{eq:simple_ordering}, the assumption \(b_e(\beta) < g_i(\gamma)\) clearly holds, and there's nothing more to discuss.
+In case \eqref{eq:simple_ordering}, the assumption \(b_e(\beta) < g_i(\gamma)\) clearly holds, and there is nothing more to discuss.
 
 Otherwise, minimizing the cost function will yield an early arrival until the point \(t_s(\beta, \gamma)\), and a late arrival after that point.
 The following observation would thus hold:
@@ -632,7 +631,7 @@ The following observation would thus hold:
 \end{figure}
 
 In other words, no on-time arrival is realized during the traffic peak.
-Figure~\ref{fig:tt_functions_int} shows this case, in which the location of the point \(t_s(\beta, \gamma)\) has to be computed
+Figure~\ref{fig:tt_functions_int} shows this case, in which the location of the point \(t_s(\beta, \gamma)\) has to be computed.
 
 It is thus useful to, given \(\beta\), \(\gamma\), find an expression for the point \(t_s\).
 
@@ -657,7 +656,7 @@ The point in which arriving late costs as much as arriving early is thus the one
 \end{equation}
 
 Even being this expression convoluted, it is an analytical expression for the function \(t_s\).
-This conclude the section, by fully characterizing the function \(t^{opt}(t^*, \beta, \gamma)\).
+This concludes the section, by fully characterizing the function \(t^{opt}(t^*, \beta, \gamma)\).
 
 The characterization follows by observations~\ref{obs:char_opt_time_simple} and~\ref{obs:char_opt_time_comp}:
 it can thus be computed as follows:
@@ -715,7 +714,7 @@ and constant when not.
 Figure~\ref{fig:t_opt_on_star} shows this dependency, in the case in which \(g_i(\gamma) < b_e(\beta)\):
 no on-time arrivals are indeed there realized, as can be seen by the absence of a growing part in the middle of the plot.
 
-On top of characterizing the dependency of \(t^{opt}\) on \(t^*\),
+In addition to characterizing the dependency of \(t^{opt}\) on \(t^*\),
 the dependency on the parameters \(\beta, \gamma\) is characterized as well, through the functions defined in~\eqref{eq:def_b_ieg_ie}.
 
 Before concluding the section, the following proposition gives a deeper understanding of how this dependency is realized
@@ -724,7 +723,7 @@ Before concluding the section, the following proposition gives a deeper understa
   \label{prop:monotonous_interv}
   Let \(tt_a\) be a proper travel time function.
 
-  The interval \((b_i(\beta), b_e(\beta))\) is decreasing in \(\beta\) (with respect to the ordering given by being contained).
+  The interval \((b_i(\beta), b_e(\beta))\) is decreasing in \(\beta\) (with respect to the order given by being contained).
 
   Similarly, the interval \((g_i(\gamma), g_e(\gamma))\) is decreasing in \(\gamma\).
 \end{prop}
@@ -766,7 +765,7 @@ This proposition is interesting:
 it indeed shows that, as \(\beta\) is increased,
 the window of \(t^*\) for which an early arrival is realized shrinks (and, similarly, the same happens for \(\gamma\)).
 
-This concludes the section about the analytical minimization of the cost function.
+This concludes the section on the analytical minimization of the cost function.
 The next section will study how, given distributed parameters \(\beta, \gamma, t^*\),
 the likelihood of a data point can be analytically computed.
 
@@ -781,19 +780,19 @@ it is important to understand what are the parameters that introduce stochastici
 
 \subsection{Stocasticity in the Parameters}
 
-As introduced in section~\ref{sec:thesis_obj}, the parameters \(\beta, \gamma, t^*\) will be considered as random variables
+As introduced in Section~\ref{sec:thesis_obj}, the parameters \(\beta, \gamma, t^*\) will be considered as random variables
 with probability density functions, respectively, \(f_\beta, f_\gamma, f_{T^*}\).
 
-The first important question to ask is wether the parameters can be considered as independent.
+The first important question to ask is whether the parameters can be considered as independent.
 
 Clearly, the parameters \(\beta, \gamma\) are not independent:
 rich people will, in general, have them higher while poorer people will have them lower.
 This suggests that the positive correlation between them is not negligible at all.
 
-Recall thus that, in the theory developed in this pages,
+Recall thus that, in the theory developed in these pages,
 the value of the parameter \(\alpha\) has been normalized to one:
-supposing \(\beta/\alpha, \gamma/\alpha\) to be independent is way more reasonable than supposing \(\beta, \gamma\) to be so.
-This assumption is thus made. For a discussion on wether groups of people have dependant \(\beta/\alpha, \gamma/\alpha\), see \cite{LindseyBook}.
+supposing \(\beta/\alpha, \gamma/\alpha\) to be independent is much more reasonable than supposing \(\beta, \gamma\) to be so.
+This assumption is thus made. For a discussion on whether groups of people have dependent \(\beta/\alpha, \gamma/\alpha\), see \cite{LindseyBook}.
 
 Moreover, the distribution of the parameter \(t^*\) is assumed to be independent from the schedule delay preferences.
 Again, some insights on the studied population could be used to confirm or deny this hypothesis.
@@ -807,7 +806,7 @@ and gives an high level description of the problem.
 \subsection{Description of the Likelihood}
 \label{sec:descr-likel}
 
-As explained in section~\ref{sec:lik_comp},
+As explained in Section~\ref{sec:lik_comp},
 the goal of this section is describing how the Probability Density Function for the random variable \(T^{opt}\), \(f_{T^{opt}}\), can be computed.
 
 In other words, given an arrival time \(t_a\),
@@ -846,9 +845,9 @@ After that, an expression for the likelihood for early and late arrivals will be
 \label{sec:lik_ot}
 
 As seen in section \ref{sec:glob_min},
-on-time arrivals occur when the parameter \(t^*\) is out of some intervals defined by the parameters \(\beta\), \(\gamma\).
+on-time arrivals occur when the parameter \(t^*\) is outside some intervals defined by the parameters \(\beta\), \(\gamma\).
 Given an arrival time \(t_a\),
-it is an on-time arrival if it is equal to \(t^*\) and, moreover, it is out of the said intervals.
+it is an on-time arrival if it is equal to \(t^*\) and, moreover, it is outside the said intervals.
 
 More formally, the event \textit{being an on-time arrival} can be decomposed in \textit{being a realization of the random variable \(T^*\)} and \textit{not being into an interval that would yield an internal minimum}.
 
@@ -928,12 +927,12 @@ The final expression for the likelihood of a point being an on-time arrival is t
 
 Consider now the probability \(f_{T^{opt}, Q}(t_a, -1)\) of a point being an arrival and being an early arrival.
 
-A reasoning analogous to what done in section~\ref{sec:lik_ot} shows that an early arrival is realized when,
+An analogous reasoning to what done in Section~\ref{sec:lik_ot} shows that an early arrival is realized when,
 differently from an on-time arrival,
 the point \(t^*\) falls into the interval \((b_i(\beta), \min\{b_e(\beta), t_s(\beta, \gamma)\})\) and,
 on top of this, the point \(b_i(\beta)\) coincides with \(t_a\).
 
-These events are not anymore independent,
+These events are no longer independent,
 and the conditional probabilities have to be computed.
 
 The member of the likelihood relative to the early arrival is thus
@@ -966,7 +965,7 @@ I get a final expression for the probability density function:
   + f_\beta(tt_a'(t_a))[tt_a''(t_a)]^+  \int_0^\infty f_\beta(x) (F_{T^*}(t_a) - F_{T^*}(\max(g_i(-tt_a'(t_a)), t_s(x, -tt_a'(t_a)))) ) dx\ 
 \end{multline}
 
-Given one data point \(t_a\), the travel time function \(tt_a\) and probability density functions for the parameters \(\beta, \gamma, t^*\),
+Given one data point \(t_a\), the travel time function \(tt_a\) and the probability density functions for the parameters \(\beta, \gamma, t^*\),
 the likelihood of the data point can now be computed.
 
 Suppose now the probability density functions to be parametrized by a parameter \(\theta\in\R^d\).
@@ -988,7 +987,7 @@ and to work with it instead of directly with the result of the likelihood.
 
 The likelihood function has thus been developed, and can be computed and minimized.
 
-The expression of it can be quite convoluted, but is a close form analytical expression
+The expression of it can be quite convoluted, but is a closed form analytical expression
 (given the definitions of the auxiliary functions given in the previous sections),
 and can be numerically approximated.
 The next section shows how the approximation can be made.
@@ -996,8 +995,8 @@ The next section shows how the approximation can be made.
 \subsection{Numerical Computation of the Likelihood}
 \label{sec:numerical_lik}
 
-For the reasons noted in section~\ref{sec:lik_speed}
-the result of the expression for the likelihood in~\eqref{eq:lik_final} can't be directly computed.
+For the reasons noted in Section~\ref{sec:lik_speed}
+the result of the expression for the likelihood in~\eqref{eq:lik_final} cannot be directly computed.
 There are indeed several problems, listed below:
 \begin{enumerate}
 \item The integrals cannot be analytically computed
@@ -1012,7 +1011,7 @@ There are indeed several problems, listed below:
 These problems prevent a numerical computation of the solution via the direct implementation of a closed form analytical expression.
 Each one of them can anyway be solved in a different way:
 \begin{enumerate}
-\item The integrals can be approximated via the trapezoid rule,
+\item The integrals can be approximated via the trapezoid method,
   to a desired precision.
 \item The derivative of the travel time function is strictly monotone where it has to be inverted.
   A bisection algorithm can thus find the solution.
@@ -1032,13 +1031,13 @@ Each one of them can anyway be solved in a different way:
 
   Again, both methods can solve the problem up to a desired precision.
 \item The functions \(b_e, g_i\) can be again approximated via a bisection algorithm:
-  they are indeed determined by the point in which a line intersects a function,
+  they are indeed determined by the point at which a line intersects a function,
   and this intersection is realized only once.
   Finding suitable initial conditions is thus easily doable.
-\item Finally, the functions \(\beta_0, \gamma_0\) can again be approximate via a bisection algorithm.
+\item Finally, the functions \(\beta_0, \gamma_0\) can again be approximated via a bisection algorithm.
   It is indeed clear that \(0 < \beta_0(t) < \beta_{max}\):
-  by using these initial condition,
-  at each iteration wether the point \(t\) falls into the interval defined in~\eqref{eq:def_b_0_g_0} can be checked.
+  by using this initial condition,
+  at each iteration whether the point \(t\) falls into the interval defined in~\eqref{eq:def_b_0_g_0} can be checked.
   The bisection will be made accordingly.
 \end{enumerate}
 
@@ -1048,9 +1047,9 @@ in particular if performed several times
 (note that one of these operations may be performed on the result of another one of them,
 multiplying the computational complexity of the two operations).
 
-Since python was decided to be the language of choice for this problem
+Since Python was decided to be the language of choice for this problem
 (due to its flexibility and suitability to work with data from different sources),
-the use of an high-performance library was needed.
+the use of a high-performance library was needed.
 
 The choice of JAX allowed to reduce the execution time of the likelihood computation by up to four orders of magnitude when compared to standard python code,
 by being able to compile the code and to partially parallelize it.
@@ -1066,16 +1065,16 @@ to study how the estimator performs on different scenarios.
 \section{Evaluation on Synthetic Dataset}
 \label{sec:eval_synth_dataset}
 
-As mentioned in section~\ref{sec:synth_dataset},
-the evaluation on synthetic dataset can give some insights on sow the model works,
-but doesn't help in proving its efficiency with real data,
+As mentioned in Section~\ref{sec:synth_dataset},
+the evaluation on synthetic dataset can give some insights on how the model works,
+but does not help in proving its efficiency with real data,
 that may be, a priori, extremely different from what simulated.
 
 The insights this method gives on how the model works in the simplest case may anyway be helpful:
 it will indeed be possible to plot an empirical likelihood function to compare it with the theoretical result,
 and the optimizers will be calibrated to achieve a good convergence.
 
-In order to build a synthetic dataset as explained in section~\ref{sec:synth_dataset},
+In order to build a synthetic dataset as explained in Section~\ref{sec:synth_dataset},
 it is necessary to sample from the distributions of the parameters \(\beta, \gamma, t^*\).
 The distribution of the parameters,
 and the parameter \(\theta\) to be estimated (which parametrizes the distributions),
@@ -1132,16 +1131,16 @@ As expected, higher density zones are observed where early and late arrivals are
 \begin{figure}
   \centering
   \includegraphics[width=.8\textwidth]{hist_ll}
-  \caption{Histogram of the arrival times when sampling a big number of points (in this case, 100,000 points are sampled),
+  \caption{Histogram of the arrival times when sampling a large number of points (in this case, 100,000 points are sampled),
     plotted with a scaled version of the likelihood function.
     It can be seen how the theoretically computed likelihood closely follows the empirical distribution of the points,
-    confirming the accuracy of the theoretical work done in section~\ref{sec:lik}.}
+    confirming the accuracy of the theoretical work done in Section~\ref{sec:lik}.}
   \label{fig:hist_pdf}
 \end{figure}
 
-To show whether this characteristic is properly described by the theoretical likelihood developed in section~\ref{sec:lik},
+To show whether this characteristic is properly described by the theoretical likelihood developed in Section~\ref{sec:lik},
 the probability density function \eqref{eq:lik_final} is thus plotted,
-alongside an histogram made by sampling a big number of arrival times,
+alongside an histogram made by sampling a large number of arrival times,
 in figure~\ref{fig:hist_pdf}.
 Note that the histogram of the empirical distribution should converge,
 as the sample size increases, to the shape of the probability density function.
@@ -1155,7 +1154,7 @@ This confirms that, given the correct parameter \(\theta\),
 the likelihood correctly captures how the resulting arrival times are distributed.
 To be able to perform the optimization though,
 the likelihood has to be well behaved as the parameter \(\theta\) changes.
-This is looked at in the next section
+This is looked at in the next section.
 
 \subsection{Optimizing the Likelihood on a Synthetic Dataset}
 
@@ -1176,9 +1175,9 @@ to the global minimum of the function (that is, the parameter used to generate t
 The parameter used to generate the dataset over which the likelihood is evaluated can then be changed,
 to evaluate how well-behaved the likelihood is for different types of parameters.
 
-The most meaningful insights come, in this case, by plotting the values for the parameters \(\mu_\beta, \mu_\gamma\) while leaving the others unchanged.
+The most meaningful insights come, in this case, by plotting the values of the parameters \(\mu_\beta, \mu_\gamma\) while leaving the others unchanged.
 
-The first insight from doing this procedure regards the parameter \(\sigma\):
+The first insight from doing this procedure concerns the parameter \(\sigma\):
 it is indeed the one that the most changes the panorama of the likelihood,
 and how it does so is particularly interpretable.
 
@@ -1196,11 +1195,11 @@ and how it does so is particularly interpretable.
 
 Figure~\ref{fig:contour_mid_var} shows the said plot,
 when the parameter \(\sigma\), regarding the variance of the scheduling preferences \(\beta, \gamma\),
-has a value that is not too big neither too low (namely, \(\sigma = 0.3\) for that plot).
+has a value that is neither too large nor too low (namely, \(\sigma = 0.3\) for that plot).
 The likelihood is here well behaved,
 even if not convex, and clearly shows a big minimum:
-convergency should not here yield any problem.
-Moreover, the minimum is realized (in this case) exactly in the point where the parameter that generated the dataset lies.
+convergence should not here yield any problem.
+Moreover, the minimum is realized (in this case) exactly at the point where the parameter that generated the dataset lies.
 This depends, in general, on the size of the dataset.
 It being true for a small dataset is anyway another sign of the likelihood being well behaved.
 
@@ -1217,7 +1216,7 @@ It being true for a small dataset is anyway another sign of the likelihood being
 
 When the variance is too low, on the other hand,
 the situation is not as simple.
-Figure~\ref{fig:contour_low_var} show this case:
+Figure~\ref{fig:contour_low_var} shows this case:
 the function is close to constant when changing the parameters that decide the mean of the schedule delay preferences,
 and an iterative optimizer could easily get stuck in these zones.
 Close to the global minimum we can anyway observe a steep decrease of the value of the function.
@@ -1226,7 +1225,7 @@ The reason behind this phenomenon is quite intuitive:
 with a small variance, both the data and the likelihood function will show a sharp peak for the early and late arrivals.
 Changing the parameters \(\mu_\beta, \mu_\gamma\) moves the peak in time,
 and the peaks of the likelihood function will be moved to zones in which the density of the observed data is constant.
-The likelihood will thus there be constant.
+The likelihood will thus be, in that zone, constant.
 
 \begin{figure}
   \centering
@@ -1244,12 +1243,12 @@ and may not perfectly coincide with the parameter value.
 This is, again, easy to understand:
 as the parameters have a higher variance,
 the variance of the observed arrival times will increase as well
-(as long as the travel time function doesn't have points in which its second derivative assumes really high values, that is not the case here).
+(as long as the travel time function does not have points in which its second derivative assumes really high values, that is not the case here).
 Its minima will thus be flatter,
 and in order to estimate the original parameter with the same precision,
 a greater number of samples will be needed.
 
-To tackle all this problems, a smart choice of the initial condition for the optimizer is enough:
+To tackle all these problems, a smart choice of the initial condition for the optimizer is enough:
 a rough grid search will thus find the best initial condition for the iterative optimizer that will subsequently run.
 
 Carefully choosing the right initial condition can relevantly improve the convergence:
@@ -1261,7 +1260,7 @@ Lastly, figure~\ref{fig:contour_mid_var} shows, near to \(\mu_\beta = 4\),
 a small local minimum.
 The good initial condition will, even in this case, avoid convergence to this local minimum.
 
-Once the grid search is done,
+Once the grid search is performed,
 an iterative optimizer is used to find the minimum.
 We currently run a Nelder-Mead optimizer,
 achieving relative errors (with respect to the initial parameter value)
@@ -1275,8 +1274,8 @@ the optimizer has indeed to converge in a 5-dimensional space,
 and two of these dimensions are variances.
 For variances, in particular, errors could be better tolerated than how much they can be tolerated for the means.
 
-Once good results have been achieved on synthetic data,
-the nest step is validating the model on data from simulation.
+Once good results have been achieved with synthetic data,
+the nest step is validating the model with data from a simulation.
 
 \section{Evaluation on Data from Simulation}
 \label{sec:res_eval_metr}
@@ -1285,9 +1284,9 @@ Evaluating the model with data taken from traffic simulators is a considerable s
 if indeed the simulator converges (by considering more and more complex situations) to the reality,
 the step from simulated data to real data could be smaller than the one from synthetic data to simulated data.
 
-As noted in section~\ref{sec:eval_metr},
+As noted in Section~\ref{sec:eval_metr},
 the evaluations presents anyway some difficulties,
-that were sadly not totally overcame during the time frame given to the study.
+that were sadly not totally overcome during the time frame given to the study.
 
 The first difficulty regards the smoothing of the travel time data.
 
@@ -1329,7 +1328,7 @@ constrained to have a smooth connection with this function.
 \begin{figure}
   \centering
   \includegraphics[width=.7\textwidth]{tdata_f}
-  \caption{Data retrieved by a simulation on METROPOLIS2, as explained in section~\ref{sec:eval_metr}.
+  \caption{Data retrieved by a simulation on METROPOLIS2, as explained in Section~\ref{sec:eval_metr}.
     On top of the data, a function built by linking two branches of hyperbola and a polynomial is fitted to the data and plotted.
   The result shows a great fit, excellently interpolating the data.}
   \label{fig:func_on_data}

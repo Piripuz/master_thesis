@@ -24,7 +24,7 @@ These junctions are called \textit{bottleneck}, since they restrict the traffic 
 Identifying the location and capacity of bottlenecks allows thus the forecasting of how traffic changes in the day,
 depending on how people will choose to move.
 
-Vickrey's work was later extended by \textcite{de1983stochastic}, which look for a stochastic equilibrium solution, and \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}, which took into account elastic demand and better formalize the initial model.
+Vickrey's work was later extended by \textcite{de1983stochastic}, which look for a stochastic equilibrium solution, and \textcite{d0907f84-e14a-3d98-ad20-759f41491d6e}, which take into account elastic demand and better formalize the initial model.
 
 According to these models, the users face a cost for each choice of departure time,
 and this cost is parametric on some characteristic of the users,
@@ -44,17 +44,17 @@ In the original work, the function expressing the cost given the departure time 
   \label{eq:cost_intro}
   C(t) = \alpha(\text{travel time}) + \beta (\text{time early}) + \gamma (\text{time late})
 \end{equation}
-where \(\alpha, \beta\) and \(\gamma\) are user-dependant parameters, and \textit{time early}, \textit{time late} are, respectively, how much time a user arrives before the desired arrival time and how much time they arrive after it.
+where \(\alpha, \beta\) and \(\gamma\) are user-dependent parameters, and \textit{time early}, \textit{time late} are, respectively, how much time a user arrives before the desired arrival time and how much time they arrive after it.
 
 The cost increases here linearly in the schedule delay (but differently, depending on whether it is negative or positive) and on the time spent traveling and is, a priori, not differentiable where the departure time yields a perfectly on-time arrival
 (that is, when the arrival time is equal to the desired arrival time),
 since an earlier departure would increase the cost by a quantity proportional to \(\beta\),
 while a later one would increase the cost by a quantity proportional to \(\gamma\).
 
-More recent works try make the cost function more flexible,
+More recent works try to make the cost function more flexible,
 by making a tradeoff with its simplicity:
-\todo{Find a paper with quadratic cost}, for instance,
-use a smoother cost function, made by considering the cost to be quadratic on schedule delay. \todo{Find possibly more papers that use different travel time functions}
+for instance, some use a smoother cost function,
+made by considering the cost to be quadratic on schedule delay.
 
 \subsection{Finding the Equilibrium Solution}
 
@@ -62,14 +62,14 @@ use a smoother cost function, made by considering the cost to be quadratic on sc
 Once a cost function has been chosen, a wide variety of works find the equilibrium for a given network and a given population,
 with both an analytical and numerical approach.
 
-Among the work that find the analytical equilibrium, initial works such as \textcite{de1983stochastic} were dealing with a single bottleneck.
+Among the works that find the analytical equilibrium, initial ones such as \textcite{de1983stochastic} dealt with a single bottleneck.
 They consider the situation described above, in which every user independently minimizes its cost by shifting its departure time forward or backward in time and they show that,
 in this case, the equilibrium
 (namely, the situation in which any user cannot improve its utility by unilaterally changing their choice)
 realizes a triangle-shaped travel time function, where the steepness of the edges of the triangle depend on the parameters of the studied population.
 
-These works were later extended, taking into account more complex network: initially, \textcite{doi:10.1287/trsc.24.3.217} considers a Y-shaped network,
-in which some of the users go trough two different bottlenecks and some others only trough one.
+These works were later extended, taking into account more complex networks: initially, \textcite{doi:10.1287/trsc.24.3.217} considers a Y-shaped network,
+in which some of the users go through two different bottlenecks and some others only through one.
 
 This model was extended by \textcite{doi:10.1287/trsc.27.2.148},
 who studied a Y-shaped network with three different bottlenecks.
@@ -77,28 +77,28 @@ They highlight how this situation yields a paradox:
 by increasing the capacity of one link, the total congestion at equilibrium is indeed higher for this type of network.
 
 More recently, \textcite{AKAMATSU2015808} analytically studied a network composed by a corridor along which several bottlenecks are positioned.
-They develop a method that allows to analytically find equilibrium solution for bigger networks,
+They develop a method that allows to analytically find an equilibrium solution for bigger networks,
 with an arbitrary number of bottlenecks.
 
-Similarly to how increasingly complex network have been studied,
+Similarly to how increasingly complex networks have been studied,
 recent literature has been increasing the complexity of the population of users.
 
 Initial works, such as \textcite{Vickrey1969}, considered the users to be homogeneous.
 Later works relaxed this hypothesis, taking into account users with heterogeneous preferences or different desired arrival times.
 Notably, \textcite{arnott1988schedule} analytically solves the problem to equilibrium when the users are divided in a finite number of groups,
-each one of whose has different values of \(\alpha\) and \(\beta\),
+each one of which has different values of \(\alpha\) and \(\beta\),
 but constant ratio \(\gamma/\beta\).
-They show that the slope of the travel time function gradually increase when getting closer to the desired arrival time,
+They show that the slope of the travel time function gradually increases when getting closer to the desired arrival time,
 and the groups of users with higher penalties for arriving early and late will arrive when the slopes are higher.
 
 More recently, \textcite{amirgholy2017analytical} compute an analytical solution in the case of uniformly distributed preferences,
 and numerically approximate it in case of other distributions.
 
-Numerically, the implementation of Vickrey's model in simulators allows to find a solution for more complex situation and large scale networks,
+Numerically, the implementation of Vickrey's model in simulators allows to find a solution for more complex situations and larger scale networks,
 and to perform simulations on digital twins of real networks.
-\textcite{de1997metropolis} developed a dynamic simulator, that iteratively finds an equilibrium solution for an arbitrarily complex network and user base.
-This simulator, and its second version \parencite{RePEc:ema:worpap:2024-03},
-were extensively used to simulate real networks and to evaluate effect of policies (see \cite{de2002real,de2005congestion,de2006modelling})
+\textcite{de1997metropolis} developed a dynamic simulator that iteratively finds an equilibrium solution for an arbitrarily complex network and user base.
+This simulator and its second version \parencite{RePEc:ema:worpap:2024-03}
+were extensively used to simulate real networks and to evaluate the effect of policies (see \cite{de2002real,de2005congestion,de2006modelling})
 
 For the development of this thesis,
 the next section will be devoted to a deeper study of equation \eqref{eq:cost_intro}.
@@ -140,7 +140,7 @@ see \textcite{LindseyBook}.
 \label{sec:estim-param-alpha}
 
 Work has been done to estimate the values of the parameters:
-\textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd} fits a discrete-choice model on a survey in which 527 commuters in the USA stated when they arrive to work, and estimates some values for the ratios \(\beta/\alpha, \gamma/\alpha\).
+\textcite{54d203ee-4bf8-3234-9286-56e4c8b7f5bd} fits a discrete choice model on a survey in which 527 commuters in the USA stated when they arrive to work, and estimates some values for the ratios \(\beta/\alpha, \gamma/\alpha\).
 The values found in this way are
 \begin{equation}
   \label{eq:beta_gamma_small}
@@ -158,7 +158,7 @@ they indeed use values such as (in \cite{4ffb5da1-1f49-3898-98a7-209781744dc0})
 
 The estimation of these parameters presents anyway some drawbacks:
 it has indeed always been based on survey data or,
-more in general, on data that rely on \textit{Stated Preferences} (what the user \textit{says} is true)
+more generally, on data that rely on \textit{Stated Preferences} (what the user \textit{says} is true)
 rather than on \textit{Revealed Preferences} (what the behaviour of the users \textit{reveals} about the true value of the parameter).
 These estimation methods, while often making it easier to conduct analyses,
 suffer from some intrinsic shortcomings,
@@ -195,10 +195,10 @@ More modern ways of finding such data include working with data from GPS sensors
 \end{figure}
 
 Loop detectors are widely used, and a vast literature relies on their data for travel time estimation \parencite{YILDIRIMOGLU201345}.
-In particular, a widely used dataset is the Performance Measurement System (PeMS) by California Department of Transportation (CalTrans),
+In particular, a widely used dataset is the Performance Measurement System (PeMS) by the California Department of Transportation (CalTrans),
 which is freely accessible and whose data, spanning across several years,
 can have a really high definition,
-allowing large scale studies to be performed with a sufficient precision.
+allowing large-scale studies to be performed with sufficient precision.
 Figure~\ref{fig:pems} shows an overview of the area in which PeMS data are available.
 
 Other than this, data from the private sector are available as well.
@@ -214,7 +214,7 @@ that could yield a precise estimate of the parameters and, as a consequence,
 a better knowledge of the population.
 This is exactly the aim of the thesis:
 to develop a model that, given some data about travel time and when people decide to depart from their origin,
-infer some characteristic about them.
+infers some characteristic about them.
 %%% Local Variables:
 %%% mode: LaTeX
 %%% TeX-master: "../main"

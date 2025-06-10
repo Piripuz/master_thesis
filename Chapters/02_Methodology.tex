@@ -1,7 +1,7 @@
 \chapter{Methodology}
 \label{chap:methodology}
 
-This chapter will present the methodology used throughout the thesis.
+This chapter presents the methodology used throughout the thesis.
 It will be articulated in different parts:
 the first step will involve building the model
 and finding a suitable method for retrieving the parameters from data.
@@ -20,9 +20,9 @@ For retrieving parameters from the data, different methods could be used,
 each one of which is better suited for a different problem.
 In order to choose one of these methods, a more formal statement of the problem is necessary.
 
-In the next lines, the inference problem is more formally stated,
+In the following lines, the inference problem is more formally stated,
 in order to acquire a deeper understanding of it and to be able to choose the right inference method.
-After that, the available methods will be presented and the most suitable method will be chosen from them.
+After that, the available methods will be presented and the most suitable one will be chosen from them.
 
 \subsection{Theoretical Preliminaries}
 \label{sec:theo_pre}
@@ -81,12 +81,12 @@ and an approach for doing this has to be chosen.
 It is well known how the inference methods are divided in Bayesian and Frequentist inference
 (for a really in-depth review of the discussion, see \cite{bandyopadhyay2011philosophy}).
 The main inference methods are thus either Bayesian methods (for an overview, see \cite{gelman2013bayesian}) or simpler Maximum Likelihood \parencite{doi:10.1098/rsta.1922.0009}.
-The following sections describe better the different approaches,
-and discuss how are they applicable to the examined problem
+The following sections better describe the different approaches,
+and discuss how are they applicable to the examined problem.
 
 \subsection{Maximum Likelihood Estimation}
 \label{sec:max_lik}
-The Maximum Likelihood Estimation is the simplest, older and probably most widely used method examined here.
+The Maximum Likelihood Estimation is the simplest, oldest and probably most widely used method examined here.
 
 The methods relies on a simple idea:
 for each value of the parameter \(\theta\),
@@ -127,10 +127,10 @@ Finding an analytical solution is anyway not always viable,
 since the function can have a convoluted analytical expression.
 Widely used methods include thus numerical optimization methods,
 often via gradient descent
-(in the cases in which the likelihood is differentiable, and the gradient is easy to compute)
+(in the cases where the likelihood is differentiable, and the gradient is easy to compute)
 or even via gradient-free optimizers using, for instance,
 the simplex method \parencite{10.1093/comjnl/7.4.308}.
-The optimization methods will be investigated further in section \ref{sec:max_lik_meth}
+The optimization methods will be investigated further in Section \ref{sec:max_lik_meth}
 
 Even being this the simplest method, it presents some challenges:
 the likelihood is indeed not trivial to estimate,
@@ -140,14 +140,14 @@ in case the computed likelihood does not allow an analytical maximization (that 
 given how the likelihood is defined).
 
 These problems, which will equally affect the other estimation methods,
-will be tackled in section \todo{Put section number}LIKELIHOOD.
+will be tackled in Section \ref{sec:lik_est}.
 I will thus here present the other main estimation method.
 
-\subsection{Bayesian Estimation}
+\subSection{Bayesian Estimation}
 \label{sec:bayes}
 
 The bayesian approach is a philosophically (beyond practical) different way of looking at the problem.
-According to this approach, parameters are not indeed seen as real variables that can maximised,
+According to this approach, parameters are not indeed seen as real variables that can be maximised,
 but rather as random variables themselves,
 some prior knowledge of which can be integrated in the model.
 
@@ -159,11 +159,11 @@ Using bayesian methods, on the other hand,
 it is possible to consider some prior knowledge about the parameter before doing the estimation
 (for instance, the parameter can be believed to be distributed close to the average height of a person).
 Data will thus enhance this knowledge,
-specified trough the choice of a \textit{prior} distribution,
+specified by the choice of a \textit{prior} distribution,
 and transform it to another distribution, called \textit{posterior} distribution.
 
 Sadly, in our case, having a meaningful prior distribution is quite difficult:
-as noted in section \ref{cha:introduction},
+as noted in Section \ref{cha:introduction},
 knowledge about the distribution of them is limited.
 A decision was thus taken to estimate the parameters by simply maximising the likelihood,
 not taking in consideration any information on the prior.
@@ -171,7 +171,7 @@ not taking in consideration any information on the prior.
 It is thus important to study the likelihood,
 in order to be able to perform the parameter estimation at the core of the project.
 
-\section{Estimation of the Likelihood}
+\Section{Estimation of the Likelihood}
 \label{sec:lik_est}
 To estimate the likelihood, two main approaches are viable:
 one could either analytically find the expression for the likelihood,
@@ -181,16 +181,16 @@ or choose to sample data points (by directly minimizing the cost function)
 to perform a subsequent maximization on what is known as \textit{empirical likelihood} \parencite{10.1093/biomet/75.2.237}:
 a nonparametric estimation of the likelihood function from a set of samples.
 
-While the standard approach could provide a way of quickly computing the likelihood,
+While the standard approach could provide a way of quickly computing the likelihood
 (enhancing as well the knowledge of the subject),
 empirically approximating it could yield an acceptable approximation and would not require as much theoretical understanding as the direct computation.
 But, since theoretical understanding of the problem is not something to be neglected,
 both methods deserve to be presented.
 
-\subsection{Empirical Approximation of the Likelihood}
+\subSection{Empirical Approximation of the Likelihood}
 \label{sec:emp_approx_lik}
 
-Empirical estimation of the likelihood is a method that was firstly defined by \textcite{10.1093/biomet/75.2.237}.
+Empirical estimation of the likelihood is a method that was first defined by \textcite{10.1093/biomet/75.2.237}.
 It consists in the estimation of the likelihood based on the \textit{empirical Cumulative Distribution Function} (eCDF)  \(\hat{F}(x)\) (simply, the ratio between the number of samples before the point in which the function is evaluated and the number of the total samples),
 and only requires an arbitrary number of independent and identically distributed (i.i.d.) samples.
 \missingfigure{Figure about eCDF vs CDF?}
@@ -218,11 +218,11 @@ For a more in-depth discussion of the empirical likelihood and its properties, s
 
 This method is certainly relevant for the problem examined in this thesis:
 the likelihood could indeed be computed regardless of the distributions of the parameters \(\alpha, \beta, \gamma, t^*\),
-as long as sampling from their distribution is easy enough.
-Once a sample has been taken from each of their distribution,
-minimizing the cost function yield a data point in the set \(S\).
+as long as sampling from their distributions is easy enough.
+Once a sample has been taken from each of their distributions,
+minimizing the cost function yields a data point in the set \(S\).
 By drawing independent samples from the chosen distributions for the parameters,
-the set \(S\) can be built of a sufficient size.
+the set \(S\) can be built to a sufficient size.
 The likelihood of the given dataset can then be estimated against the sampled data,
 and subsequently maximized.
 
@@ -239,7 +239,7 @@ This problem could be avoided by using modern high performance computing framewo
 and powerful machines.
 It is anyway a major drawback and suggests, if possible, the adoption of alternative methods.
 
-\subsection{Direct Computation of the Likelihood}
+\subSection{Direct Computation of the Likelihood}
 \label{sec:lik_comp}
 
 As mentioned earlier, the obvious method of computing a likelihood is the direct computation of it.
@@ -256,8 +256,8 @@ Lastly, the characterization has to be extended to the case in which the paramet
 
 This process could be particularly laborious,
 but once done it could provide an elegant and precise estimation method:
-having a full characterization of the points minimizing the cost function \(C(t; \alpha, \beta, \gamma, t^*)\) would indeed require a deep knowledge of the problem,
-and this is, herein, interesting by itself on top of being useful.
+having a full characterization of the points that minimize the cost function \(C(t; \alpha, \beta, \gamma, t^*)\) would indeed require a deep knowledge of the problem,
+and this is, herein, interesting by itself in addition to being useful.
 
 Despite being challenging,
 this approach is the chosen one:
@@ -267,12 +267,11 @@ Once the analytical expression for the likelihood is found,
 the estimation is not done at all:
 computing the likelihood will indeed require computations that can only be numerically approximated,
 and whose approximation with a good precision requires a big computational effort.
-The following section will delve a bit deeper in the problem,
+The following section delves a bit deeper in the problem,
 and presents some solutions that can help in mitigating the issues.
 
-\subsection{Speeding Up the Likelihood Computation}
+\subSection{Speeding Up the Likelihood Computation}
 \label{sec:lik_speed}
-\todo{I don't understand if this section has to go in methods or results: I am assuming the likelihood to be known, but it is not...}
 As stated in the previous paragraph, numerically computing the Probability Density Function of the variable \(T^{opt}\) will,
 by itself, not be a trivial task.
 Moreover, the computation has to be repeated a big number of times for performing the final MLE estimate for the parameter \(\theta\):
@@ -280,20 +279,20 @@ the value of the pdf has indeed to be computed for each point in the dataset,
 and once this computation has been done the final result has to be maximised,
 requiring the whole computation to be performed as many times as the maximization algorithm requires to.
 Moreover, being able to perform a gradient descent on the result of the likelihood would greatly reduce the number of times the computation is performed,
-while the simpler algorithms would be considerably slower by requiring a bigger number of function evaluations.
+while the simpler algorithms would be considerably slower by requiring a larger number of function evaluations.
 
 The problems in the evaluation of the likelihood are mainly two:
 the first one is the need of evaluating integrals of function whose primitive is not analytically computable;
 the second one is the need of inverting some functions whose inverse does not have a closed form analytical expression.
 
 Both problems are solvable,
-since there exists methods that find the solutions with arbitrary precision,
+since there exist methods that find the solutions with arbitrary precision,
 as long as the functions are behaved well enough (that is the case in this problem).
 
 Regarding the integration, the solution can be approximated by using the \todo{add figure for this?} trapezoid method,
 that requires a finite number of function evaluations and yields a good estimate of the integral
 (for a deeper discussion on this, see \cite{Sueli_Mayers_2003}).
-An approximated integral via the trapezoid method can be thus computed and,
+An approximated integral via the trapezoid method can thus be computed and,
 if gradient descent has to be performed on its result,
 the derivative of it can be computed.
 The differentiation is anyway not feasible analytically, since it involves a great number of terms.
@@ -301,7 +300,7 @@ In order to properly differentiate it,
 an automatic differentiation framework is needed.
 
 For what concerns inverting functions, the problem is again computationally tractable,
-as the inverse can be approximated iteratively by using a bisection method or,
+as the inverse can be approximated iteratively by using a biSection method or,
 in some particular cases, a gradient descent algorithm.
 Anyway, differentiating the result of an iterative method does not even have a general meaning,
 and is thus not doable.
@@ -310,20 +309,20 @@ called implicit differentiation \parencite{DBLP:journals/corr/abs-2105-15183},
 allows anyway to numerically approximate the gradient of the result of optimization techniques.
 The method is efficiently implemented for the automatic differentiation framework JAX \parencite{jax2018github}
 that, on top of allowing the computation of gradients,
-speeds up by several order of magnitude the written code (compared to standard python implementations)
+speeds up by several orders of magnitude the written code (compared to standard Python implementations)
 by leveraging just-in-time compilation and hardware acceleration.
 Utilizing this library will be fundamental in the development of the thesis,
-by allowing the computations to be ran in tolerable times even in normal, consumer-grade machines.
+by allowing the computations to be executed in tolerable times even on normal, consumer-grade machines.
 
 After the likelihood has been efficiently computed,
 inferring the parameters requires it to be maximised.
-An overview of the possible maximisation methods is thus given in the following section.
+An overview of the possible maximisation methods is thus given in the following Section.
 
-\section{Maximization of the Likelihood}
+\Section{Maximization of the Likelihood}
 \label{sec:max_lik_meth}
 
 The ideal way of finding the maximum of the likelihood would be differentiating it,
-invert the derivative and analytically compute the result.
+inverting the derivative and analytically computing the result.
 This is sadly not possible in general,
 since the expression for the likelihood could be very convoluted and,
 as a consequence,
@@ -332,19 +331,19 @@ the derivative can become analytically intractable.
 To solve this problem,
 the maximum will be numerically approximated.
 Different techniques can be used for the approximation of it,
-and they will be presented in this section.
+and they will be presented in this Section.
 
-\subsection{Grid Search}
+\subSection{Grid Search}
 \label{sec:grid_search}
 
 The most basic and intuitive solution for maximising a function (after randomly selecting a point to be the maximum) is grid search:
 the function is evaluated on a set of equally spaced points spread over its domain,
 and the point in which the function assumes the highest value is chosen as the approximated maximum.
 
-Despite this being a naive solution,
+Despite being a naive solution,
 this method offers some advantages compared to other more sophisticated algorithms.
 A grid search is indeed unlikely to output a local minimum,
-since no information about wether the function is growing is ever used.
+since no information about whether the function is growing is ever used.
 Moreover, the algorithm is not inherently iterative,
 and as such greatly parallelizable.
 
@@ -358,10 +357,10 @@ but often combining it with an iterative maximization algorithm offers the best 
 
 Iterative methods are thus examined in the next sections.
 
-\subsection{Gradient Descent Methods}
+\subSection{Gradient Descent Methods}
 \label{sec:grad_desc}
 
-Gradient descent (with the various modified versions of it) is arguably the most widely known and used method in optimization \parencite{ruder2017overviewgradientdescentoptimization}.
+Gradient descent (and the various modified versions of it) is arguably the most widely known and used method in optimization \parencite{ruder2017overviewgradientdescentoptimization}.
 It is based on a simple idea:
 it is easy to prove that, for a differentiable function,
 the direction in which the value of the function increases the fastest (clearly, locally)
@@ -390,17 +389,17 @@ The step size can be either constant, yielding a more predictable but often slow
 or variable.
 In the case in which the step size is not constant,
 it can be changed in a variety of different ways,
-defining several different gradient descent algorithms with their strength and weaknesses
+defining several different gradient descent algorithms with their strengths and weaknesses
 \parencite{doi:10.1137/1011036,MR701288}.
 
 For a deeper discussion on these methods, including how the step size can be chosen,
 see \cite{10.5555/3317111}.
 
-Many of the strength and weaknesses of these method are anyway common across all of them,
+Many of the strengths and weaknesses of these methods are anyway common across all of them,
 and the major weakness is, in many cases,
 the need of computing the gradient.
 
-In our case, the gradient of the likelihood can be computed via, as presented in section \ref{sec:lik_speed},
+In our case, the gradient of the likelihood can be computed via, as presented in Section \ref{sec:lik_speed},
 modern computational frameworks which allow implicit differentiation.
 The methods may anyway have issues with numerical stability,
 and need careful tuning for avoiding regions that are out of the domain\footnote{As reported in a conversation with a JAX developer}.
@@ -408,14 +407,14 @@ This problem could, in principle,
 make the computation of the gradient not feasible.
 In this case, iterative algorithms such as gradient-less optimizers could still yield good results.
 
-\subsection{Simplex Method}
+\subSection{Simplex Method}
 \label{sec:no_grad_opt}
 
 It may happen, in general, that no information is available other than the function values,
 making it impossible to compute the gradient,
 or particularly expensive to estimate it.
 
-For addressing this type of problems, some optimization techniques which only rely on the values of the function at some points,
+For addressing this type of problems, some optimization techniques that only rely on the values of the function at some points,
 without needing anything else,
 have been developed.
 I will focus here on the method that is arguably the most popular among them,
@@ -438,12 +437,12 @@ each point is pulled towards the best one proportionally on their distance from 
 When the simplex is lying on a \textit{flat} surface (that is, when the values of the function at its edges are close enough),
 the method is terminated and the edge in which the function assumes the lowest value is returned as the minimum.
 
-This method achieves convergence with a relatively little number of function evaluations,
+This method achieves convergence with a relatively small number of function evaluations,
 since the values of the function at the edges can be stored in memory.
 Despite this, it presents two major drawbacks.
 The first one is about the number of function evaluations:
 while the method does not require a big number of them if compared with gradient-free methods,
-the number of function evaluations it requires can exceed the ones required by gradient methods by different order of magnitude.
+the number of function evaluations it requires can exceed the ones required by gradient methods by different orders of magnitude.
 The second drawback regards the optimum found by the method:
 as found by \textcite{doi:10.1137/S1052623496303482},
 the method can indeed converge to nonstationary points,
@@ -457,25 +456,25 @@ and avoided in favour of gradient-based methods when possible.
 Once the likelihood has been maximised,
 the method has to be tested on scenarios in which the convergence can be evaluated,
 in order to prove it to actually be meaningful.
-The following sections will present how the evaluation will be performed,
+The following Sections will present how the evaluation will be performed,
 on various scenarios of increasing complexity.
 
-\section{Evaluation on Synthetic Data}
+\Section{Evaluation on Synthetic Data}
 \label{sec:eval_synth}
 
 The first, simplest scenario for testing the method consists in building a dataset of artificial observations of departure times,
 from a purely theoretical (and well behaved) travel time function.
-Building the dataset without any connection with real scenarios won't yield important data regarding the usefulness of the method when real data will be used.
-It anyway provides a nice instrument for evaluating the convergence properties of the method.
+Building the dataset without any connection with real scenarios will not yield important data regarding the usefulness of the method when real data will be used.
+However, it provides a nice instrument for evaluating the convergence properties of the method.
 Moreover, evaluating the method on a tailored dataset efficiently separates the method from the underlying theory:
 this step will enable to evaluate the method without it being affected by potential faults of the bottleneck modelling we assume.
 
-To perform this evaluation, the first thing that needs to be done is building the dataset.
+To perform this evaluation, the first thing that needs to be done is ing the dataset.
 
-\subsection{Building the Synthetic Dataset}
+\subSection{Building the Synthetic Dataset}
 \label{sec:synth_dataset}
 
-The dataset has to be build independently from the theory developed when estimating the likelihood,
+The dataset has to be built independently from the theory developed when estimating the likelihood,
 since a theory cannot be used for evaluating itself.
 
 The most independent way to build a synthetic dataset is thus to computationally minimise the cost function for each agent,
@@ -487,7 +486,7 @@ Remind that, from \eqref{eq:cost_inf}, the cost is equal to
 \end{equation*}
 
 To minimize it, a specification of the travel time function \(tt(t)\) is thus needed,
-on top of the parameters \(\alpha, \beta, \gamma, t^*\).
+in addition to the parameters \(\alpha, \beta, \gamma, t^*\).
 The travel time function can be chosen to have an arbitrary analytical form,
 as long as it satisfies the theoretical properties one expects from it (that will be defined further ahead).
 On the other hand, the parameters will be sampled from the chosen distribution,
@@ -495,12 +494,12 @@ parametrized by the parameter \(\theta\).
 
 Once the cost function has been defined,
 the minimization has to occur.
-Since the cost can have up to three local minima (as shown in section \todo{Section number} THEORY1),
+Since the cost can have up to three local minima (as shown in Section \todo{Section number} THEORY1),
 three different optimizers are run on it,
-each one of which aimed to one of the minima.
+each one of which aimed at one of the minima.
 The retrieved values are then compared, and the global minimum is found in this way.
 This procedure can be run for an arbitrary number of time,
-in order to obtain dataset of the wanted size \(N\).
+in order to obtain dataset of the desired size \(N\).
 
 With this method, both the size of the dataset \(N\) and the parameter \(\theta\) can be tweaked as much as needed:
 convergence can in this way be evaluated for many shapes of the distribution,
@@ -509,13 +508,13 @@ to ensure the robustness of the developed method.
 Once the dataset has been built,
 the model will be tested with the artificial data.
 
-\subsection{Running the Model on Synthetic Data}
+\subSection{Running the Model on Synthetic Data}
 \label{sec:run_synth_dataset}
 
-Being ran is exactly the purpose of the model and isn't thus particularly complex.
+Being run is exactly the purpose of the model and is not thus particularly complex.
 Some comments on how the model is evaluated can anyway be made to comprehend it better.
 
-As explained in section \ref{sec:thesis_obj},
+As explained in Section \ref{sec:thesis_obj},
 the model's input must be the dataset about when people actually leave from the origin of their trip and the travel time function.
 In this case, both of these input are readily available and easy to get:
 the travel time function has some analytical form that has been decided earlier,
@@ -539,10 +538,10 @@ before dealing with more realistic but more difficultly interpretable scenarios.
 
 The next step is to evaluate the model on a scenario that is more realistic than a simple synthetic dataset,
 but for which the convergence can still be evaluated.
-Traffic simulators, and in particular METROPOLIS2 (in which the parameters \(\alpha, \beta, \gamma\) can be explicitly set for each agent)
+Traffic simulators, and in particular METROPOLIS2 (in which the parameters \(\alpha, \beta, \gamma\) can be explicitly set for each agent),
 are extremely helpful in this stage.
 
-\section{Evaluation on Data from Traffic Simulator}
+\Section{Evaluation on Data from Traffic Simulator}
 \label{sec:eval_metr}
 
 A traffic simulator can provide precious insights on the value of the model:
@@ -551,31 +550,31 @@ suitable for providing data about the most simple scenarios (such as a single bo
 while converging to the reality as the scenario gets more and more complex.
 Moreover, as noted above,
 they can be used as a measure of the convergence without building real surveys on purpose,
-that can be very expensive and complex ways to test the convergence of a model.
+which can be very expensive and complex ways to test the convergence of a model.
 
-Many different traffic simulation programs have been written through the years
+Many different traffic simulation programs have been written over the years
 (for a review of the existing ones, with their respective strengths and weaknesses, see \cite{NGUYEN2021100486}).
-To the best of my knowledge though,
+To the best of our knowledge though,
 the one that the most respects the specifications of Vickrey's model \parencite{LI2020311} is METROPOLIS,
 a traffic simulator written by \textcite{de1997metropolis} and its succesor METROPOLIS2, by \textcite{RePEc:ema:worpap:2024-03}.
 I will mainly focus, in this thesis,
 on the faster and more recent METROPOLIS2,
-that provides a more precise convergence and more flexible simulation,
+which provides a more precise convergence and more flexible simulation,
 at the cost of (currently) some of the ease of use.
-The next section will thus briefly cover the working principle of the simulator,
+The next Section will thus briefly cover the working principle of the simulator,
 to later delve into how it can be used for the thesis' purpose.
 
-\subsection{METROPOLIS2 Working Principle}
+\subSection{METROPOLIS2 Working Principle}
 \label{sec:metr}
 
-Traffic simulators can be usually distinguished into microscopic simulator,
+Traffic simulators can usually be distinguished into microscopic simulators,
 which model traffic at small scales such as the single neighbourhood \parencite{8569938},
 and macroscopic simulators, which model it to large scales,
 such as cities or whole countries \parencite{mcnally2007four}.
 
-METROPOLIS doesn't fit in any of these categories:
+METROPOLIS does not fit in any of these categories:
 it is indeed defined a \textit{mesoscopic} traffic simulator \parencite{RePEc:ema:worpap:2024-03},
-which adopts an intermediate approach between a micro- and macroscopic simulators.
+which adopts an intermediate approach between micro- and macroscopic simulators.
 It is indeed built following an agent-based methodology,
 in which each user behaves independently,
 according to the travel time function defined by the collectivity.
@@ -597,7 +596,7 @@ the decisions of all the users are taken into account, and the experienced trave
 finally, the learning model computes the \textit{expected} network conditions:
 according to a predefined learning function,
 the network conditions of all the previous days are averaged and what the users expect for the next day is decided.
-Equilibrium is reached when the decisions of the users don't relevantly change after each day,
+Equilibrium is reached when the decisions of the users do not relevantly change after each day,
 or equally when the expected network conditions reach a stationary situation.
 \begin{figure}
   \centering
@@ -643,38 +642,38 @@ for \(\mu \rightarrow 0\), the random variable goes towards a dirac distributed 
 while for high values of \(\mu\) it tends towards an uniformly distributed random variable.
 
 For the convergence to equilibrium, the model relies heavily\footnote{As noted in private discussions with Lucas Javaudin and AndrÃ© de Palma} on the value of the noise parameter \(\mu\),
-and won't converge for low values of it.
+and will not converge for low values of it.
 This will potentially create some problems when validating with it the model developed in the thesis:
 the heterogeneity in choices considered by the model will indeed be entirely explainable with differences across individuals,
 while in the simulated data there will be another source of randomness determined by the parameter \(\mu\).
 
-A theoretical analysis could be done to performed,
+A theoretical analysis could be performed,
 to prove that a logit model would yield the same distribution of departure times as the deterministic case with some changes on the distributions of the parameters \(\alpha, \beta, \gamma, t^*\).
 This analysis is anyway considered out of the scope of this thesis and will not be performed:
 to achieve convergence,
 a value of \(\mu\) as low as possible will be chosen to keep the simulator converging,
 while having a dataset close enough to the deterministic case.
 
-On top of this problem, evaluating the model with simulated data present some technical challenges.
-the next section describe them, and the methods for addressing them.
+On top of this problem, evaluating the model with simulated data presents some technical challenges.
+The next section describe them, and the methods for addressing them.
 
-\subsection{Challenges in the Evaluation with Synthetic Data}
+\subSection{Challenges in the Evaluation with Synthetic Data}
 \label{sec:sim_tech}
 
 Evaluating the model on simulated data is not straightforward,
-and for finalizing an evaluation several difficulties have to be overcame.
-In this section, all the necessary steps for performing a successful evaluation,
+and for finalizing an evaluation several difficulties have to be overcome.
+In this Section, all the necessary steps for performing a successful evaluation,
 and the corresponding difficulties, will be described.
 
-The first step needed for doing the model evaluation is retrieving the data.
+The first step needed to perform the model evaluation is to retrieve the data.
 The first main challenge for this task regards running the simulator:
 METROPOLIS2 is indeed not a commercial software,
 its documentation is not complete and the user experience is not close to what a normal software offers.
-Thank to the kind support of Lucas Javaudin,
-the main author of the simulator, this difficulty was efficiently overcame.
+Thanks to the kind support of Lucas Javaudin,
+the main author of the simulator, this difficulty was efficiently overcome.
 
 Once the software is ready to be used,
-the population on which the simulation is ran has to be determined.
+the population on which the simulation is run has to be determined.
 This is not a trivial task:
 equilibrium is indeed defined as the situation in which none of the agents have any interest in behaving differently from how they are doing;
 given the travel time function at equilibrium,
@@ -687,11 +686,11 @@ This could simply be achieved by only running the demand model on a given travel
 This approach would anyway have two major drawbacks:
 on the one hand, it would require modifying the source code of the simulator,
 which is not open source;
-on the other hand, it would yield an evaluation procedure extremely similar to the one described in section \ref{sec:eval_synth}:
+on the other hand, it would yield an evaluation procedure extremely similar to the one described in Section \ref{sec:eval_synth}:
 each agent would indeed independently minimize a cost function
 (or a slightly modified version of it, if taking into account the logit model).
 This would make this method less powerful and generalizable,
-since it will constrain the evaluation to a purely theoretical setting.
+since it will restrict the evaluation to a purely theoretical setting.
 
 Instead of this another, more realistic approach will be taken:
 the studied commuters will be a minority of the totality,
@@ -702,12 +701,12 @@ the first one, representing the majority of the commuters,
 will have their parameters distributed according to some distribution,
 of interest only for the impact it has on the travel time function.
 The second group, representing a small minority of the commuters,
-will have the parameters distributed according to a distribution of the chosen form (as in section \ref{sec:run_synth_dataset}),
+will have the parameters distributed according to a distribution of the chosen form (as in Section \ref{sec:run_synth_dataset}),
 parametrized by some parameter \(\theta\).
 The effective departure times of the users in the second group are used,
-and the maximum likelihood estimator will find the parameter \(\theta\) determining the distributions of the parameters of it.
+and the maximum likelihood estimator will find the parameter \(\theta\) determining the distributions of the parameters of the group.
 The travel time function, on the other hand,
-will mainly depend on the choices of the big group.
+will mainly depend on the choices of the large group.
 A 2-dimensional projection of the parameter \(\theta\) is shown in figure~\ref{fig:par_groups_sim}.
 
 \begin{figure}
@@ -751,8 +750,8 @@ This allows to set some constraint on the desired theoretical properties of the 
 while being able to have enough degrees of freedom,
 as long as a wise choice is made regarding the interpolating function.
 
-After the model is run on the retrieved data, more complex scenarios can be considered.
-A more complex population, composed by more than two groups, can be taken into account:
+After running the model on the retrieved data, more complex scenarios can be considered.
+A more complex population, composed of more than two groups, can be taken into account:
 as in the simpler case, the model will estimate parameters for a small group of users,
 whose action on the experienced travel time is negligible.
 Alternatively, simulations can be performed for more complex road networks:
@@ -762,22 +761,22 @@ By improving the simulation in these two ways,
 the simulated data can be made to progressively converge to real data,
 which is the final goal of the project.
 
-\section{Evaluation on Real Data}
+\Section{Evaluation on Real Data}
 \label{sec:eval_real}
 
 Evaluating the model on real data poses several challenges,
-which cannot be easily overcame.
-In this section, the main ones are listed, and the problems in solving them are described.
+which cannot be easily overcome.
+In this Section, the main ones are listed, and the problems in solving them are described.
 
 The first problem arises in retrieving the data:
-as briefly written in section~\ref{sec:data-about-travel},
+as briefly written in Section~\ref{sec:data-about-travel},
 data about travel time are not difficult to retrieve.
 At the same time, data about experienced departure time of a population can be retrieved in different ways:
 surveys can be made (for instance, EPFL mobility survey is a nice data source, including what was the last departure time from home for each user),
 or some sensors can be used to retrieve Revealed Preferences, rather than Stated Preferences,
 for a population (e. g., by using a mobile phone application).
-Survey data have anyway the drawbacks that were explained in section~\ref{sec:estim-param-alpha},
-and other ways of finding these kind of data are out of the scope of this thesis
+Survey data have anyway the drawbacks that were explained in Section~\ref{sec:estim-param-alpha},
+and other ways of finding these kinds of data are out of the scope of this thesis
 (but may be the topic of future works).
 
 Data sets exclusively regarding travel times are anyway difficult to use for this use case:
@@ -786,37 +785,37 @@ to deploy the developed model.
 Using the data sources presented above,
 the only way to obtain these data is by using survey data for obtaining the departure times and using some private service,
 such as Google Maps API,
-for retrieving data about travel times for the exact routes drove by who answered the survey.
+for retrieving data about travel times for the exact routes driven by who answered the survey.
 This method has, as explained above, some drawbacks.
 It could be anyway used, as the data are sufficient to deploy the model.
 
 Apart from this, the evaluation on real data reveals another, deeper problem:
 as explained in chapter \ref{cha:introduction},
 studies involving Vickrey model and real data are extremely lacking.
-A recent paper \parencite{https://doi.org/10.1111/iere.12692} notes a deep problem in doing these kind of studies:
-slopes computed using real data are indeed way lower than what one would expect from theoretical studies on Vickrey's model at equilibrium\todo{As shown in figure...}.
+A recent paper \parencite{https://doi.org/10.1111/iere.12692} notes a deep problem in doing these kinds of study:
+slopes computed using real data are indeed much lower than what one would expect from theoretical studies on Vickrey's model at equilibrium\todo{As shown in figure...}.
 
 The model developed in this thesis is anyway not studying equilibrium dynamics,
 and is thus not directly affected by the highlighted problem.
 It is anyway affected by it in two different ways, in the theoretical and practical levels.
-On the theoretical level, the method could loose relevance:
+On the theoretical level, the method could lose relevance:
 it is indeed based on a theory that is currently showing a relevant flaw,
 and the models developed by it could thus be flawed themselves in case the theory is shown not to work.
 On the practical level, on the other hand,
 having high slopes in the travel time function is essential for the model to work:
 with low enough slopes,
-the predicted values for the parameters of the studied population would be consistently different from the ones predicted by the theory, and shown in section \ref{sec:estim-param-alpha}.
+the predicted values for the parameters of the studied population would be consistently different from the ones predicted by the theory, and shown in Section \ref{sec:estim-param-alpha}.
 
 To solve this issue, different approaches are being developed:
 \textcite{https://doi.org/10.1111/iere.12692} suggests a particular distribution of the population,
-in which some travellers (which are called, in the paper, \textit{inframarginal}) have extremely high values of \(\beta/\alpha, \gamma/\alpha\).
+in which some travellers (which are called, in the article, \textit{inframarginal}) have extremely high values of \(\beta/\alpha, \gamma/\alpha\).
 This solution is compatible with the model developed here:
 it indeed makes it possible to have a group of people with low values for the said parameters,
 and the existence of the group would be justified by the existence of the inframarginal travellers,
 who make the values reported in the existent theory possible.
-This solution is anyway not, as far as I'm concerned,
-a systematic solution to the weakness showed by the model.
-A group of researchers from EPFL and Cergy University (with which I am currently working) are currently working on an alternative solution of the problem,
+This solution is anyway not, as far as I am concerned,
+a systematic solution to the weakness shown by the model.
+A group of researchers from EPFL and Cergy University (with whom I am currently working) are currently working on an alternative solution of the problem,
 by taking into account the uncertainty on the travel time expected by the user.
 The model shows preliminary good results, and will be developed in the near future.
 It is anyway out of the scope of the thesis.

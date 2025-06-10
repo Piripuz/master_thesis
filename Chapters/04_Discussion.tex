@@ -9,9 +9,9 @@ at first, a theoretical understanding of the problem was developed,
 to be able to properly interpret the real data and,
 more technically, to develop an analytical expression for the likelihood.
 After this, the model was applied to different scenarios,
-to evaluate its properties and to see wether it forecasts the actual scheduling delay preferences of the users.
+to evaluate its properties and to see whether it forecasts the actual scheduling delay preferences of the users.
 
-The main contribution of this work are certainly related to the theoretical understanding of the problem:
+The main contributions of this work are certainly related to the theoretical understanding of the problem:
 how a rational agent minimizing the cost acts was studied,
 and an analytical expression for the choices they make retrieved.
 This analytical expression has moreover an intuitive geometrical meaning,
@@ -20,7 +20,7 @@ we indeed fully characterize the period of time for which early and late arrival
 and show how closely related they are to the derivative of the travel time function.
 
 These results are obtained by assuming the travel time function to be exogenous,
-in a situation in which the studied group of users is out from equilibrium.
+in a situation in which the studied group of users is out of equilibrium.
 This approach differs from the majority of the work in the field,
 that is mainly addressed to solve various equilibrium problems.
 Reversing the problem, and supposing the whole system to be at equilibrium for studying the behaviour of a part of it,
@@ -36,14 +36,14 @@ and yield more general methods.
 
 The validation of the method on synthetic dataset was successful.
 As stated different times,
-this doesn't help in proving the generalizability of the model (since it just proves that a theory is coherent with itself),
+this does not help in proving the generalizability of the model (since it just proves that a theory is coherent with itself),
 but does help in showing that the theoretical work done is relevant,
 and that the numerical implementation is precise enough.
 
 Sadly, different problems have been observed with the method.
 The first one is noted in section~\ref{sec:data-about-realized}:
 taking into account heteregenoities in choices,
-by choosing a continuous logit model to describe the probability each departure time is chosen by an user,
+by choosing a continuous logit model to describe the probability each departure time is chosen by a user,
 the method does not work anymore,
 and a deep revision of the model is made necessary.
 
@@ -59,11 +59,11 @@ and require less knowledge of the subject.
 This would be the drawback of the method as well:
 a minor understanding of the subject would be developed if implementing the logit model.
 
-This problem can thus be overcame.
+This problem can thus be overcome.
 A deeper problem, that cannot be solved as easily,
 would then arise when working with real data:
 on real data, slopes are way lower than what would be expected if the population had parameters close to the ones reported in the literature.
-This problem is reported by \textcite{https://doi.org/10.1111/iere.12692} using data from highways,
+This problem is reported by \textcite{https://doi.org/10.1111/iere.12692} using data from freeways,
 and confirmed by us when dealing with urban data.
 
 This problem implies that, if performing an estimation on real data,
