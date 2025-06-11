@@ -107,7 +107,6 @@ More generally, let
 be the given dataset of the actual departure times,
 that can be thought of as independent samples of the random variable \(T^{opt}\).
 
-\todo{Terribly written}
 Since the joint probability of independent events can be computed by multiplying the probabilities of the individual events,
 the likelihood of the parameter \(\theta\) (given the dataset \(S\)) will be defined as
 \begin{equation}
@@ -193,7 +192,6 @@ both methods deserve to be presented.
 Empirical estimation of the likelihood is a method that was first defined by \textcite{10.1093/biomet/75.2.237}.
 It consists in the estimation of the likelihood based on the \textit{empirical Cumulative Distribution Function} (eCDF)  \(\hat{F}(x)\) (simply, the ratio between the number of samples before the point in which the function is evaluated and the number of the total samples),
 and only requires an arbitrary number of independent and identically distributed (i.i.d.) samples.
-\missingfigure{Figure about eCDF vs CDF?}
 The next paragraph will briefly explain how does the method work.
 
 Consider a set \(S = \{t_1, \dots, t_N\}\) of \(N\) i.i.d. samples from the distribution we want to calculate the likelihood of.
@@ -289,7 +287,7 @@ Both problems are solvable,
 since there exist methods that find the solutions with arbitrary precision,
 as long as the functions are behaved well enough (that is the case in this problem).
 
-Regarding the integration, the solution can be approximated by using the \todo{add figure for this?} trapezoid method,
+Regarding the integration, the solution can be approximated by using the trapezoid method,
 that requires a finite number of function evaluations and yields a good estimate of the integral
 (for a deeper discussion on this, see \cite{Sueli_Mayers_2003}).
 An approximated integral via the trapezoid method can thus be computed and,
@@ -494,7 +492,7 @@ parametrized by the parameter \(\theta\).
 
 Once the cost function has been defined,
 the minimization has to occur.
-Since the cost can have up to three local minima (as shown in Section \todo{Section number} THEORY1),
+Since the cost can have up to three local minima (as shown in Section~\ref{sec:local_min}),
 three different optimizers are run on it,
 each one of which aimed at one of the minima.
 The retrieved values are then compared, and the global minimum is found in this way.
@@ -793,7 +791,7 @@ Apart from this, the evaluation on real data reveals another, deeper problem:
 as explained in chapter \ref{cha:introduction},
 studies involving Vickrey model and real data are extremely lacking.
 A recent paper \parencite{https://doi.org/10.1111/iere.12692} notes a deep problem in doing these kinds of study:
-slopes computed using real data are indeed much lower than what one would expect from theoretical studies on Vickrey's model at equilibrium\todo{As shown in figure...}.
+slopes computed using real data are indeed much lower than what one would expect from theoretical studies on Vickrey's model at equilibrium.
 
 The model developed in this thesis is anyway not studying equilibrium dynamics,
 and is thus not directly affected by the highlighted problem.
