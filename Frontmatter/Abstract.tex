@@ -1,9 +1,38 @@
 \section*{Abstract}
 \addcontentsline{toc}{section}{Abstract}
 
-\blindtext
+Transport modelling initially relied on static models, which remain widely used in practice despite their strong assumption that congestion levels remain constant during peak and non-peak hours.
+This assumption was challenged by several economists
+in the second half of the last century.
+
+The main alternative approach was formalized by \textcite{de1983stochastic},
+defining what is known as the \(\alpha\)-\(\beta\)-\(\gamma\) model,
+a stochastic departure framework.
+Here the commuters make trade-offs between congestion levels and early arrivals relative to an ideal arrival time, denoted as \(t^*\).
+According to the \(\alpha\)-\(\beta\)-\(\gamma\) model,
+\(\alpha\) is the value of time, \(\beta\) the unit cost of early arrival and \(\gamma\) the unit cost of late arrival.
+This theoretical model assumes congestion to be endogenous,
+and studies the situation in which it is stabilized at equilibrium.
+
+The equilibrium solutions, as can be imagined,
+strictly depend on the values of the parameters \(\alpha\), \(\beta\) and \(\gamma\).
+However, estimation of them is impractical, as it relies uniquely on costly and infrequent surveys.
+Moreover, theoretical results are often impractical, as even in a steady state, actual travel times can vary significantly.
+
+The aim of this thesis is therefore to develop a methodology for calibrating the values of the parameters \(\alpha, \beta, \gamma\) and \(t^*\),
+for a group of user travelling with exogenous congestion pattern.
+Being the model applicable to an arbitrary network, the congestion is not assumed to be the solution of a classical equilibrium model:
+we assume it to be known,
+either from simulations or direct observation.
+We thus derive the conditions corresponding to the minimization of the individual cost,
+for each commuter.
+Based on this, we are able to describe the distribution of parameters for a group of commuters.
+
+Our method shows great accuracy when evaluated on a synthetic dataset.
 
 
 
-
-
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../main"
+%%% End:

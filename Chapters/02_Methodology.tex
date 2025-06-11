@@ -2,7 +2,7 @@
 \label{chap:methodology}
 
 This chapter presents the methodology used throughout the thesis.
-It will be articulated in different parts:
+It will be articulated in different parts, according to how the thesis will proceed:
 the first step will involve building the model
 and finding a suitable method for retrieving the parameters from data.
 After this, the method must be tested on several different scenarios of increasing complexity.
@@ -61,7 +61,7 @@ that will vary in function of the parameters:
 
 Suppose now that all four parameters are distributed across the different commuters,
 and the parameter of each commuter are sampled from four different random variables,
-whose probability distribution functions \todo{maybe by introducing the parameter \(\theta\), the approach is already not bayesian (actually, maybe not)} are parametrized by a parameter \(\theta \in \R^n, n \geq 1\).
+whose probability distribution functions are parametrized by a parameter \(\theta \in \R^n, n \geq 1\).
 The minimization process yields another random variable, parametrized by the same parameter \(\theta\),
 which describes the optimal departure time \(t^{opt}\).
 Let \(T^{opt}\) be this random variable, and
@@ -142,7 +142,7 @@ These problems, which will equally affect the other estimation methods,
 will be tackled in Section \ref{sec:lik_est}.
 I will thus here present the other main estimation method.
 
-\subSection{Bayesian Estimation}
+\subsection{Bayesian Estimation}
 \label{sec:bayes}
 
 The bayesian approach is a philosophically (beyond practical) different way of looking at the problem.
@@ -170,7 +170,7 @@ not taking in consideration any information on the prior.
 It is thus important to study the likelihood,
 in order to be able to perform the parameter estimation at the core of the project.
 
-\Section{Estimation of the Likelihood}
+\section{Estimation of the Likelihood}
 \label{sec:lik_est}
 To estimate the likelihood, two main approaches are viable:
 one could either analytically find the expression for the likelihood,
@@ -186,7 +186,7 @@ empirically approximating it could yield an acceptable approximation and would n
 But, since theoretical understanding of the problem is not something to be neglected,
 both methods deserve to be presented.
 
-\subSection{Empirical Approximation of the Likelihood}
+\subsection{Empirical Approximation of the Likelihood}
 \label{sec:emp_approx_lik}
 
 Empirical estimation of the likelihood is a method that was first defined by \textcite{10.1093/biomet/75.2.237}.
@@ -237,7 +237,7 @@ This problem could be avoided by using modern high performance computing framewo
 and powerful machines.
 It is anyway a major drawback and suggests, if possible, the adoption of alternative methods.
 
-\subSection{Direct Computation of the Likelihood}
+\subsection{Direct Computation of the Likelihood}
 \label{sec:lik_comp}
 
 As mentioned earlier, the obvious method of computing a likelihood is the direct computation of it.
@@ -268,7 +268,7 @@ and whose approximation with a good precision requires a big computational effor
 The following section delves a bit deeper in the problem,
 and presents some solutions that can help in mitigating the issues.
 
-\subSection{Speeding Up the Likelihood Computation}
+\subsection{Speeding Up the Likelihood Computation}
 \label{sec:lik_speed}
 As stated in the previous paragraph, numerically computing the Probability Density Function of the variable \(T^{opt}\) will,
 by itself, not be a trivial task.
@@ -316,7 +316,7 @@ After the likelihood has been efficiently computed,
 inferring the parameters requires it to be maximised.
 An overview of the possible maximisation methods is thus given in the following Section.
 
-\Section{Maximization of the Likelihood}
+\section{Maximization of the Likelihood}
 \label{sec:max_lik_meth}
 
 The ideal way of finding the maximum of the likelihood would be differentiating it,
@@ -331,7 +331,7 @@ the maximum will be numerically approximated.
 Different techniques can be used for the approximation of it,
 and they will be presented in this Section.
 
-\subSection{Grid Search}
+\subsection{Grid Search}
 \label{sec:grid_search}
 
 The most basic and intuitive solution for maximising a function (after randomly selecting a point to be the maximum) is grid search:
@@ -355,7 +355,7 @@ but often combining it with an iterative maximization algorithm offers the best 
 
 Iterative methods are thus examined in the next sections.
 
-\subSection{Gradient Descent Methods}
+\subsection{Gradient Descent Methods}
 \label{sec:grad_desc}
 
 Gradient descent (and the various modified versions of it) is arguably the most widely known and used method in optimization \parencite{ruder2017overviewgradientdescentoptimization}.
@@ -405,7 +405,7 @@ This problem could, in principle,
 make the computation of the gradient not feasible.
 In this case, iterative algorithms such as gradient-less optimizers could still yield good results.
 
-\subSection{Simplex Method}
+\subsection{Simplex Method}
 \label{sec:no_grad_opt}
 
 It may happen, in general, that no information is available other than the function values,
@@ -457,7 +457,7 @@ in order to prove it to actually be meaningful.
 The following Sections will present how the evaluation will be performed,
 on various scenarios of increasing complexity.
 
-\Section{Evaluation on Synthetic Data}
+\section{Evaluation on Synthetic Data}
 \label{sec:eval_synth}
 
 The first, simplest scenario for testing the method consists in building a dataset of artificial observations of departure times,
@@ -469,7 +469,7 @@ this step will enable to evaluate the method without it being affected by potent
 
 To perform this evaluation, the first thing that needs to be done is ing the dataset.
 
-\subSection{Building the Synthetic Dataset}
+\subsection{Building the Synthetic Dataset}
 \label{sec:synth_dataset}
 
 The dataset has to be built independently from the theory developed when estimating the likelihood,
@@ -506,7 +506,7 @@ to ensure the robustness of the developed method.
 Once the dataset has been built,
 the model will be tested with the artificial data.
 
-\subSection{Running the Model on Synthetic Data}
+\subsection{Running the Model on Synthetic Data}
 \label{sec:run_synth_dataset}
 
 Being run is exactly the purpose of the model and is not thus particularly complex.
@@ -519,7 +519,10 @@ the travel time function has some analytical form that has been decided earlier,
 while the dataset of departure times has just been built.
 
 Running the model will thus produce an estimate \(\hat{\theta}\) of the original distribution parameter \(\theta\).
-Convergence can then be evaluated by simply computing the Mean Square Error
+Being the parameter in a low-dimensional space,
+convergence can be assessed by visual inspection of the results.
+
+If an objective measure of it is needed, it can then be evaluated by simply computing the Mean Square Error
 \begin{equation*}
   MSE = \sqrt{\sum_i (\theta_i - \hat{\theta}_i)^2}
 \end{equation*}
@@ -539,7 +542,7 @@ but for which the convergence can still be evaluated.
 Traffic simulators, and in particular METROPOLIS2 (in which the parameters \(\alpha, \beta, \gamma\) can be explicitly set for each agent),
 are extremely helpful in this stage.
 
-\Section{Evaluation on Data from Traffic Simulator}
+\section{Evaluation on Data from Traffic Simulator}
 \label{sec:eval_metr}
 
 A traffic simulator can provide precious insights on the value of the model:
@@ -562,7 +565,7 @@ at the cost of (currently) some of the ease of use.
 The next Section will thus briefly cover the working principle of the simulator,
 to later delve into how it can be used for the thesis' purpose.
 
-\subSection{METROPOLIS2 Working Principle}
+\subsection{METROPOLIS2 Working Principle}
 \label{sec:metr}
 
 Traffic simulators can usually be distinguished into microscopic simulators,
@@ -655,7 +658,7 @@ while having a dataset close enough to the deterministic case.
 On top of this problem, evaluating the model with simulated data presents some technical challenges.
 The next section describe them, and the methods for addressing them.
 
-\subSection{Challenges in the Evaluation with Synthetic Data}
+\subsection{Challenges in the Evaluation with Synthetic Data}
 \label{sec:sim_tech}
 
 Evaluating the model on simulated data is not straightforward,
@@ -759,7 +762,7 @@ By improving the simulation in these two ways,
 the simulated data can be made to progressively converge to real data,
 which is the final goal of the project.
 
-\Section{Evaluation on Real Data}
+\section{Evaluation on Real Data}
 \label{sec:eval_real}
 
 Evaluating the model on real data poses several challenges,
